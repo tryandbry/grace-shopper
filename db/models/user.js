@@ -8,9 +8,9 @@ module.exports = db => db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
+    allowNull: false,
     validate: {
       isEmail: true,
-      notNull: true,
     },
   },
   // We support oauth, so users may or may not have passwords.
@@ -39,6 +39,14 @@ module.exports = db => db.define('user', {
   getterMethods: {
     fullName: function(){
       return this.firstName + " " + this.lastName;
+    },
+  },
+  setterMethods: {
+    name: function(value){
+      var splitted = value.split(' ');
+
+      this.setDataValue('firstName',splitted.slice(0,-1).join(' '));
+      this.setDataValue('lastName',splitted.slice(-1).join(' '));
     },
   },
   hooks: {
