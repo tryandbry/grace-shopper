@@ -14,12 +14,16 @@ const db = require('APP/db')
       } = db;
 
 //BEGIN random generator functions
+//##########################################
 const generateFloat = (upperBound)=>Math.random()*upperBound;
+
+//const fuzz = ()=>+`${Date.now()}`.slice(-1)/9;
 
 const generateInteger = (lowerBound,upperBound)=>{
   let delta = upperBound - lowerBound;
+  let fuzz = Math.random();
 
-  return lowerBound + Math.floor(Math.random()*delta);
+  return lowerBound + Math.round(fuzz*delta);
 }
 
 const generateReview = ()=>{
@@ -32,6 +36,7 @@ const generateReview = ()=>{
     "Is this from Outer SPACE?!",
     "I eat rocks for breakfast.  Like Chuck Norris.",
     "If you do not forward this rock to 10 people, then you will smell bad :)",
+    "I hide my rock with my potatoes.  My life has meaning again.",
   ];
   
   var random = generateInteger(0,desc.length-1);
@@ -52,23 +57,29 @@ const generateRockDescription = ()=>{
   var random = generateInteger(0,desc.length-1);
   return desc[random];
 }
+//##########################################
+//END random generator functions
+
+//BEGIN seed data arrays
+//##########################################
+var users = [
+  { email: "peter@familyguy.com", name: "Peter Griffin" },
+  { email: "pikachu@pokemon.com", name: "Pika Pikachu" },
+];
+
+var carts = users.map((e,i)=>({user_id: i+1}));
 
 var rocks = [
   { name: "icky-icky", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "microbead", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "dino poo", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "pyrite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "azurite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "peanutty", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "trilobite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "gypsum", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "obsidian", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "kitchen sponge", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "slate", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
   { name: "malachite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-];
-
-var users = [
-  { email: "peter@familyguy.com", name: "Peter Griffin" },
-  { email: "pikachu@pokemon.com", name: "Pika Pikachu" },
 ];
 
 var categories = [
@@ -80,24 +91,34 @@ var categories = [
 ];
 
 var reviews = [
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
-  { rating: String(generateInteger(1,5)), text: generateReview() },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
 ];
+//##########################################
+//END seed data arrays
 
 if(module === require.main){
+  /*
+  Promise.all(User.bulkCreate(users))
+  .then(()=>console.log("done"))
+  .catch((error)=>console.log("dammit!",error));
+  */
   let promiseArray = db.didSync
+  .then(() => db.sync({force: true}))
   .then(()=>{
     let promises = [];
     //populate Product
@@ -108,6 +129,8 @@ if(module === require.main){
     promises.push(Category.bulkCreate(categories));
     //populate Review
     promises.push(Review.bulkCreate(reviews));
+    //populate Cart
+    promises.push(Cart.bulkCreate(carts));
 
     return promises;
   });
