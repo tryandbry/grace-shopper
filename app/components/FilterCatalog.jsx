@@ -14,12 +14,17 @@ class FilterCatalog extends React.Component {
     }
     
     onChange (e) {
+        e.preventDefault();
         this.setState({ inputValue : e.target.value })
     }
     
     render () {
-        console.log('filterCatalog component props', this.props)
+        // console.log('filterCatalog component props', this.props)
         const inputValue = this.state.inputValue;
+        const selectedCategory = this.props.selectedCategory;
+        
+        console.log('filterCatalog selected category', selectedCategory)
+        
         const filteredProducts = this
             .props
             .products
@@ -39,7 +44,7 @@ class FilterCatalog extends React.Component {
 
 const mapState = (state) => ({
     products : state.catalog.products,
-    categories : state.catalog.categories
+    selectedCategory : state.catalog.selectedCategory
 });
 export default connect(mapState)(FilterCatalog);
 

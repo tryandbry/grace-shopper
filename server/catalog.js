@@ -9,6 +9,7 @@ Get all products
 Create 1 new product (admin)
 Get all categories
 // create new category?
+Get one category
 */
 
 module.exports = require('express').Router()
@@ -34,5 +35,13 @@ module.exports = require('express').Router()
         Category
             .findAll({})
             .then(categories => res.send(categories))
+            .catch(next);
+    })
+    .get('/category/:categoryId', (req, res, next) => {
+        Category
+            .findOne({
+                where : { id : req.params.categoryId }
+            })
+            .then(category => res.send(category))
             .catch(next);
     })

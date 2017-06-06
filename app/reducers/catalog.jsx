@@ -3,6 +3,8 @@ import axios from 'axios';
 // actions
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CATEGORIES = 'SET_CATEGORIES';
+const SELECT_CATEGORY = 'SELECT_CATEGORY';
+const NOTHING = 'NOTHING';
 
 // action-creators
 const setProducts = (products) => ({
@@ -13,12 +15,16 @@ const setCategories = (categories) => ({
     type: SET_CATEGORIES,
     categories
 });
-
+const selectCategory = (category) => ({
+    type: SELECT_CATEGORY,
+    category
+});
 
 // reducer
 const initialState = {
     products: [],
-    categories: []
+    categories: [],
+    selectedCategory: null
 };
 export default function reducer (state=initialState, action) {
     let newState = Object.assign({}, state)
@@ -29,26 +35,41 @@ export default function reducer (state=initialState, action) {
         case (SET_CATEGORIES):
             newState.categories = action.categories;
             break;
+        case (SELECT_CATEGORY):
+            newState.selectedCategory = action.category;
+            break;
         default:
             return state
     }
     return newState;
 }
 
+const resToData = res => res.data;
+
 // action-dispatcher
 export const getProducts = () => {
     return dispatch => axios
         .get('/api/catalog')
-        .then(res => res.data)
-        .then(products => {
-            console.log(products)
-            dispatch(setProducts(products))})
+        .then(resToData)
+        .then(products => dispatch(setProducts(products)))
         .catch(console.error.bind(console));
 }
 export const getCategories = () => {
     return dispatch => axios
         .get('/api/catalog/category')
-        .then(res => res.data)
+        .then(resToData)
         .then(categories => dispatch(setCategories(categories)))
+        .catch(console.error.bind(console));
+}
+export const getSelectedCategory = (categoryId) => {
+    
+    ////// WOAH I NEED A CODE REVIEW
+    if (categoryId === 'all')
+        return (dispatch) => dispatch({ type: NOTHING });
+    
+    return dispatch => axios
+        .get(`/api/catalog/category/${categoryId}`)
+        .then(resToData)
+        .then(category => dispatch(selectCategory(category)))
         .catch(console.error.bind(console));
 }

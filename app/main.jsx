@@ -11,6 +11,7 @@ import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
 import FilterCatalog from './components/FilterCatalog'
+import Sidebar from './components/Sidebar'
 
 import { getProducts, getCategories } from './reducers/catalog';
 
@@ -22,6 +23,7 @@ const ExampleApp = connect(
       <nav>
         {user ? <WhoAmI/> : <Login/>}
       </nav>
+      <Sidebar />
       {children}
     </div>
 )
@@ -29,7 +31,6 @@ const ExampleApp = connect(
 const onEnter = function () {
     store.dispatch(getProducts())
     store.dispatch(getCategories())
-    console.log('ONENTER')
 }
 
 render(
