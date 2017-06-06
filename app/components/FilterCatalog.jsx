@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import FilterInput from './FilterInput';
 import Catalog from './Catalog';
 
-export default class FilterCatalog extends React.Component {
+class FilterCatalog extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -31,9 +31,14 @@ export default class FilterCatalog extends React.Component {
                 inputValue={inputValue}
                 onChange={this.onChange}
             />
-                <p>this should be below filterinput and above catalog</p>
             <Catalog products={filteredProducts} />
             </div>
         );
     }
 }
+
+const mapState = (state) => ({
+    products : state.catalog.products
+});
+export default connect(mapState)(FilterCatalog);
+
