@@ -10,6 +10,8 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
+import { getProducts, getCategories } from './reducers/catalog';
+
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
 )(
@@ -22,15 +24,20 @@ const ExampleApp = connect(
     </div>
 )
 
+const onEnter = () => {
+    getCategories();
+    getProducts();
+}
+
 render(
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp}>
-        <IndexRedirect to="/jokes" />
-        <Route path="/jokes" component={Jokes} />
-      </Route>
-      <Route path='*' component={NotFound} />
-    </Router>
-  </Provider>,
-  document.getElementById('main')
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={ExampleApp} onEnter={onEnter}>
+                <IndexRedirect to="/catalog" />
+                <Route path="/catalog" component={Catalog} />
+            </Route>
+            <Route path='*' component={NotFound} />
+        </Router>
+    </Provider>,
+    document.getElementById('main')
 )
