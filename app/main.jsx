@@ -27,8 +27,8 @@ const ExampleApp = connect(
 )
 
 const onEnter = function () {
-    store.dispatch(getProducts)
-    store.dispatch(getCategories)
+    store.dispatch(getProducts())
+    store.dispatch(getCategories())
     console.log('ONENTER')
 }
 

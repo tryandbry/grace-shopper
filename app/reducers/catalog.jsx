@@ -40,7 +40,9 @@ export const getProducts = () => {
     return dispatch => axios
         .get('/api/catalog')
         .then(res => res.data)
-        .then(products => dispatch(setProducts(products)))
+        .then(products => {
+            console.log(products)
+            dispatch(setProducts(products))})
         .catch(console.error.bind(console));
 }
 export const getCategories = () => {

@@ -18,7 +18,7 @@ class FilterCatalog extends React.Component {
     }
     
     render () {
-        console.log(this.props)
+        console.log('filterCatalog component props', this.props)
         const inputValue = this.state.inputValue;
         const filteredProducts = this
             .props
@@ -38,7 +38,8 @@ class FilterCatalog extends React.Component {
 }
 
 const mapState = (state) => ({
-    products : state.catalog.products
+    products : state.catalog.products,
+    categories : state.catalog.categories
 });
 export default connect(mapState)(FilterCatalog);
 
