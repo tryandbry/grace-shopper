@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 module.exports = db => db.define('bom', {
   shipping: {
     type: Sequelize.STRING,
-    notNull: true,
+    allowNull: false,
   },
   status: {
     type: Sequelize.ENUM('created','processing','cancelled','completed'),

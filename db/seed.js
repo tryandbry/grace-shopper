@@ -12,18 +12,34 @@ const db = require('APP/db')
 	User,
       } = db;
 
+if(module === require.main){
+  db.didSync
+  .then(()=>
+    User.create({
+      email: "test@test.com",
+      name: "Peter Griffin",
+    })
+  )
+  .finally(()=>process.exit(0))
+  .catch(console.log);
+}
+/*
 if (module === require.main) {
   db.didSync
     .then(() => db.sync({force: true}))
     .then(()=>{
-      console.log('LOGGING!');
-      return User.create({
-	email: "test@test.com",
+      //console.log('LOGGING!', Object.keys(db.User.__proto__));
+      console.log('LOGGING!', String(User.create));
+      User.create({
+	//email: "test@test.com",
+	name: "Peter Griffin",
+      })
+      .then(theuser=>{
+	console.log("created user:",theuser);
+	return theuser;
       });
     })
-    .then(()=>console.log("test user created"))
     .finally(() => process.exit(0))
     .catch(console.error.bind(console));
 }
-
-//module.exports = Object.assign({}, {})
+*/
