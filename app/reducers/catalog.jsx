@@ -16,18 +16,23 @@ const setCategories = (categories) => ({
 
 
 // reducer
-const initialState = [];
+const initialState = {
+    products: [],
+    categories: []
+};
 export default function reducer (state=initialState, action) {
+    let newState = Object.assign({}, state)
     switch (action.type) {
         case (SET_PRODUCTS): 
-            return action.products;
+            newState.products = action.products;
             break;
         case (SET_CATEGORIES):
-            return action.categories;
+            newState.categories = action.categories;
             break;
         default:
             return state
     }
+    return newState;
 }
 
 // action-dispatcher
