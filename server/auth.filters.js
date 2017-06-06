@@ -12,6 +12,7 @@ const selfOnly = action => (req, res, next) => {
   next()
 }
 
+// rewrite to give access only to admins
 const forbidden = message => (req, res) => {
   res.status(403).send(message)
 }
