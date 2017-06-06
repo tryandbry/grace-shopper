@@ -7,7 +7,7 @@ export default class FilterCatalog extends React.Component {
     constructor() {
         super();
         this.state = {
-            inputValue: '';
+            inputValue: ''
         }
         
         this.onChange = this.onChange.bind(this);
@@ -18,6 +18,7 @@ export default class FilterCatalog extends React.Component {
     }
     
     render () {
+        console.log(this.props)
         const inputValue = this.state.inputValue;
         const filteredProducts = this
             .props
@@ -30,6 +31,7 @@ export default class FilterCatalog extends React.Component {
                 inputValue={inputValue}
                 onChange={this.onChange}
             />
+                <p>this should be below filterinput and above catalog</p>
             <Catalog products={filteredProducts} />
             </div>
         );

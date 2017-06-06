@@ -10,6 +10,8 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
+import FilterCatalog from './components/FilterCatalog'
+
 import { getProducts, getCategories } from './reducers/catalog';
 
 const ExampleApp = connect(
@@ -24,9 +26,10 @@ const ExampleApp = connect(
     </div>
 )
 
-const onEnter = () => {
-    getCategories();
-    getProducts();
+const onEnter = function () {
+    getProducts()(store.dispatch)
+    getCategories()(store.dispatch)
+    console.log('ONENTER')
 }
 
 render(
@@ -34,7 +37,7 @@ render(
         <Router history={browserHistory}>
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
-                <Route path="/catalog" component={Catalog} />
+                <Route path="/catalog" component={FilterCatalog} />
             </Route>
             <Route path='*' component={NotFound} />
         </Router>
