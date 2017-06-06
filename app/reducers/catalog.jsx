@@ -17,7 +17,7 @@ const setCategories = (categories) => ({
 
 // reducer
 const initialState = [];
-export default reducer = (state=initialState, action) => {
+export default function reducer (state=initialState, action) {
     switch (action.type) {
         case (SET_PRODUCTS): 
             return action.products;
@@ -34,12 +34,14 @@ export default reducer = (state=initialState, action) => {
 export const getProducts = () => {
     return dispatch => axios
         .get('/api/catalog')
+        .then(res => res.data)
         .then(products => dispatch(setProducts(products)))
         .catch(console.error.bind(console));
 }
 export const getCategories = () => {
     return dispatch => axios
         .get('/api/catalog/category')
+        .then(res => res.data)
         .then(categories => dispatch(setCategories(categories)))
         .catch(console.error.bind(console));
 }

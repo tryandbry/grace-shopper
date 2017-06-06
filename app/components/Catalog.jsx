@@ -13,20 +13,22 @@ const Catalog = (props) => {
             products && products
                 .map(product => (
                     <div className="col-xs-4" key={ product.id }>
-                    <Link 
-                        className="thumbnail" 
-                        to={`/product/${product.id}`}
-                    >
-                    <img src={ product.image }/>
-                    <div className="caption">
-                        <h5><span>{product.name}</span></h5>
+                        <Link 
+                            className="thumbnail" 
+                            to={`/product/${product.id}`}
+                        >     
+                            <img src={ product.image }/>
+                            <div className="caption">
+                                <h5><span>{product.name}</span></h5>
+                            </div>
+                            <small>${ product.cost }</small>
+                        </Link>
                     </div>
-                    <small>${ product.cost }</small>
-                    </Link>
-                    <div>
                 ))
             }
         </div>
         </div>
     );
 }
+
+export default Catalog;
