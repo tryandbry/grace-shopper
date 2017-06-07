@@ -13,21 +13,19 @@ class CheckoutContainer extends React.Component {
 	    shipCity: "",
 	    shipState: "",
 	    shipZip: "",
+	    paymentAddress1: "",
+	    paymentAddress2: "",
+	    paymentCity: "",
+	    paymentState: "",
+	    paymentZip: "",
 	    creditcard: "",
 	    expiration: "",
 	    ccv: "",
 	}
 
 	this.onSubmitShipping = this.onSubmitShipping.bind(this);
-	this.onChangeAddress1 = this.onChangeAddress1.bind(this);
-	this.onChangeAddress2 = this.onChangeAddress2.bind(this);
-	this.onChangeCity = this.onChangeCity.bind(this);
-	this.onChangeState = this.onChangeState.bind(this);
-	this.onChangeZip = this.onChangeZip.bind(this);
-
-	this.onChangeCreditCard = this.onChangeCreditCard.bind(this);
-	this.onChangeExpiration = this.onChangeExpiration.bind(this);
-	this.onChangeCCV = this.onChangeCCV.bind(this);
+	this.onSubmitPayment = this.onSubmitPayment.bind(this);
+	this.onChange = this.onChange.bind(this);
     }
 
     //handlers for AddressForm
@@ -37,37 +35,14 @@ class CheckoutContainer extends React.Component {
       this.setState({flowState: 1});
     }
 
-    onChangeAddress1 = (event)=>{
-      this.setState({shipAddress1: event.target.value});
+    onSubmitPayment = (event)=>{
+      event.preventDefault();
+      console.log("submitted!",this.state);
+      this.setState({flowState: 2});
     }
 
-    onChangeAddress2 = (event)=>{
-      this.setState({shipAddress2: event.target.value});
-    }
-
-    onChangeCity = (event)=>{
-      this.setState({shipCity: event.target.value});
-    }
-
-    onChangeState = (event)=>{
-      this.setState({shipState: event.target.value});
-    }
-
-    onChangeZip = (event)=>{
-      this.setState({shipZip: event.target.value});
-    }
-
-    //handlers for payment
-    onChangeCreditCard = (event)=>{
-      this.setState({creditcard: event.target.value});
-    }
-
-    onChangeExpiration = (event)=>{
-      this.setState({expiration: event.target.value});
-    }
-
-    onChangeCCV = (event)=>{
-      this.setState({ccv: event.target.value});
+    onChange = (type,event)=>{
+      this.setState({[type]: event.target.value});
     }
 
     render () {
@@ -78,24 +53,13 @@ class CheckoutContainer extends React.Component {
 	    {this.state.flowState === 0 ? 
 	    <AddressForm
 	      onSubmit={this.onSubmitShipping}
-	      onChangeAddress1={this.onChangeAddress1}
-	      onChangeAddress2={this.onChangeAddress2}
-	      onChangeCity={this.onChangeCity}
-	      onChangeState={this.onChangeState}
-	      onChangeZip={this.onChangeZip}
+	      onChange={this.onChange}
 	      title={"Shipping Address"}
 	    />
 	    : this.state.flowState === 1 ?
 	    <Payment
-	      onSubmit={this.onSubmitShipping}
-	      onChangeAddress1={this.onChangeAddress1}
-	      onChangeAddress2={this.onChangeAddress2}
-	      onChangeCity={this.onChangeCity}
-	      onChangeState={this.onChangeState}
-	      onChangeZip={this.onChangeZip}
-	      onChangeCreditCard={this.onChangeCreditCard}
-	      onChangeExpiration={this.onChangeExpiration}
-	      onChangeCCV={this.onChangeCCV}
+	      onSubmit={this.onSubmitPayment}
+	      onChange={this.onChange}
 	      title={"Billing Address"}
 	    />
 	    : ""}

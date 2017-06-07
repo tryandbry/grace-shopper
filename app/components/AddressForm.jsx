@@ -6,11 +6,12 @@ export default class AddressForm extends React.Component {
   }
 
   render(){
-    const onChangeAddress1 = this.props.onChangeAddress1;
-    const onChangeAddress2 = this.props.onChangeAddress2;
-    const onChangeCity = this.props.onChangeCity;
-    const onChangeState = this.props.onChangeState;
-    const onChangeZip = this.props.onChangeZip;
+    const onChangeAddress1 = (evt)=>this.props.onChange('shipAddress1',evt);
+    const onChangeAddress2 = (evt)=>this.props.onChange('shipAddress2',evt);
+    const onChangeCity = (evt)=>this.props.onChange('shipCity',evt);
+    const onChangeState = (evt)=>this.props.onChange('shipState',evt);
+    const onChangeZip = (evt)=>this.props.onChange('shipZip',evt);
+
     const onSubmit = this.props.onSubmit;
     const title = this.props.title;
 
