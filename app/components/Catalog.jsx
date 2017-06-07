@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 const Catalog = (props) => {
     const products = props.products;
-    
+
+
     return (
         <div>
         <h3>Catalog</h3>

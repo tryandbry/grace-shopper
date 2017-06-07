@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 
 const Product = (props) => {
     const product = props.selectedProduct;
-    const reviews = props.reviews;
-    const user = props.user;
 
     return(
             <div className="product">
@@ -15,13 +13,13 @@ const Product = (props) => {
         <img src={ product.image } className="img-thumbnail"/>
         <small> { product.description } </small>
         <span> { product.inventory } </span> <span> { product.cost } </span>
-        <button type="button" class="btn btn-success" onClick={'FILL_ME_IN'}>Add Rock</button>
+        <button type="button" className="btn btn-success" onClick={() => console.log('=]')}>Add Rock</button>
       </div>
       <div>
           {
-              reviews && reviews.map(review => (
+              product.reviews && product.reviews.map(review => (
                 <div key={ review.id }>
-                    <h5><span>{user.name}</span></h5>  
+                    <h5><span>{review.user.fullName}</span></h5>  
                     <small>{ review.text }</small>
                 </div>
               ))
@@ -32,11 +30,8 @@ const Product = (props) => {
 }
 
 
-function mapStateToProps() {
-    return {};
+function mapStateToProps(state) {
+    return { selectedProduct: state.product.product };
 }
 
-function mapDispatchToProps() {
-    return {};
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default connect(mapStateToProps)(Product);

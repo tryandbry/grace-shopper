@@ -17,6 +17,7 @@ import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 
 import { getProducts, getCategories } from './reducers/catalog';
+import { getProduct } from './reducers/product'
 
 
 const ExampleApp = connect(
@@ -37,13 +38,18 @@ const onEnter = function () {
     store.dispatch(getCategories())
 }
 
+const onProductEnter = function (nextRouterState) {
+    const productId = nextRouterState.params.id;
+    store.dispatch(getProduct(parseInt(productId)))
+}
+
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
-                <Route path="/product/:id" component={Product} />
+                <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
                 <Route path="/cart" component={Cart} />    
 
             </Route>
