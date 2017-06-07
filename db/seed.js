@@ -83,11 +83,11 @@ var rocks = [
 ];
 
 var categories = [
-  "ugly",
-  "pretty",
-  "retiscent",
-  "bargain",
-  "baller",
+  { name : "ugly" },
+  { name : "pretty" },
+  { name : "retiscent" },
+  { name : "bargain" },
+  { name : "baller" },
 ];
 
 var reviews = [
