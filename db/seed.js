@@ -92,22 +92,22 @@ var categories = [
 ];
 
 var reviews = [
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
-  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
+  { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length), product_id: generateInteger(1,users.length) },
 ];
 
 var pro_cat = [

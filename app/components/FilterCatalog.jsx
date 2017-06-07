@@ -19,7 +19,6 @@ class FilterCatalog extends React.Component {
     }
     
     render () {
-        // console.log('filterCatalog component props', this.props)
         const inputValue = this.state.inputValue;
         const selectedCategory = this.props.selectedCategory;
         
@@ -27,13 +26,14 @@ class FilterCatalog extends React.Component {
             .props
             .products
             .filter(product => product.name.match(inputValue));
-        
+                
         if (selectedCategory) {
+            console.log('selectedCategory')
             filteredProducts = filteredProducts
                 .filter(product => product
                     .categories
                     .reduce((prev, category) =>
-                        prev && (category.id == selectedCategory.id)
+                        prev || (category.id == selectedCategory.id)
                     , false)
                 );
         }
