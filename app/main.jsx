@@ -40,7 +40,6 @@ const onEnter = function () {
 
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;
-    console.log('slkfjldsfj ', nextRouterState);
     store.dispatch(getProduct(parseInt(productId)))
 }
 

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 const Product = (props) => {
     const product = props.selectedProduct;
-    console.log('product is.....', product);
 
     return(
             <div className="product">
