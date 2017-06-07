@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action) {
             newState.product = action.product;
             break;
         case (SET_REVIEWS):
-            newState.reviews = action.reviews;
+            newState.reviews = action.reviews;  // this might be wrong? I think it is correct though
             break;
         default:
             return state
@@ -39,3 +39,17 @@ export default function reducer(state = initialState, action) {
 
 // action-dispatcher
 
+export const getProduct = productId => {
+    return dispatch => axios
+        .get(`api/product/${productId}`)
+        .then(res => res.data)
+        .then(product => dispatch(setProduct(product)))
+        .catch(console.error.bind(console));
+}
+
+export const getReviews = productId => {
+    return dispatch => axios
+        .get(`api/product/${productId}/reviews`)
+        .then(res => res.data)
+        .then(reviews => dispatch(setReviews(reviews)))
+}

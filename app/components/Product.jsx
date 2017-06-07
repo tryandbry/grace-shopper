@@ -31,4 +31,12 @@ const Product = (props) => {
     )
 }
 
-export default Product;
+
+function mapStateToProps() {
+    return {};
+}
+
+function mapDispatchToProps() {
+    return {};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
