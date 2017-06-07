@@ -62,6 +62,12 @@ class CheckoutContainer extends React.Component {
 	      onChange={this.onChange}
 	      title={"Billing Address"}
 	    />
+	    : this.state.flowState === 2 ?
+	    <Payment
+	      onSubmit={this.onSubmitPayment}
+	      onChange={this.onChange}
+	      title={"Billing Address"}
+	    />
 	    : ""}
 	  </div>
         );
