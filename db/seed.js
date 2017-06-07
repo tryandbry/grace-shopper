@@ -83,11 +83,11 @@ var rocks = [
 ];
 
 var categories = [
-  "ugly",
-  "pretty",
-  "retiscent",
-  "bargain",
-  "baller",
+  { name: "ugly" },
+  { name: "pretty" },
+  { name: "retiscent" },
+  { name: "bargain" },
+  { name: "baller" },
 ];
 
 var reviews = [
@@ -108,6 +108,28 @@ var reviews = [
   { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
   { rating: String(generateInteger(1,5)), text: generateReview(), user_id: generateInteger(1,users.length) },
 ];
+
+var pro_cat = [
+  [1,5],
+  [1,4],
+  [2],
+  [2],
+  [4],
+  [5],
+  [2,4],
+  [1,4],
+  [3],
+  [2,5],
+];
+
+var cat_pro = [
+  [1,2,8],
+  [3,4,7,10],
+  [9],
+  [2,5,7,8],
+  [1,6,10],
+];
+
 //##########################################
 //END seed data arrays
 
@@ -136,7 +158,28 @@ if(module === require.main){
   });
 
   Promise.all(promiseArray)
-  .then(()=>console.log("db seeded"))
+  .then(()=>console.log("base information seeded."))
+
+  .then(()=>Product.findAll())
+  .then(products=>{
+    let promises = products.reduce((sum,product,i)=>{
+      sum.push(product.setCategories(pro_cat[i]));
+      return sum;
+    },[]);
+    return Promise.all(promises);
+  })
+  .then(products=>console.log("set product associations",products))
+
+  .then(()=>Category.findAll())
+  .then(categories=>{
+    let promises = categories.reduce((sum,category,i)=>{
+      sum.push(category.setProducts(cat_pro[i]));
+      return sum;
+    },[]);
+    return Promise.all(promises);
+  })
+  .then(categories=>console.log("set category associations",categories))
+
   .finally(()=>process.exit(0))
   .catch(console.log);
 }
