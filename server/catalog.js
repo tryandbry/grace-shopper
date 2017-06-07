@@ -2,7 +2,7 @@
 
 const db = require('APP/db');
 const Product = db.model('product');
-const Category = db.model('category')
+const Category = db.model('category');
 
 /* 
 Get all products

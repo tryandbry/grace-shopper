@@ -1,9 +1,7 @@
 import React from 'react';
 import FilterCategory from './FilterCategory';
 
-const Sidebar = () => {
-    
-    
+const Sidebar = () => {    
     return (
         <div>
             <p>this is the start of the sidebar</p>
