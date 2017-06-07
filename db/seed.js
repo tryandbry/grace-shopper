@@ -85,7 +85,7 @@ var rocks = [
 var categories = [
   { name: "ugly" },
   { name: "pretty" },
-  { name: "retiscent" },
+  { name: "reticent" },
   { name: "bargain" },
   { name: "baller" },
 ];

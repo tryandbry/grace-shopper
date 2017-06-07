@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
     auth: require('./auth').default,
-    catalog: require('./catalog').default
+    catalog: require('./catalog').default,
+    cart: require('./cart').default
 })
 
 export default rootReducer
