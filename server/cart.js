@@ -4,6 +4,7 @@ const db = require('APP/db');
 const Item = db.model('item');
 const Product = db.model('product');
 const Cart = db.model('cart');
+const User = db.model('user');
 
 /*
 Get all Items
@@ -11,24 +12,37 @@ Update 1 item
 Delete 1 item
 
 see https://github.com/ehacinom/checkpoint-express-review/blob/master/api/index.js
+
+be careful about the posting to productId and not posting to itemId
 */
 
 module.exports = require('express').Router()
-    .params('userId', (req, res, next, userId) => {
+    .param('userId', (req, res, next, userId) => {
         // this will run everytime for Cart
         // but not for Checkout? I think
-        // do i want to use userId to grab a user instead
+        // do i want to use userId to grab only user instead
         // and not items, and do items elsewhere?
         // is this right way of doing grabbing items/cart right away?
         // CODE REVIEW
         
-        if (isNaN(userId)) res.sendStatus(404);
+        if (isNaN(userId)) next(404); // res.sendStatus(404);
         else {
             req.userId = userId;
             
-            Item
-                .findAll({
-                    where : { userid : userId }
+            // gets this specific User!! 
+            // should be able to do off req.user using passport
+            // but also admin should be able to go to this route
+            // where should this go instead/is there somewhere better?
+            User
+                .findOne({
+                    where : { id : userId }
+                })
+                .then(user => {
+                    if (!user) next(404);
+                    
+                    req.user = user;
+                    
+                    return Item.findAll({ where : { cart_id : user.cart_id } })
                 })
                 .then(items => {
                     req.cart = items;
@@ -40,7 +54,7 @@ module.exports = require('express').Router()
     .get('/:userId', (req, res, next) => {
         res.send(req.cart)
     })
-    .params('itemId', (req, res, next, itemId) => {
+    .param('itemId', (req, res, next, itemId) => {        
         if (isNaN(itemId)) res.sendStatus(404);
         else {
             req.itemId = itemId;
@@ -80,7 +94,7 @@ module.exports = require('express').Router()
         // sees it as the same as itemId
         Product
             .findOne({
-                where : { req.params.productId }
+                where : { id : req.params.productId }
             })
             .then(product => {
                 const item = {

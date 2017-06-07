@@ -6,7 +6,7 @@ const CartItems = (props) => {
     
     return (
         <div>
-            <table class="table table-striped table-responsive">
+            <table className="table table-striped table-responsive">
                 <thead>
                     <tr>
                         <th>item</th>

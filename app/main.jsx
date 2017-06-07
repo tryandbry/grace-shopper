@@ -12,6 +12,7 @@ import NotFound from './components/NotFound'
 
 import FilterCatalog from './components/FilterCatalog'
 import Sidebar from './components/Sidebar'
+import Cart from './components/Cart'
 
 import { getProducts, getCategories } from './reducers/catalog';
 
@@ -39,6 +40,7 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
+                <Route path="/cart" component={Cart} />    
             </Route>
             <Route path='*' component={NotFound} />
         </Router>
