@@ -63,11 +63,12 @@ const generateRockDescription = ()=>{
 //BEGIN seed data arrays
 //##########################################
 var users = [
-  { email: "peter@familyguy.com", name: "Peter Griffin" },
-  { email: "pikachu@pokemon.com", name: "Pika Pikachu" },
+  { email: "peter@familyguy.com", name: "Peter Griffin", cart_id: 1 },
+  { email: "pikachu@pokemon.com", name: "Pika Pikachu",  cart_id: 2 },
 ];
 
-var carts = users.map((e,i)=>({user_id: i+1}));
+//var carts = users.map((e,i)=>({user_id: i+1}));
+var carts = users.map((e,i)=>({}));
 
 var rocks = [
   { name: "icky-icky", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
@@ -143,6 +144,8 @@ if(module === require.main){
   .then(() => db.sync({force: true}))
   .then(()=>{
     let promises = [];
+    //populate Cart
+    promises.push(Cart.bulkCreate(carts));
     //populate Product
     promises.push(Product.bulkCreate(rocks));
     //populate User
@@ -151,8 +154,6 @@ if(module === require.main){
     promises.push(Category.bulkCreate(categories));
     //populate Review
     promises.push(Review.bulkCreate(reviews));
-    //populate Cart
-    promises.push(Cart.bulkCreate(carts));
 
     return promises;
   });
