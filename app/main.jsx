@@ -11,7 +11,10 @@ import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
 import FilterCatalog from './components/FilterCatalog'
+
 import Product from './components/Product'
+import Sidebar from './components/Sidebar'
+import Cart from './components/Cart'
 
 import { getProducts, getCategories } from './reducers/catalog';
 
@@ -24,14 +27,14 @@ const ExampleApp = connect(
       <nav>
         {user ? <WhoAmI/> : <Login/>}
       </nav>
+      <Sidebar />
       {children}
     </div>
 )
 
 const onEnter = function () {
-    store.dispatch(getProducts)
-    store.dispatch(getCategories)
-    console.log('ONENTER')
+    store.dispatch(getProducts())
+    store.dispatch(getCategories())
 }
 
 render(
@@ -41,6 +44,8 @@ render(
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} />
+                <Route path="/cart" component={Cart} />    
+
             </Route>
             <Route path='*' component={NotFound} />
         </Router>
