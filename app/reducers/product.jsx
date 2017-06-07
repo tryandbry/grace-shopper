@@ -2,7 +2,6 @@ import axios from 'axios';
 
 //actions
 const SET_PRODUCT = 'SET_PRODUCT';
-const SET_REVIEWS = 'SET_REVIEWS';
 
 //action-creators
 
@@ -10,16 +9,11 @@ const setProduct = product => ({
     type: SET_PRODUCT,
     product
 });
-const setReviews = reviews => ({
-    type: SET_REVIEWS,
-    reviews
-});
 
 // reducer
 
 const initialState = {
-    product: {},
-    reviews: []
+    product: {}
 };
 
 export default function reducer(state = initialState, action) {
@@ -27,9 +21,6 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case (SET_PRODUCT):
             newState.product = action.product;
-            break;
-        case (SET_REVIEWS):
-            newState.reviews = action.reviews;  // this might be wrong? I think it is correct though
             break;
         default:
             return state
@@ -41,15 +32,8 @@ export default function reducer(state = initialState, action) {
 
 export const getProduct = productId => {
     return dispatch => axios
-        .get(`api/product/${productId}`)
+        .get(`/api/product/${productId}`)
         .then(res => res.data)
         .then(product => dispatch(setProduct(product)))
         .catch(console.error.bind(console));
-}
-
-export const getReviews = productId => {
-    return dispatch => axios
-        .get(`api/product/${productId}/reviews`)
-        .then(res => res.data)
-        .then(reviews => dispatch(setReviews(reviews)))
 }
