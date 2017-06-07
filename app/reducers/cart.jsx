@@ -25,8 +25,8 @@ export default function reducer (state=initialState, action) {
     return newState;
 }
 
-// action-dispatcher
-export const getItems = () => {
-    return dispatch => axios
-    .get('/api/');
-}
+// // action-dispatcher
+// export const getItems = () => {
+//     return dispatch => axios
+//     .get('/api/');
+// }

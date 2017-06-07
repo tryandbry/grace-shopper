@@ -15,7 +15,14 @@ Get one category
 module.exports = require('express').Router()
     .get('/', (req, res, next) => {
         Product
-            .findAll({ include: [{ all: true }] })
+            .findAll({ include: Category })
+        ////// this is to load only one attribute of the category but not working
+        // HELP CODE REVIEW
+            // .findAll({
+            //     include : [{
+            //         model : Category , through: { attributes: ['id'] }
+            //     }] ,
+            // })
             .then(products => res.send(products))
             .catch(next);
     })
