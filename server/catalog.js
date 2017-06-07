@@ -15,7 +15,7 @@ Get one category
 module.exports = require('express').Router()
     .get('/', (req, res, next) => {
         Product
-            .findAll({})
+            .findAll({ include: [{ all: true }] })
             .then(products => res.send(products))
             .catch(next);
     })

@@ -4,7 +4,7 @@ import axios from 'axios';
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_CATEGORIES = 'SET_CATEGORIES';
 const SELECT_CATEGORY = 'SELECT_CATEGORY';
-const NOTHING = 'NOTHING';
+const RESET_CATEGORIES = 'RESET_CATEGORIES';
 
 // action-creators
 const setProducts = (products) => ({
@@ -38,6 +38,9 @@ export default function reducer (state=initialState, action) {
         case (SELECT_CATEGORY):
             newState.selectedCategory = action.category;
             break;
+        case (RESET_CATEGORIES):
+            newState.selectedCategory = null;
+            break;
         default:
             return state
     }
@@ -65,7 +68,7 @@ export const getSelectedCategory = (categoryId) => {
     
     ////// WOAH I NEED A CODE REVIEW
     if (categoryId === 'all')
-        return (dispatch) => dispatch({ type: NOTHING });
+        return (dispatch) => dispatch({ type: RESET_CATEGORIES });
     
     return dispatch => axios
         .get(`/api/catalog/category/${categoryId}`)

@@ -23,12 +23,20 @@ class FilterCatalog extends React.Component {
         const inputValue = this.state.inputValue;
         const selectedCategory = this.props.selectedCategory;
         
-        console.log('filterCatalog selected category', selectedCategory)
-        
-        const filteredProducts = this
+        let filteredProducts = this
             .props
             .products
             .filter(product => product.name.match(inputValue));
+        
+        if (selectedCategory) {
+            filteredProducts = filteredProducts
+                .filter(product => product
+                    .categories
+                    .reduce((prev, category) =>
+                        prev && (category.id == selectedCategory.id)
+                    , false)
+                );
+        }
         
         return (
             <div>
