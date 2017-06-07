@@ -27,7 +27,7 @@ const initialState = {
     selectedCategory: null
 };
 export default function reducer (state=initialState, action) {
-    let newState = Object.assign({}, state)
+    let newState = Object.assign({}, state);
     switch (action.type) {
         case (SET_PRODUCTS): 
             newState.products = action.products;
