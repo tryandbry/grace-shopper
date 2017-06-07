@@ -16,10 +16,6 @@ module.exports = db => db.define('user', {
   // We support oauth, so users may or may not have passwords.
   password_digest: Sequelize.STRING, // This column stores the hashed password in the DB, via the beforeCreate/beforeUpdate hooks
   password: Sequelize.VIRTUAL, // Note that this is a virtual, and not actually stored in DB
-  googleId: {
-    type: Sequelize.STRING,
-    unique: true,
-  },
   firstName: {
     type: Sequelize.STRING,
   },
@@ -31,7 +27,7 @@ module.exports = db => db.define('user', {
     defaultValue: false,
   },
   triggerNewPassword: {
-    type: Sequelize.STRING,
+    type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
 }, {
@@ -43,10 +39,10 @@ module.exports = db => db.define('user', {
   },
   setterMethods: {
     name: function(value){
-      var splitted = value.split(' ');
+      var arr = value.split(' ');
 
-      this.setDataValue('firstName',splitted.slice(0,-1).join(' '));
-      this.setDataValue('lastName',splitted.slice(-1).join(' '));
+      this.setDataValue('firstName', arr.slice(0,1).join(' '));
+      this.setDataValue('lastName', arr.slice(1).join(' '));
     },
   },
   hooks: {

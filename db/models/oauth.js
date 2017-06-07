@@ -19,6 +19,12 @@ module.exports = db => {
 
     // The whole profile as JSON
     profileJson: JSON,
+    
+    // google id
+    googleId: {
+      type: STRING,
+      unique: true,
+    },
   }, {
     // Further reading on indexes:
     // 1. Sequelize and indexes: http://docs.sequelizejs.com/en/2.0/docs/models-definition/#indexes

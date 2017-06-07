@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 module.exports = db => db.define('product', {
   name: {
     type: Sequelize.STRING,
+    allowNull : false
   },
   image: {
     type: Sequelize.STRING,

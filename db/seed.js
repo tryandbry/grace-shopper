@@ -123,13 +123,13 @@ var pro_cat = [
   [2,5],
 ];
 
-var cat_pro = [
-  [1,2,8],
-  [3,4,7,10],
-  [9],
-  [2,5,7,8],
-  [1,6,10],
-];
+// var cat_pro = [
+//   [1,2,8],
+//   [3,4,7,10],
+//   [9],
+//   [2,5,7,8],
+//   [1,6,10],
+// ];
 
 //##########################################
 //END seed data arrays
@@ -171,15 +171,15 @@ if(module === require.main){
   })
   .then(products=>console.log("set product associations",products))
 
-  .then(()=>Category.findAll())
-  .then(categories=>{
-    let promises = categories.reduce((sum,category,i)=>{
-      sum.push(category.setProducts(cat_pro[i]));
-      return sum;
-    },[]);
-    return Promise.all(promises);
-  })
-  .then(categories=>console.log("set category associations",categories))
+  // .then(()=>Category.findAll())
+  // .then(categories=>{
+  //   let promises = categories.reduce((sum,category,i)=>{
+  //     sum.push(category.setProducts(cat_pro[i]));
+  //     return sum;
+  //   },[]);
+  //   return Promise.all(promises);
+  // })
+  // .then(categories=>console.log("set category associations",categories))
 
   .finally(()=>process.exit(0))
   .catch(console.log);

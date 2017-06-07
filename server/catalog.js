@@ -7,9 +7,6 @@ const Category = db.model('category');
 /* 
 Get all products
 Create 1 new product (admin)
-Get all categories
-// create new category?
-Get one category
 */
 
 module.exports = require('express').Router()
@@ -17,7 +14,6 @@ module.exports = require('express').Router()
         Product
             .findAll({ include: Category })
         ////// this is to load only one attribute of the category but not working
-        // HELP CODE REVIEW
             // .findAll({
             //     include : [{
             //         model : Category , through: { attributes: ['id'] }
@@ -38,17 +34,4 @@ module.exports = require('express').Router()
                 .then(() => res.sendStatus(201))
                 .catch(next);
     })
-    .get('/category', (req, res, next) => {
-        Category
-            .findAll({})
-            .then(categories => res.send(categories))
-            .catch(next);
-    })
-    .get('/category/:categoryId', (req, res, next) => {
-        Category
-            .findOne({
-                where : { id : req.params.categoryId }
-            })
-            .then(category => res.send(category))
-            .catch(next);
-    })
+    
