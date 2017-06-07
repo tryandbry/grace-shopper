@@ -11,10 +11,13 @@ import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 
 import FilterCatalog from './components/FilterCatalog'
+
+import Product from './components/Product'
 import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 
 import { getProducts, getCategories } from './reducers/catalog';
+
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -40,7 +43,9 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
+                <Route path="/product/:id" component={Product} />
                 <Route path="/cart" component={Cart} />    
+
             </Route>
             <Route path='*' component={NotFound} />
         </Router>
