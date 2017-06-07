@@ -70,16 +70,16 @@ var users = [
 var carts = users.map((e,i)=>({user_id: i+1}));
 
 var rocks = [
-  { name: "icky-icky", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "dino poo", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "pyrite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "azurite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "peanutty", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "trilobite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "gypsum", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "kitchen sponge", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "slate", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
-  { name: "malachite", image: "/img/FILL_ME_IN", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "icky-icky", image: "https://s-media-cache-ak0.pinimg.com/236x/e1/5a/d6/e15ad630ac3d4d567fdf17e64c5bd956.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "dino poo", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/A_large_coprolite_%28fossilized_feces_or_dinosaur_poop%29_from_South_Carolina%2C_USA..jpg/220px-A_large_coprolite_%28fossilized_feces_or_dinosaur_poop%29_from_South_Carolina%2C_USA..jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "pyrite", image: "http://www.tysonsfineminerals.com/filemanager/photos/Pyrite59398.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "azurite", image: "http://whataearth.com/wp-content/uploads/2013/12/Azurite__Liufengshan__China_2.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "peanutty", image: "http://pre02.deviantart.net/b442/th/pre/i/2012/097/6/4/peanut_brittle_rock_by_moocow152-d4vbqk1.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "trilobite", image: "http://www.fossilmall.com/Pangaea/patrilos/tr22/pft757b.JPG", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "gypsum", image: "http://www.gemstonebuzz.com/files/gemstone/rough-gypsum.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "kitchen sponge", image: "http://static4.businessinsider.com/image/56817bc0dd0895dc648b457e/your-kitchen-sponge-is-disgusting-and-theres-only-one-good-way-to-clean-it.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "slate", image: "http://williamsslate.com/quarry_slate.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
+  { name: "malachite", image: "https://img0.etsystatic.com/152/0/8358778/il_570xN.1112625302_l06f.jpg", cost: generateFloat(1000000), description: generateRockDescription(), inventory: generateInteger(0,10000) },
 ];
 
 var categories = [
