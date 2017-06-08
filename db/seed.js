@@ -67,7 +67,6 @@ var users = [
   { email: "pikachu@pokemon.com", name: "Pika Pikachu",  cart_id: 2 },
 ];
 
-//var carts = users.map((e,i)=>({user_id: i+1}));
 var carts = users.map((e,i)=>({}));
 
 var rocks = [
@@ -123,13 +122,11 @@ var pro_cat = [
   [2,5],
 ];
 
-// var cat_pro = [
-//   [1,2,8],
-//   [3,4,7,10],
-//   [9],
-//   [2,5,7,8],
-//   [1,6,10],
-// ];
+var items = [
+  { quantity: 1, cost: 523361.61, discount: .45, cart_id: 1, product_id: 10},
+  { quantity: 4, cost: 504562.84, discount: .3, cart_id: 1, product_id: 1},
+  { quantity: 2, cost: 311835.84, discount: .67, cart_id: 1, product_id: 8},
+];
 
 //##########################################
 //END seed data arrays
@@ -146,6 +143,11 @@ if(module === require.main){
     let promises = [];
     //populate Cart
     promises.push(Cart.bulkCreate(carts));
+
+    return promises;
+  })
+  .then(()=>{
+    let promises = [];
     //populate Product
     promises.push(Product.bulkCreate(rocks));
     //populate User
@@ -154,6 +156,8 @@ if(module === require.main){
     promises.push(Category.bulkCreate(categories));
     //populate Review
     promises.push(Review.bulkCreate(reviews));
+    //populate Item
+    promises.push(Item.bulkCreate(items));
 
     return promises;
   });
