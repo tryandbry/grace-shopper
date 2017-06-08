@@ -27,7 +27,7 @@ class FilterCatalog extends React.Component {
             .props
             .products
             .filter(product => product.name.match(inputValue));
-                
+        
         if (selectedCategory) {
             console.log('selectedCategory')
             filteredProducts = filteredProducts

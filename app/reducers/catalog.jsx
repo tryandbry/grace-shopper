@@ -59,7 +59,7 @@ export const getProducts = () => {
 }
 export const getCategories = () => {
     return dispatch => axios
-        .get('/api/catalog/category')
+        .get('/api/category')
         .then(resToData)
         .then(categories => dispatch(setCategories(categories)))
         .catch(console.error.bind(console));
@@ -71,7 +71,7 @@ export const getSelectedCategory = (categoryId) => {
         return (dispatch) => dispatch({ type: RESET_CATEGORIES });
     
     return dispatch => axios
-        .get(`/api/catalog/category/${categoryId}`)
+        .get(`/api/category/${categoryId}`)
         .then(resToData)
         .then(category => dispatch(selectCategory(category)))
         .catch(console.error.bind(console));
