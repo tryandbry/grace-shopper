@@ -1,8 +1,9 @@
 const mustBeLoggedIn = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).send('You must be logged in')
-  }
-  next()
+    // temporarily removing this so we can check things
+    // if (!req.user) {
+    //     return res.status(401).send('You must be logged in')
+    // }
+    next()
 }
 
 const selfOnly = action => (req, res, next) => {

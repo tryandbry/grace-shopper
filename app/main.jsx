@@ -15,6 +15,8 @@ import FilterCatalog from './components/FilterCatalog'
 import Product from './components/Product'
 import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
+import CheckoutContainer from './containers/CheckoutContainer'
+//import CheckoutContainer from './containers/test'
 
 import { getProducts, getCategories } from './reducers/catalog';
 import { getProduct } from './reducers/product'
@@ -51,7 +53,7 @@ render(
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
                 <Route path="/cart" component={Cart} />    
-
+                <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
             <Route path='*' component={NotFound} />
         </Router>
