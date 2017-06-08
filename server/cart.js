@@ -61,9 +61,9 @@ module.exports = require('express').Router()
                 // THIS IS ALSO NOT GOING TO WORK WELL
                 // I THINK
                 // cause this is a magic method welp
-                return req.cart.setItems([item]) 
+                return Promise.all(req.cart.setItems([item]), item)
             })
-            .then(() => res.status(201).send(req.cart)) // return what?
+            .spread((cartPromise, item) => res.status(201).send(item))
     })
     .param('itemId', (req, res, next, itemId) => {        
         if (isNaN(itemId)) res.sendStatus(404);
