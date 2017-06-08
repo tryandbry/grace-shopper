@@ -3,75 +3,44 @@
 const db = require('APP/db');
 const Item = db.model('item');
 const Product = db.model('product');
-// const Cart = db.model('cart');
-// const User = db.model('user');
-
-/*
-Get cart
-Add item to cart
--> param : get item
-Delete item
-Update quantity on item
-
-see https://github.com/ehacinom/checkpoint-express-review/blob/master/api/index.js
-*/
+const Cart = db.model('cart');
+const User = db.model('user');
 
 module.exports = require('express').Router()
     .get('/', (req, res, next) =>
-        res.status(200).send({"hey":"hey", "cart":req.cart})
+        res.status(200).send({ "hey": "hey", "cart": req.cart })
     )
     .post('/', (req, res, next) => {
-        // /* 
-        // When creating a new item in the Cart
-        // You must send as your post (after clicking button on product page)
-        //     req.body = { product , quantity } user/:userid/cart
-        // */
-    
-        // // put in some checks to make sure the data is formatted correctly
-        const product = req.body.product;
-        const quantity = req.body.quantity;
-        // // no discount yet
-    
-        Item
-            .create({
-                quantity : Number(quantity),
-                cost : product.cost,
-                product : product
-            }, {
-                include : [ Product ]
+        console.log('what is inside me? ', req.body)
+        let quantity = req.body.quantity
+        let cost = req.body.product.cost
+        let cartId;
+        User.findById(req.body.userId, {
+            include: {
+                model: Cart
+            }
+        })
+            //**********************grab userId and cartId and add them to newItem********************************
+            .then(user => {
+                console.log('user!#M!#$MM!#$M#M$M#M$M#$M ', user);
+                // console.log(Object.keys(newItem.__proto__));
+                res.sendStatus(200);
             })
-            .then(item => {
-                console.log(
-                    'WE ARE NOW POSTING A NEW ITEM TO',
-                    '/api/user/:userId/cart/',
-                    'This is the req.cart',
-                    req.cart,
-                    'This is the req.user',
-                    req.user,
-                    'This is the req.body',
-                    req.body,
-                    'this is the product',
-                    product,
-                    'this is the quantity',
-                    quantity
-                )
-            
-                // setItems or setItem?
-                // THIS IS ALSO NOT GOING TO WORK WELL
-                // I THINK
-                // cause this is a magic method welp
-                return req.cart.setItems([item]) 
-            })
-            .then(() => res.status(201).send(req.cart))
-            .catch(next);                                            // return what?
+
+       
+        // let newItem = Item.build({
+        //     quantity,
+        //     cost,
+        //     discount: .45
+        // })
     })
-    .param('itemId', (req, res, next, itemId) => {        
+    .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);
         else {
-        
+
             // itemId
             req.itemId = itemId;
-        
+
             Item
                 .findById(itemId)
                 .then(item => {
@@ -93,7 +62,6 @@ module.exports = require('express').Router()
         console.log('here we are updating a cart item /api/:userId/cart/:itemId')
         console.log('ids', req.userId, req.itemId)
         console.log('and finally req.body', req.body)
-    
+
         req.item.update(req.body).then(item => res.status(200).send(item));
-    }) 
-    
+    })

@@ -42,11 +42,12 @@ export default function reducer(state = initialState, action) {
 // }
 
 export const getItem = (userId, product, quantity) => {
-    console.log('get item in reducer', userId, product, quantity);
     return dispatch => axios
         .post(`/api/user/${userId}/cart`, {
+            userId,
+            product,
+            quantity
         })
-        .then(res => console.log('response in axios!!!!!!!!!!! ', res))
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
         .catch(()=>console.log('error in getItem'));
