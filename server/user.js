@@ -5,6 +5,8 @@ const User = db.model('user')
 const Item = db.model('item')
 // const Product = db.model('product')
 
+const { encrypt } = require('object-encrypt-decrypt');
+
 
 // TODO
 // login with session using post('/')
@@ -35,15 +37,27 @@ module.exports = require('express').Router()
             .then(users => res.json(users))
             .catch(next)
     )
-    .post('/', (req, res, next) =>
+    .post('/', (req, res, next) => {
+        // console.log(req.session)
+        // sessionOptions = {} // sessionKey = "session" // session = Session {}
+        console.log(Object.keys(req))
+        console.log(Object.keys(req.sessionCookies))
+        console.log(req.sessionCookies.keys)
+        
+        
+        
         User
             .create(req.body)
             .then(user => res.status(201).json(user))
+            /*
+                this is not going well
+                this error is dumb and sorta just dissapears
+            */
             .catch(err => {
                 const message = 'WARNING: we didnt authenticate because of duplicate email'
-                console.error(message);
-                console.error(err.errors);
+                res.status(204).send({ message, error: err.errors })
             })
+        }
     )
     
     /* 

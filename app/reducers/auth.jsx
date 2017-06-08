@@ -1,9 +1,19 @@
 import axios from 'axios'
 
+const testUser = {
+    id : 2, 
+    email : "pikachu@pokemon.com",
+    firstName : "Pika",
+    lastName : "Pikachu",
+    isAdmin : false,
+    triggerNewPassword : false,
+    cart_id : 2
+}
+
 const reducer = (state=null, action) => {
     switch (action.type) {
         case AUTHENTICATED:
-            return action.user
+            return action.user || testUser
     }
     
     return state
@@ -31,10 +41,16 @@ const createGuest = user =>
         .post('/api/user', user)
         .then(res => res.data)
         .then(user => {
-            console.log('creating guest user', user)
+            console.log('creating guest user:', user)
+            
+            /////// THIS IS WHERE MY ERRORS DISSAPEAR
+            /////// GUYSS
+            /////// RIGHT HERE
+            
             return dispatch(authenticated(user))
         })
-        .catch(() => dispatch(authenticated(null)));
+        .catch(err => dispatch(authenticated(null)))
+
 
 /*
 in the whoami
@@ -57,9 +73,9 @@ export const whoami = () =>
         .then(res => res.data)
         .then(user => {
             if (user) return authenticated(user);
-            else return createGuest({email : "asdfasdfasdf5@gmail.com"});
+            else return createGuest({email : "asdfasdfasdf11@gmail.com"});
         })
         .then(dispatch)
-        .catch(() => dispatch(authenticated(null)))
+        .catch(err => dispatch(authenticated(null)))
 
 export default reducer
