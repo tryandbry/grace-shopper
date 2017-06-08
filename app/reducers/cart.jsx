@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // actions
 const SET_ITEMS = 'SET_ITEMS';
+const ADD_ITEM = 'ADD_ITEM';
 
 // action-creators
 const setItems = (items) => ({
@@ -9,15 +10,24 @@ const setItems = (items) => ({
     items
 });
 
+const addItem = item => ({
+    type: ADD_ITEM,
+    item
+})
+
 // reducer
 const initialState = {
-    items : [],
+    item: {}
+    items: [],
 };
-export default function reducer (state=initialState, action) {
+export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case (SET_ITEMS):
             newState.items = action.items;
+            break;
+        case (ADD_ITEM):
+            newState.item = action.item;
             break;
         default:
             return state;
@@ -30,3 +40,15 @@ export default function reducer (state=initialState, action) {
 //     return dispatch => axios
 //     .get('/api/');
 // }
+
+export const getItem = (userId, product, quantity) => {
+    return dispatch => axios
+        .post(`/api/user/${userId}/cart`, {
+            product,
+            quantity
+        })
+        .then(res => res.data)
+        .then(item => dispatch(addItem(item)))
+        .catch(console.error.bind(console));
+
+}
