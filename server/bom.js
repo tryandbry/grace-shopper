@@ -3,6 +3,7 @@
 const db = require('APP/db');
 const Item = db.model('item');
 const Bom = db.model('bom');
+const Product = db.model('product');
 const router = require('express').Router();
 
 module.exports = router;
@@ -14,12 +15,30 @@ router.route('/:id')
       id: req.params.id
     },
     include: {
-      model: Item
+      model: Item,
     }
   })
   .then(bom=>{
-    console.log("BOM route hit: ",bom);
-    res.sendStatus(200);
+    //console.log("BOM route hit: ",bom);
+
+    let items = bom.get('items');
+    //console.log("items:",items);
+    let item_ids = items.map(e=>e.get('id'));
+    //console.log("item IDs:",item_ids);
+    let items2 = Item.findAll({
+      where: {
+	id: item_ids,
+      },
+      include: {
+	model: Product,
+      },
+    })
+    .then(items=>{
+      //console.log("eager loaded items?",snorlax);
+      let products =  items.map(e=>e.product);
+      res.send({bom,products});
+    })
+
   })
   .catch(error=>{
     console.error(error);

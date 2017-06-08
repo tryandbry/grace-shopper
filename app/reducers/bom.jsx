@@ -20,6 +20,7 @@ export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case (SET_BOM):
+	    console.log("Bom reducer, SET_BOM:",action);
             newState.shipping = action.shipping;
             newState.status = action.status;
             newState.items = action.items.slice();
@@ -38,7 +39,12 @@ export default function reducer(state = initialState, action) {
 // dispatchers
 export const fetchBom = id=>{
     return dispatch=>{
-      /* FILL ME IN */
+      axios.get(`/api/bom/${id}`)
+      .then(bom=>{
+	console.log('fetchBom result: ',bom);
+	dispatch(setBom(bom));
+      })
+      .catch(console.error);
     }
 }
 
