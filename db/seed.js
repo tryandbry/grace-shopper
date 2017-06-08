@@ -67,7 +67,6 @@ var users = [
   { email: "pikachu@pokemon.com", name: "Pika Pikachu",  cart_id: 2 },
 ];
 
-//var carts = users.map((e,i)=>({user_id: i+1}));
 var carts = users.map((e,i)=>({}));
 
 var rocks = [
@@ -123,13 +122,32 @@ var pro_cat = [
   [2,5],
 ];
 
-// var cat_pro = [
-//   [1,2,8],
-//   [3,4,7,10],
-//   [9],
-//   [2,5,7,8],
-//   [1,6,10],
-// ];
+var items = [
+  { quantity:  1, cost: 234974.22, discount: .67, cart_id: null, product_id:  6},
+  { quantity:  8, cost:  12323.34, discount: .70, cart_id: null, product_id:  2},
+  { quantity:  9, cost: 811835.84, discount: .45, cart_id: null, product_id:  1},
+  { quantity: 11, cost: 211835.84, discount: .50, cart_id: null, product_id:  2},
+  { quantity:  3, cost: 511835.84, discount: .51, cart_id: null, product_id:  8},
+  { quantity: 25, cost:  11835.84, discount: .67, cart_id: null, product_id:  9},
+  { quantity:  1, cost:  11835.84, discount: .67, cart_id: null, product_id: 10},
+  { quantity:  2, cost: 311835.84, discount: .70, cart_id: null, product_id:  3},
+  { quantity:  1, cost: 523361.61, discount: .45, cart_id: 1, product_id: 10},
+  { quantity:  4, cost: 504562.84, discount: .30, cart_id: 1, product_id:  1},
+  { quantity:  2, cost: 311835.84, discount: .67, cart_id: 1, product_id:  8},
+  { quantity:  1, cost: 311835.84, discount: .67, cart_id: 1, product_id:  4},
+];
+
+var bom_items = [
+  [1,2],
+  [3,4,5,6],
+  [7,8],
+];
+
+var boms = [
+  { shipping: "31 Spooner St.\nQuahog, RI 01234", status: "completed", user_id: 1 },
+  { shipping: "31 Spooner St.\nQuahog, RI 01234", status: "processing", user_id: 1 },
+  { shipping: "01 Snorlax Way\nPallet Town, PM 72374", status: "cancelled", user_id: 2 },
+];
 
 //##########################################
 //END seed data arrays
@@ -146,6 +164,11 @@ if(module === require.main){
     let promises = [];
     //populate Cart
     promises.push(Cart.bulkCreate(carts));
+
+    return promises;
+  })
+  .then(()=>{
+    let promises = [];
     //populate Product
     promises.push(Product.bulkCreate(rocks));
     //populate User
@@ -154,6 +177,10 @@ if(module === require.main){
     promises.push(Category.bulkCreate(categories));
     //populate Review
     promises.push(Review.bulkCreate(reviews));
+    //populate Bom
+    promises.push(Bom.bulkCreate(boms));
+    //populate Item
+    promises.push(Item.bulkCreate(items));
 
     return promises;
   });
@@ -169,17 +196,17 @@ if(module === require.main){
     },[]);
     return Promise.all(promises);
   })
-  .then(products=>console.log("set product associations",products))
+  .then(products=>console.log("set product associations, count:",products.length))
 
-  // .then(()=>Category.findAll())
-  // .then(categories=>{
-  //   let promises = categories.reduce((sum,category,i)=>{
-  //     sum.push(category.setProducts(cat_pro[i]));
-  //     return sum;
-  //   },[]);
-  //   return Promise.all(promises);
-  // })
-  // .then(categories=>console.log("set category associations",categories))
+  .then(()=>Bom.findAll())
+  .then(boms=>{
+    let promises = boms.reduce((sum,bom,i)=>{
+      sum.push(bom.setItems(bom_items[i]));
+      return sum;
+    },[]);
+    return Promise.all(promises);
+  })
+  .then(boms=>console.log("set bom to item associations, bom count:",boms.length))
 
   .finally(()=>process.exit(0))
   .catch(console.log);
