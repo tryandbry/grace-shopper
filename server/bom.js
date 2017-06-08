@@ -9,7 +9,9 @@ const router = require('express').Router();
 module.exports = router;
 
 router.route('/:id')
+// return BOM and associated Items and Products
 .get(function(req,res,next){
+  //find the Bom and eager load Item(s)
   Bom.findOne({
     where: {
       id: req.params.id
@@ -18,24 +20,20 @@ router.route('/:id')
       model: Item,
     }
   })
+  //for each Item, find related Product 
   .then(bom=>{
-    //console.log("BOM route hit: ",bom);
+    let id = bom.get('items').map(e=>e.get('id'));
 
-    let items = bom.get('items');
-    //console.log("items:",items);
-    let item_ids = items.map(e=>e.get('id'));
-    //console.log("item IDs:",item_ids);
-    let items2 = Item.findAll({
+    Item.findAll({
       where: {
-	id: item_ids,
+	id,
       },
       include: {
 	model: Product,
       },
     })
     .then(items=>{
-      //console.log("eager loaded items?",snorlax);
-      let products =  items.map(e=>e.product);
+      let products = items.map(e=>e.product);
       res.send({bom,products});
     })
 
