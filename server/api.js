@@ -11,6 +11,7 @@ api
     .use('/catalog', require('./catalog'))
     .use('/product', require('./product'))
     .use('/category', require('./category'))
+    .use('/bom', require('./bom'))
 
 // No routes matched? 404.
 api.use((req, res) => res.status(404).end())

@@ -16,7 +16,7 @@ import Product from './components/Product'
 import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 import CheckoutContainer from './containers/CheckoutContainer'
-//import CheckoutContainer from './containers/test'
+import Bom from './components/Bom'
 
 import { getProducts, getCategories } from './reducers/catalog';
 import { getProduct } from './reducers/product'
@@ -55,6 +55,8 @@ render(
                 <Route path="/cart" component={Cart} />    
                 <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
+	    {/*<Route path="/bom/:id" component={Bom} onEnter={fetchBom} />    */} 
+	    <Route path="/bom/:id" component={Bom} />    
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,

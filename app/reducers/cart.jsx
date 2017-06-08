@@ -17,7 +17,7 @@ const addItem = item => ({
 
 // reducer
 const initialState = {
-    item: {}
+    item: {},
     items: [],
 };
 export default function reducer(state = initialState, action) {
