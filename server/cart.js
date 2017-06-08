@@ -18,20 +18,19 @@ see https://github.com/ehacinom/checkpoint-express-review/blob/master/api/index.
 
 module.exports = require('express').Router()
     .get('/', (req, res, next) =>
-        res.status(200).send(req.cart)
+        res.status(200).send({"hey":"hey", "cart":req.cart})
     )
     .post('/', (req, res, next) => {
-        /* 
-        When creating a new item in the Cart
-        You must send as your post (after clicking button on product page)
-            req.body = { product , quantity } user/:userid/cart
-        */
+        // /* 
+        // When creating a new item in the Cart
+        // You must send as your post (after clicking button on product page)
+        //     req.body = { product , quantity } user/:userid/cart
+        // */
     
-        // put in some checks to make sure the data is formatted correctly
-    
+        // // put in some checks to make sure the data is formatted correctly
         const product = req.body.product;
         const quantity = req.body.quantity;
-        // no discount yet
+        // // no discount yet
     
         Item
             .create({
@@ -63,7 +62,8 @@ module.exports = require('express').Router()
                 // cause this is a magic method welp
                 return req.cart.setItems([item]) 
             })
-            .then(() => res.status(201).send(req.cart)) // return what?
+            .then(() => res.status(201).send(req.cart))
+            .catch(next);                                            // return what?
     })
     .param('itemId', (req, res, next, itemId) => {        
         if (isNaN(itemId)) res.sendStatus(404);
@@ -95,11 +95,5 @@ module.exports = require('express').Router()
         console.log('and finally req.body', req.body)
     
         req.item.update(req.body).then(item => res.status(200).send(item));
-    })
-
-
-
-    
-    
-    
+    }) 
     
