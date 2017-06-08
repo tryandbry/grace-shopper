@@ -39,7 +39,11 @@ module.exports = require('express').Router()
         User
             .create(req.body)
             .then(user => res.status(201).json(user))
-            .catch(next)
+            .catch(err => {
+                const message = 'WARNING: we didnt authenticate because of duplicate email'
+                console.error(message);
+                console.error(err.errors);
+            })
     )
     
     /* 

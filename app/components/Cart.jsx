@@ -1,23 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CartItems from './CartItems';
+import { getCart } from '../reducers/cart';
 
-const Cart = (props) => {
-    const items = props.items || [];
+class Cart extends React.Component {
+    constructor () {
+        super();
+        this.state = {
+            items : []
+        }
+    }
     
-    return (
-        <div>
-        <h3>Cart</h3>
-        <CartItems items={items}/>
-        </div>
-    );
+    // componentDidMount (nextProps, nextState) {
+    //     const { userId } = nextState.params;
+    //     getCart( userId, )
+    // }
+    
+    render () {
+        const items = this.props.items;
+        
+        return (
+            <div>
+            <h3>Cart</h3>
+            <CartItems items={items}/>
+            </div>
+        );
+    }
 }
 
 const mapState = (state) => ({
     items : state.cart.items
 });
-const mapDispatch = (dispatch) => ({
-    
-});
+// const mapDispatch = (dispatch) => ({
+//     getCart : () =>
+// });
 
-export default connect(mapState, mapDispatch)(Cart);
+export default connect(mapState)(Cart);

@@ -3,21 +3,25 @@ import axios from 'axios';
 // actions
 const SET_ITEMS = 'SET_ITEMS';
 const ADD_ITEM = 'ADD_ITEM';
+const SET_CART = 'SET_CART';
 
 // action-creators
-const setItems = (items) => ({
+const setItems = items => ({
     type: SET_ITEMS,
     items
 });
-
 const addItem = item => ({
     type: ADD_ITEM,
     item
 })
+// const setCart = () => ({
+//     type:
+// });
+
 
 // reducer
 const initialState = {
-    item: {}
+    item: {},
     items: [],
 };
 export default function reducer(state = initialState, action) {
@@ -28,6 +32,7 @@ export default function reducer(state = initialState, action) {
             break;
         case (ADD_ITEM):
             newState.item = action.item;
+            newState.items = [...state.items, action.item];
             break;
         default:
             return state;

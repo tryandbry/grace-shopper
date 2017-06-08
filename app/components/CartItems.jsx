@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const CartItems = (props) => {
-    const items = props.items || [];
+    const items = props.items;
     
     return (
         <div>

@@ -18,9 +18,9 @@ import Cart from './components/Cart'
 import CheckoutContainer from './containers/CheckoutContainer'
 //import CheckoutContainer from './containers/test'
 
-import { getProducts, getCategories } from './reducers/catalog';
+import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
-
+// import { getCart } from './reducers/cart'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -38,7 +38,9 @@ const ExampleApp = connect(
 const onEnter = function () {
     store.dispatch(getProducts())
     store.dispatch(getCategories())
+    // store.dispatch(getCart())
 }
+
 
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;
@@ -52,7 +54,7 @@ render(
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
-                <Route path="/cart" component={Cart} />    
+                <Route path="/user/:userId/cart" component={Cart} />    
                 <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
             <Route path='*' component={NotFound} />
