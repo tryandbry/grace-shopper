@@ -24,7 +24,7 @@ module.exports = require('express').Router()
         /* 
         When creating a new item in the Cart
         You must send as your post (after clicking button on product page)
-            req.body = { product , quantity }
+            req.body = { product , quantity } user/:userid/cart
         */
     
         // put in some checks to make sure the data is formatted correctly
