@@ -12,7 +12,7 @@ class Bom extends React.Component {
 
     const bom_id = +this.props.routeParams.id;
     const fetchBom = this.props.fetchBom;
-    fetchBom(bom_id);
+    //fetchBom(bom_id);
 
     return(
       <div>

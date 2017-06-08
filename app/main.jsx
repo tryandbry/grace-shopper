@@ -17,6 +17,7 @@ import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 import CheckoutContainer from './containers/CheckoutContainer'
 import Bom from './components/Bom'
+import { fetchBom } from './reducers/bom';
 
 import { getProducts, getCategories } from './reducers/catalog';
 import { getProduct } from './reducers/product'
@@ -45,6 +46,11 @@ const onProductEnter = function (nextRouterState) {
     store.dispatch(getProduct(parseInt(productId)))
 }
 
+const fetchBomOnEnter = (nextRouterState)=>{
+  console.log("fetchBomOnEnter: ",nextRouterState);
+  fetchBom(nextRouterState.params.id)(store.dispatch);
+}
+
 render(
     <Provider store={store}>
         <Router history={browserHistory}>
@@ -55,8 +61,7 @@ render(
                 <Route path="/cart" component={Cart} />    
                 <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
-	    {/*<Route path="/bom/:id" component={Bom} onEnter={fetchBom} />    */} 
-	    <Route path="/bom/:id" component={Bom} />    
+	    <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} /> 
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,

@@ -53,17 +53,3 @@ export const fetchBom = id=>{
       .catch(console.error);
     }
 }
-
-
-
-
-
-      /*
-      .post(`/api/user/${userId}/cart`, {
-	  product,
-	  quantity
-      })
-      .then(res => res.data)
-      .then(item => dispatch(addItem(item)))
-      .catch(console.error.bind(console));
-      */
