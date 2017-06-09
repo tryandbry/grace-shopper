@@ -31,18 +31,21 @@ module.exports = require('express').Router()
         res.status(200).send(req.cart)
     })
     .post('/', (req, res, next) => {
-        /* 
+        /*
         When creating a new item in the Cart
         You must send as your post (after clicking button on product page)
             req.body = { product , quantity } user/:userid/cart
         */
-        
+
         // put in some checks to make sure the data is formatted correctly
 
         const product = req.body.product;
         const quantity = req.body.quantity;
         // no discount yet
-    
+
+        console.log('product quantity', product, quantity)
+        console.log('\n\n\ncart', req.cart)
+
         Item
             .create({
                 quantity : Number(quantity),
@@ -51,34 +54,46 @@ module.exports = require('express').Router()
             }, {
                 include : [ Product ]
             })
-            .then(item => {
-                console.log(
-                    'WE ARE NOW POSTING A NEW ITEM TO',
-                    '/api/user/:userId/cart/',
-                    'This is the req.cart',
-                    req.cart,
-                    'This is the req.user',
-                    req.user,
-                    'This is the req.body',
-                    req.body,
-                    'this is the product',
-                    product,
-                    'this is the quantity',
-                    quantity
-                )
-            
-                // save to session
-                req.session.cart.push(item);
-            
-                // setItems or setItem?
-                // THIS IS ALSO NOT GOING TO WORK WELL
-                // I THINK
-                // cause this is a magic method welp
-                return Promise.all(req.cart.setItems([item]), item)
-            })
-            // .spread((cartPromise, item) => res.status(201).send(item))
-            .then(() => res.status(201).send(req.cart)) // return what?
+            // .then(item => {
+            //     console.log(
+            //         'WE ARE NOW POSTING A NEW ITEM TO',
+            //         '/api/user/:userId/cart/',
+            //         'This is the req.cart',
+            //         req.cart,
+            //         'This is the req.user',
+            //         req.user,
+            //         'This is the req.body',
+            //         req.body,
+            //         'this is the product',
+            //         product,
+            //         'this is the quantity',
+            //         quantity
+            //     )
+            //
+            //     // save to session
+            //     req.session.cart.push(item);
+            //
+            //     // setItems or setItem?
+            //     // THIS IS ALSO NOT GOING TO WORK WELL
+            //     // I THINK
+            //     // cause this is a magic method welp
+            //     return Promise.all(req.cart.setItems([item]), item)
+            // })
+            // // .spread((cartPromise, item) => res.status(201).send(item))
+            // .then((cart, item) => res.status(201).send(req.cart)) // return what?
             .catch(next);
+
+
+
+        // Item.build({
+        //     quantity,
+        //     cost,
+        //     discount: .45,
+        //     product_id: req.body.product.id,
+        //     cart_id: cartId,
+        //     //bom_id: bomId
+        // }).save()
+        //     .then(() => res.sendStatus(200))
     })
     .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getItem } from '../reducers/cart';
 
-// need find way to make user match review and get user on props
+// userId getting passed in through props, will bomId or need grab bomId in db
 
 class Product extends Component {
 
@@ -26,7 +26,7 @@ class Product extends Component {
     handleMinusQuantity() {
         if (this.state.quantity - 1) {
             this.setState({
-                quantity: this.state.quantity - 1
+                quantity: parseInt(this.state.quantity - 1)
             })
         }
         console.log('minus.. ', this.state.quantity)
@@ -34,89 +34,88 @@ class Product extends Component {
 
     handleChange(evt) {
         const value = evt.target.value;
-        if (!value.match(/[^0-9"]/)) {
+        if (value === "") {
             this.setState({
-                quantity: +value
+                quantity: ""
             })
+        }
+        else {
+            if (!value.match(/[^0-9"]/)) {
+                this.setState({
+                    quantity: +value
+                })
+            }
+
         }
     }
 
     render() {
         const product = this.props.selectedProduct;
         const addItemToCart = this.props.getItem;
-        const userId = this.props.userId;
 
         return (
             <div className="product">
-            
-            {/* Product */}
-            <div>
-                <h3>{product.name}</h3>
-                <img src={product.image} className="img-thumbnail" />
-                <small> {product.description} </small>
-                <span> {product.inventory} </span> <span> {product.cost} </span>
-                <div className="col-lg-2">
-                    <div className="input-group">
-                        <span className="input-group-btn">
-                            <button 
-                                className="btn btn-default value-control" 
-                                data-action="minus" 
-                                data-target="font-size" 
-                                onClick={() => this.handleMinusQuantity()} >
-                                <span className="glyphicon glyphicon-minus"></span>-
-                            </button>
-                        </span>
-                        <input 
-                            type="text" 
-                            onChange={this.handleChange} 
-                            value={this.state.quantity} 
-                            className="form-control" 
-                            id="font-size" 
-                        />
-                        <span className="input-group-btn">
-                            <button 
-                                className="btn btn-default value-control" 
-                                data-action="plus" 
-                                data-target="font-size" 
-                                onClick={() => this.handleAddQuantity()}>
-                                <span className="glyphicon glyphicon-plus"></span>+
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            
-                <button 
-                    type="button" 
-                    className="btn btn-success" 
-                    onClick={() => addItemToCart(
-                        product, this.state.quantity, userId
-                    )}
-                >Add Rock
-                </button>
-            </div>
-            
-            {/* Reviews */}
-            <div>
-                {
-                    product.reviews && product.reviews.map(review => (
-                        <div key={review.id}>
-                            <h5><span>{review.user.fullName}</span></h5>
-                            <small>{review.text}</small>
+                <div>
+                    <h3>{product.name}</h3>
+                    <img src={product.image} className="img-thumbnail" />
+                    <small> {product.description} </small>
+                    <span> {product.inventory} </span> 
+                    <span> {product.cost} </span>
+                    <div className="col-lg-2">
+                        <div className="input-group">
+                            <span className="input-group-btn">
+                                <button 
+                                    className="btn btn-default value-control" 
+                                    data-action="minus" 
+                                    data-target="font-size" 
+                                    onClick={() => this.handleMinusQuantity()} 
+                                ><span className="glyphicon glyphicon-minus"></span>-
+                                </button>
+                            </span>
+                            <input 
+                                type="text" 
+                                onChange={this.handleChange} 
+                                value={this.state.quantity} 
+                                className="form-control" 
+                                id="font-size" 
+                            />
+                            <span className="input-group-btn">
+                                <button 
+                                    className="btn btn-default value-control" 
+                                    data-action="plus" 
+                                    data-target="font-size" 
+                                    onClick={() => this.handleAddQuantity()}
+                                ><span className="glyphicon glyphicon-plus"></span>+
+                                </button>
+                            </span>
                         </div>
-                    ))
-                }
-            </div>
-            
+                    </div>
+                    <button 
+                        type="button" 
+                        className="btn btn-success" 
+                        onClick={() => addItemToCart(product, this.state.quantity, 1)}
+                    >Add Rock
+                    </button>
+                </div>
+                <div>
+                    {
+                        product.reviews && product.reviews.map(review => (
+                            <div key={review.id}>
+                                <h5><span>{review.user.fullName}</span></h5>
+                                <small>{review.text}</small>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         )
     }
 }
 
 
-const mapState = (state) => ({
-    selectedProduct: state.product.product,
-    userId: state.auth ? state.auth.id : undefined
-})
+function mapState(state) {
+    return { selectedProduct: state.product.product };
+}
 
 const mapDispatch = {
     getItem,

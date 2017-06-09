@@ -3,6 +3,7 @@
 const db = require('APP/db')
 const User = db.model('user')
 const Item = db.model('item')
+const Cart = db.model('cart')
 // const Product = db.model('product')
 
 // TODO
@@ -58,7 +59,7 @@ module.exports = require('express').Router()
     
     TODO: authentication
     */
-    .use(mustBeLoggedIn)
+    // .use(mustBeLoggedIn)
     .param('userId', (req, res, next, userId) => {
         if (isNaN(userId)) next(404); // res.sendStatus(404);
         else {
@@ -68,22 +69,15 @@ module.exports = require('express').Router()
 
             User // findById
                 .findOne({
-                    where : { id : userId }
+                    where : { id : userId },
+                    include : [ Cart ]
                 })
                 .then(user => {
                     if (!user) next(404);
 
                     // req.user is passport's user info
-                    req.user = user;
-                    
-                    // cartId
-                    req.cartId = user.cart_id;
-                    
-                    // now we want the cart
-                    return Item.findAll({ where : { cart_id : req.cartId } })
-                })
-                .then(items => {
-                    req.cart = items;
+                    // req.user = user;
+                    req.cart = user.cart;
                     next(); // I get a warning that 
 // a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
                 })
