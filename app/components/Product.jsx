@@ -26,7 +26,7 @@ class Product extends Component {
     handleMinusQuantity() {
         if (this.state.quantity - 1) {
             this.setState({
-                quantity: this.state.quantity - 1
+                quantity: parseInt(this.state.quantity - 1)
             })
         }
         console.log('minus.. ', this.state.quantity)
@@ -34,10 +34,18 @@ class Product extends Component {
 
     handleChange(evt) {
         const value = evt.target.value;
-        if (!value.match(/[^0-9"]/)) {
+        if (value === "") {
             this.setState({
-                quantity: +value
+                quantity: ""
             })
+        }
+        else {
+            if (!value.match(/[^0-9"]/)) {
+                this.setState({
+                    quantity: +value
+                })
+            }
+
         }
     }
 
