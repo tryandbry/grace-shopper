@@ -3,8 +3,11 @@
 const db = require('APP/db')
 const User = db.model('user')
 const Item = db.model('item')
-// const Product = db.model('product')
+const Cart = db.model('cart')
+const Review = db.model('review')
+const Bom = db.model('bom')
 
+// const Product = db.model('product')
 
 // TODO
 // login with session using post('/')
@@ -35,11 +38,20 @@ module.exports = require('express').Router()
             .then(users => res.json(users))
             .catch(next)
     )
-    .post('/', (req, res, next) =>
+    .post('/', (req, res, next) => {        
         User
             .create(req.body)
             .then(user => res.status(201).json(user))
-            .catch(next)
+            // .catch(next)
+            /*
+                this is not going well
+                this error is dumb and sorta just dissapears
+            */
+            .catch(err => {
+                const message = 'WARNING: we didnt authenticate because of duplicate email'
+                res.status(204).send({ message, error: err.errors })
+            })
+        }
     )
     
     /* 
@@ -50,7 +62,7 @@ module.exports = require('express').Router()
     
     TODO: authentication
     */
-    .use(mustBeLoggedIn)
+    // .use(mustBeLoggedIn)
     .param('userId', (req, res, next, userId) => {
         if (isNaN(userId)) next(404); // res.sendStatus(404);
         else {
@@ -60,23 +72,33 @@ module.exports = require('express').Router()
 
             User // findById
                 .findOne({
-                    where : { id : userId }
+                    where : { id : userId },
+                    include : [ Cart, Review, Bom ]
                 })
                 .then(user => {
                     if (!user) next(404);
-
-                    // req.user is passport's user info
-                    req.user = user;
                     
-                    // cartId
-                    req.cartId = user.cart_id;
+                    console.log('\n\n\n\nuser\n\n\n\n', user)
                     
-                    // now we want the cart
-                    return Item.findAll({ where : { cart_id : req.cartId } })
-                })
-                .then(items => {
-                    req.cart = items;
-                    next();
+                    /*
+                        
+                        JUSTIN
+                        TOGGLE THIS LINE
+                        IF YOU NEED USER INFORMATION
+                        FROM THE USER TABLE
+                        
+                    */
+                    // req.user = user;
+                    req.account = user;
+                    
+                    req.cart = user.cart;
+                    req.session.cart = user.cart;
+                    
+                    req.reviews = user.reviews;
+                    req.orders = user.orders;
+                    
+                    next(); // I get a warning that 
+// a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
                 })
                 .catch(next);
         }

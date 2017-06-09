@@ -16,8 +16,5 @@ const Cart = (props) => {
 const mapState = (state) => ({
     items : state.cart.items
 });
-const mapDispatch = (dispatch) => ({
-    
-});
 
-export default connect(mapState, mapDispatch)(Cart);
+export default connect(mapState)(Cart);

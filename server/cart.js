@@ -7,40 +7,42 @@ const Cart = db.model('cart');
 const User = db.model('user');
 
 module.exports = require('express').Router()
-    .get('/', (req, res, next) =>
-        res.status(200).send({ "hey": "hey", "cart": req.cart })
-    )
-    .post('/', (req, res, next) => {
-        let quantity = req.body.quantity
-        let cost = req.body.product.cost
-        let cartId;
-        let userId = req.body.userId
-        //let bomId;
-
-        User.findById(userId, {
-            include: {
-                model: Cart,
-            }
-        })
-                //********************** Need find bomId which can be grabbed using userId ***************
-            //**********************grab bomId and add them to newItem********************************
-            .then(user => {
-                cartId = user.cart.id;
-            })
-            .then(() => {
-        Item.build({
-            quantity,
-            cost,
-            discount: .45,
-            product_id: req.body.product.id,
-            cart_id: cartId,
-            //bom_id: bomId
-        }).save()
-            .then(() => res.sendStatus(200))
+    .get('/', (req, res, next) => {
+        // note, only api/user/:userId/cart for each user
+        // others use api/guest/cart
+        
+        req.session.cart = req.cart;
+        res.status(200).send(req.cart)
     })
+    .post('/', (req, res, next) => {
+        /*
+        When creating a new item in the Cart
+        You must send as your post (after clicking button on product page)
+            req.body = { product , quantity } user/:userid/cart
+        */
 
+        // put in some checks to make sure the data is formatted correctly
+
+        const product = req.body.product;
+        const quantity = req.body.quantity;
+        // no discount yet
+
+        Item
+            .create({
+                quantity : Number(quantity),
+                cost : product.cost,
             })
-
+            .then(item => Product
+                .findById(product.id)
+                .then(product => item.setProduct(product))
+            )
+            .then(item => req.cart.setItems([item]))
+            .then(cart => {
+                req.session.cart = cart // save to session
+                res.status(201).send(cart)
+            })
+            .catch(next);
+    })
     .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);
         else {
