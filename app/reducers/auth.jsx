@@ -55,6 +55,7 @@ export const whoami = () =>
         .then(auth => {
             // also get the cart on the session + the store
             if (auth.user) return getCart(auth.user.id);
+            // I don't know if I want to get cart and set it??
             else return getCart();
         })
         .then(dispatch)

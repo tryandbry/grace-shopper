@@ -84,7 +84,8 @@ module.exports = require('express').Router()
                 })
                 .then(items => {
                     req.cart = items;
-                    next();
+                    next(); // I get a warning that 
+// a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
                 })
                 .catch(next);
         }
