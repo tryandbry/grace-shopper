@@ -4,6 +4,9 @@ const db = require('APP/db')
 const User = db.model('user')
 const Item = db.model('item')
 const Cart = db.model('cart')
+const Review = db.model('review')
+const Bom = db.model('bom')
+
 // const Product = db.model('product')
 
 // TODO
@@ -70,14 +73,30 @@ module.exports = require('express').Router()
             User // findById
                 .findOne({
                     where : { id : userId },
-                    include : [ Cart ]
+                    include : [ Cart, Review, Bom ]
                 })
                 .then(user => {
                     if (!user) next(404);
-
-                    // req.user is passport's user info
+                    
+                    console.log('\n\n\n\nuser\n\n\n\n', user)
+                    
+                    /*
+                        
+                        JUSTIN
+                        TOGGLE THIS LINE
+                        IF YOU NEED USER INFORMATION
+                        FROM THE USER TABLE
+                        
+                    */
                     // req.user = user;
+                    req.account = user;
+                    
                     req.cart = user.cart;
+                    req.session.cart = user.cart;
+                    
+                    req.reviews = user.reviews;
+                    req.orders = user.orders;
+                    
                     next(); // I get a warning that 
 // a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
                 })

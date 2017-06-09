@@ -115,12 +115,8 @@ class Product extends Component {
 
 const mapState = (state) => ({
     selectedProduct: state.product.product,
-    // userId: state.auth.
-})
-// {
-//     return { selectedProduct: state.product.product };
-// }
-
+    userId: state.auth.id
+});
 const mapDispatch = {
     getItem,
 };
