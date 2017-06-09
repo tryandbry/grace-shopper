@@ -88,14 +88,13 @@ module.exports = require('express').Router()
                         FROM THE USER TABLE
                         
                     */
-                    // req.user = user;
                     req.account = user;
                     
                     req.cart = user.cart;
                     req.session.cart = user.cart;
                     
                     req.reviews = user.reviews;
-                    req.orders = user.orders;
+                    req.orders = user.boms;
                     
                     next(); // I get a warning that 
 // a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
@@ -107,5 +106,7 @@ module.exports = require('express').Router()
         res.status(200).send(req.user)
     )
     .use('/:userId/cart', require('./cart'))
+    .use('/:userId/review', require('./review'))
+    .use('/:userId/orders', require('./orders'))
     
     // this last line moves the cart api to cart.js
