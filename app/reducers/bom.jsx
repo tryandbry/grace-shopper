@@ -26,6 +26,7 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case (SET_BOM):
 	    //console.log("Bom reducer, SET_BOM:",action);
+            newState.id = action.bom.id;
             newState.shipping = action.bom.shipping;
             newState.status = action.bom.status;
             newState.items = action.bom.items.slice();
