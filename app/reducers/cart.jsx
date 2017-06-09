@@ -38,11 +38,14 @@ export default function reducer(state = initialState, action) {
 
 // action-dispatcher
 // user: gets cart from db, saves it to session and to store
-// guest: saves empty cart to store and session
+// guest: saves empty cart to session and store
 export const getCart = (userId) => {
     const backendRoute = isNaN(userId)
         ? '/api/guest/cart'
         : `/api/user/${userId}/cart`;
+    
+    console.log('THIS IS ACTION DISPATCHER GETCART', backendRoute)
+    
     return dispatch => axios
         .get(backendRoute)
         .then(res => res.data)
@@ -51,14 +54,19 @@ export const getCart = (userId) => {
 }
 
 // user: posts item to db, saves to session and to store
-// guest: saves to store
+// guest: saves to session and store
 export const getItem = (product, quantity, userId) => {
     const backendRoute = isNaN(userId)
         ? '/api/guest/cart'
         : `/api/user/${userId}/cart`;
+    console.log('\n\n\n\n', userId)
+    console.log('THIS IS ACTION DISPATCHER GETITEM', backendRoute)
     return dispatch => axios
         .post(backendRoute, { product, quantity })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
         .catch(() => console.log('error in getItem'));
 }
+
+// export const editItem
+// export const deleteItem

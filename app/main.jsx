@@ -40,7 +40,6 @@ const onEnter = function () {
     store.dispatch(getCategories())
 }
 
-
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;
     store.dispatch(getProduct(parseInt(productId)))
@@ -58,7 +57,7 @@ render(
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
-                <Route path="/user/:userId/cart" component={Cart} />    
+                <Route path="/cart" component={Cart} />    
                 <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
 	    <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} /> 
