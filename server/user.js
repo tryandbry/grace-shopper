@@ -5,9 +5,6 @@ const User = db.model('user')
 const Item = db.model('item')
 // const Product = db.model('product')
 
-const { encrypt } = require('object-encrypt-decrypt');
-
-
 // TODO
 // login with session using post('/')
 // write mustBeLoggedIn, other auth filter functions
@@ -38,6 +35,8 @@ module.exports = require('express').Router()
             .catch(next)
     )
     .post('/', (req, res, next) => {
+        
+        // WHAT"S HAPPENING HERE
         // console.log(req.session)
         // sessionOptions = {} // sessionKey = "session" // session = Session {}
         console.log(Object.keys(req))

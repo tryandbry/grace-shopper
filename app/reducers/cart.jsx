@@ -1,22 +1,18 @@
 import axios from 'axios';
 
 // actions
-const SET_ITEMS = 'SET_ITEMS';
-const ADD_ITEM = 'ADD_ITEM';
 const SET_CART = 'SET_CART';
+const ADD_ITEM = 'ADD_ITEM';
 
 // action-creators
-const setItems = items => ({
-    type: SET_ITEMS,
-    items
+const setCart = cart => ({
+    type: SET_CART,
+    cart
 });
 const addItem = item => ({
     type: ADD_ITEM,
     item
 })
-// const setCart = () => ({
-//     type:
-// });
 
 
 // reducer
@@ -27,8 +23,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
-        case (SET_ITEMS):
-            newState.items = action.items;
+        case (SET_CART):
+            newState.items = action.cart;
             break;
         case (ADD_ITEM):
             newState.item = action.item;
@@ -40,11 +36,16 @@ export default function reducer(state = initialState, action) {
     return newState;
 }
 
-// // action-dispatcher
-// export const getItems = () => {
-//     return dispatch => axios
-//     .get('/api/');
-// }
+// action-dispatcher
+export const getCart = (userId) => {
+    if (isNaN(userId)) 
+        return dispatch => dispatch(setCart([]))
+    return dispatch => axios
+        .get(`/api/user/${userId}/cart`)
+        .then(res => res.data)
+        .then(cart => dispatch(setCart(cart)))
+        .catch(console.error.bind(console));
+}
 
 export const getItem = (userId, product, quantity) => {
     return dispatch => axios

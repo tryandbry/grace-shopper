@@ -20,7 +20,6 @@ import CheckoutContainer from './containers/CheckoutContainer'
 
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
-// import { getCart } from './reducers/cart'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -35,10 +34,9 @@ const ExampleApp = connect(
     </div>
 )
 
-const onEnter = function () {
+const onEnter = function (nextState) {
     store.dispatch(getProducts())
     store.dispatch(getCategories())
-    // store.dispatch(getCart())
 }
 
 

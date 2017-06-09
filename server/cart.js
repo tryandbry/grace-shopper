@@ -17,9 +17,26 @@ see https://github.com/ehacinom/checkpoint-express-review/blob/master/api/index.
 */
 
 module.exports = require('express').Router()
-    .get('/', (req, res, next) =>
+    .get('/', (req, res, next) => {
+        /* 
+        Does req.session.cart = state.cart?
+          session, logged in : hopefully?
+          session, guest : hopefully?
+          none, guest : what?
+          none, will be logged in : seriously confused
+        */
+
+        console.log(
+            'WE ARE GETTING CART',
+            'This is req.cart',
+            req.cart,
+            'This is req.session.cart',
+            req.session.cart
+        );
+        
+        req.session.cart = req.cart;
         res.status(200).send(req.cart)
-    )
+    })
     .post('/', (req, res, next) => {
         /* 
         When creating a new item in the Cart
