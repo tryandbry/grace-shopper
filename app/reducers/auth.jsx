@@ -7,31 +7,29 @@ const AUTHENTICATED = 'AUTHENTICATED'
 // action-creators
 export const authenticated = user => ({
     type: AUTHENTICATED, 
-    user
+    user: user || {}
 })
 
 
-// test user as auth is not working yet
-const testUser = {
-    id : 2, 
-    email : "pikachu@pokemon.com",
-    firstName : "Pika",
-    lastName : "Pikachu",
-    isAdmin : false,
-    triggerNewPassword : false,
-    cart_id : 2
-}
+// // test user as auth is not working yet
+// const testUser = {
+//     id : 2,
+//     email : "pikachu@pokemon.com",
+//     firstName : "Pika",
+//     lastName : "Pikachu",
+//     isAdmin : false,
+//     triggerNewPassword : false,
+//     cart_id : 2
+// }
 
 // reducer
-export default function reducer (state=null, action) {
+export default function reducer (state={}, action) {
     switch (action.type) {
         case AUTHENTICATED:
             return action.user // || testUser
     }
     return state
 }
-
-
 
 // action-dispatchers
 export const login = (username, password) =>
@@ -52,11 +50,5 @@ export const whoami = () =>
         .then(res => res.data)
         .then(user => dispatch(authenticated(user)))
         .catch(err => dispatch(authenticated(null)))
-        .then(auth => {
-            // also get the cart on the session + the store
-            if (auth.user) return getCart(auth.user.id);
-            // I don't know if I want to get cart and set it??
-            else return getCart();
-        })
-        .then(dispatch)
+        .then(auth => dispatch(getCart(auth.user.id)))
         .catch(console.error.bind(console));

@@ -50,30 +50,16 @@ export const getCart = (userId) => {
         .catch(console.error.bind(console));
 }
 
-// <<<<<<< HEAD
-// // user: posts item to db, saves to session and to store
-// // guest: saves to store
-// export const getItem = (product, quantity, userId) => {
-//     const backendRoute = isNaN(userId)
-//         ? '/api/guest/cart'
-//         : `/api/user/${userId}/cart`;
-//     return dispatch => axios
-//         .post(backendRoute, { product, quantity })
-//         .then(res => res.data)
-//         .then(item => dispatch(addItem(item)))
-//         .catch(() => console.log('error in getItem'));
-// }
-// =======
-// dispatcher
-
+// user: posts item to db, saves to session and to store
+// guest: saves to store
 export const getItem = (product, quantity, userId) => {
+    const backendRoute = isNaN(userId)
+        ? '/api/guest/cart'
+        : `/api/user/${userId}/cart`;
     return dispatch => axios
-        .post(`/api/user/${userId}/cart`, {
-            product,
-            quantity
-        })
+        .post(backendRoute, { product, quantity })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
-        .catch(()=>console.log('error in getItem'));
+        .catch(() => console.log('error in getItem'));
 }
-// >>>>>>> master
+
