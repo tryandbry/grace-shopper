@@ -59,7 +59,7 @@ class Product extends Component {
                             <span className="input-group-btn"><button className="btn btn-default value-control" data-action="plus" data-target="font-size" onClick={() => this.handleAddQuantity()}><span className="glyphicon glyphicon-plus"></span>+</button></span>
                         </div>
                     </div>
-                    <button type="button" className="btn btn-success" onClick={() => addItemToCart(2, product, this.state.quantity)}>Add Rock</button>
+                    <button type="button" className="btn btn-success" onClick={() => addItemToCart(product, this.state.quantity, 2)}>Add Rock</button>
                 </div>
                 <div>
                     {

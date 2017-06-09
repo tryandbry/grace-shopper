@@ -38,6 +38,7 @@ module.exports = require('express').Router()
         User
             .create(req.body)
             .then(user => res.status(201).json(user))
+            // .catch(next)
             /*
                 this is not going well
                 this error is dumb and sorta just dissapears

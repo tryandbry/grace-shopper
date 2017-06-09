@@ -34,7 +34,7 @@ const ExampleApp = connect(
     </div>
 )
 
-const onEnter = function (nextState) {
+const onEnter = function () {
     store.dispatch(getProducts())
     store.dispatch(getCategories())
 }
