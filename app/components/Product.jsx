@@ -52,6 +52,7 @@ class Product extends Component {
     render() {
         const product = this.props.selectedProduct;
         const addItemToCart = this.props.getItem;
+        const userId = this.props.userId;
 
         return (
             <div className="product">
@@ -93,7 +94,7 @@ class Product extends Component {
                     <button 
                         type="button" 
                         className="btn btn-success" 
-                        onClick={() => addItemToCart(product, this.state.quantity, 1)}
+                        onClick={() => addItemToCart(product, this.state.quantity, userId)}
                     >Add Rock
                     </button>
                 </div>

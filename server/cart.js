@@ -17,11 +17,14 @@ module.exports = require('express').Router()
     .post('/', (req, res, next) => {
         /*
         When creating a new item in the Cart
-        You must send as your post (after clicking button on product page)
+        You must send as your post 
+        (after clicking button on product page)
             req.body = { product , quantity } user/:userid/cart
         */
 
         // put in some checks to make sure the data is formatted correctly
+
+        console.log('hitting post to user/id/cart')
 
         const product = req.body.product;
         const quantity = req.body.quantity;
@@ -36,10 +39,10 @@ module.exports = require('express').Router()
                 .findById(product.id)
                 .then(product => item.setProduct(product))
             )
-            .then(item => req.cart.setItems([item]))
-            .then(cart => {
+            .then(item => {
+                req.cart.setItems([item])
                 req.session.cart = cart // save to session
-                res.status(201).send(cart)
+                res.status(201).send(item)
             })
             .catch(next);
     })

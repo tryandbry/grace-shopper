@@ -77,9 +77,7 @@ module.exports = require('express').Router()
                 })
                 .then(user => {
                     if (!user) next(404);
-                    
-                    console.log('\n\n\n\nuser\n\n\n\n', user)
-                    
+                                        
                     /*
                         
                         JUSTIN
@@ -95,7 +93,7 @@ module.exports = require('express').Router()
                     req.session.cart = user.cart;
                     
                     req.reviews = user.reviews;
-                    req.orders = user.orders;
+                    req.orders = user.boms;
                     
                     next(); // I get a warning that 
 // a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
