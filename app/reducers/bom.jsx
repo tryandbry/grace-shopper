@@ -14,6 +14,7 @@ const unsetBom = bom=>({type: UNSET_BOM});
 
 // initial state
 const initialState = {
+  id: -1,
   shipping: "",
   status: "",
   items: [],
@@ -25,7 +26,6 @@ export default function reducer(state = initialState, action) {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case (SET_BOM):
-	    //console.log("Bom reducer, SET_BOM:",action);
             newState.id = action.bom.id;
             newState.shipping = action.bom.shipping;
             newState.status = action.bom.status;
@@ -33,8 +33,11 @@ export default function reducer(state = initialState, action) {
             newState.products = action.products.slice();
             break;
         case (UNSET_BOM):
+            newState.id = null;
             newState.shipping = null;
             newState.status = null;
+            newState.items = null;
+            newState.products = null;
             newState.items = [];
             break;
         default:

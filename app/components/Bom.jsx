@@ -11,6 +11,9 @@ class Bom extends React.Component {
     this.assembleLineItems = this.assembleLineItems.bind(this);
   }
 
+  // Name: assembleLineItems
+  // Purpose: Assembles line item data from this.props.bom
+  // ----------------------------------
   assembleLineItems(){
     return this.props.bom.items.reduce((sum,item,n)=>{
       sum.push({
@@ -26,6 +29,9 @@ class Bom extends React.Component {
     },[]);
   }
 
+  // Name: printPrice
+  // Purpose: Formats a float into a "price" string
+  // ----------------------------------
   printPrice(num){
     let temp = `${num}`.split('.');
     let cents;
