@@ -17,7 +17,7 @@ const addItem = item => ({
 
 // reducer
 const initialState = {
-    item: {}
+    item: {},
     items: [],
 };
 export default function reducer(state = initialState, action) {
@@ -35,20 +35,16 @@ export default function reducer(state = initialState, action) {
     return newState;
 }
 
-// // action-dispatcher
-// export const getItems = () => {
-//     return dispatch => axios
-//     .get('/api/');
-// }
+// dispatcher
 
-export const getItem = (userId, product, quantity) => {
+export const getItem = (product, quantity, userId) => {
     return dispatch => axios
         .post(`/api/user/${userId}/cart`, {
             product,
-            quantity
+            quantity,
+            userId
         })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
-        .catch(console.error.bind(console));
-
+        .catch(()=>console.log('error in getItem'));
 }
