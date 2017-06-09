@@ -20,12 +20,15 @@ const CartItems = (props) => {
                 <tbody>
                 {
                     items.map((item, i) => (
-                        <Link 
-                            to={`/product/${item.product.id}`}
-                        >
-                        <tr key={item.id}>
+                        <tr key={item.product.id}>
                             <th scope="row">{i}</th>
-                            <td><img src={ item.product.image } /></td>
+                            <td>
+                                <Link 
+                                to={`/product/${item.product.id}`}
+                                key={item.product.id}
+                                ><img src={ item.product.image } />
+                                </Link>
+                            </td>
                             <td>{ item.product.name }</td>
                             <td>{
                                 ( item.quantity < item.product.inventory )
@@ -34,7 +37,6 @@ const CartItems = (props) => {
                             }</td>
                             <td>{ item.cost }</td>
                         </tr>
-                        </Link>
                     ))
                 }
                 </tbody>
