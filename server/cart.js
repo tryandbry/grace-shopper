@@ -3,18 +3,8 @@
 const db = require('APP/db');
 const Item = db.model('item');
 const Product = db.model('product');
-// const Cart = db.model('cart');
-// const User = db.model('user');
-
-/*
-Get cart
-Add item to cart
--> param : get item
-Delete item
-Update quantity on item
-
-see https://github.com/ehacinom/checkpoint-express-review/blob/master/api/index.js
-*/
+const Cart = db.model('cart');
+const User = db.model('user');
 
 module.exports = require('express').Router()
     .get('/', (req, res, next) => {
@@ -87,16 +77,16 @@ module.exports = require('express').Router()
                 return Promise.all(req.cart.setItems([item]), item)
             })
             // .spread((cartPromise, item) => res.status(201).send(item))
-            .then(() => res.status(201).send(req.cart))
-            .catch(next); 
+            .then(() => res.status(201).send(req.cart)) // return what?
+            .catch(next);
     })
-    .param('itemId', (req, res, next, itemId) => {        
+    .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);
         else {
-        
+
             // itemId
             req.itemId = itemId;
-        
+
             Item
                 .findById(itemId)
                 .then(item => {
@@ -118,7 +108,6 @@ module.exports = require('express').Router()
         console.log('here we are updating a cart item /api/:userId/cart/:itemId')
         console.log('ids', req.userId, req.itemId)
         console.log('and finally req.body', req.body)
-    
+
         req.item.update(req.body).then(item => res.status(200).send(item));
-    }) 
-    
+    })

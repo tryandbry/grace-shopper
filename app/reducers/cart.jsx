@@ -54,7 +54,6 @@ export const getCart = (userId) => {
 export const getItem = (product, quantity, userId) => {
     let backendRoute = `/api/user/${userId}/cart`;
     if (isNaN(userId)) backendRoute = '/api/guest/cart';
-
     return dispatch => axios
         .post(`/api/user/${userId}/cart`, { product, quantity })
         .then(res => res.data)
