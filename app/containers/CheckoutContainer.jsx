@@ -41,6 +41,12 @@ class CheckoutContainer extends React.Component {
       this.setState({flowState: 2});
     }
 
+    onSubmitBuy = (event)=>{
+      event.preventDefault();
+      console.log("submitted!",this.state);
+      this.setState({flowState: 3});
+    }
+
     onChange = (type,event)=>{
       this.setState({[type]: event.target.value});
     }
@@ -63,10 +69,9 @@ class CheckoutContainer extends React.Component {
 	      title={"Billing Address"}
 	    />
 	    : this.state.flowState === 2 ?
-	    <Payment
-	      onSubmit={this.onSubmitPayment}
-	      onChange={this.onChange}
-	      title={"Billing Address"}
+	    <Review
+	      onSubmit={this.onSubmitBuy}
+	      title={"Review"}
 	    />
 	    : ""}
 	  </div>

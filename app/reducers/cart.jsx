@@ -62,4 +62,3 @@ export const getItem = (product, quantity, userId) => {
         .then(item => dispatch(addItem(item)))
         .catch(() => console.log('error in getItem'));
 }
-
