@@ -26,6 +26,9 @@ module.exports = require('express').Router()
           none, will be logged in : seriously confused
         */
 
+        // note, only api/user/:userId/cart for each user
+        // others use api/guest/cart
+
         console.log(
             'WE ARE GETTING CART',
             'This is req.cart',
@@ -43,7 +46,7 @@ module.exports = require('express').Router()
         You must send as your post (after clicking button on product page)
             req.body = { product , quantity } user/:userid/cart
         */
-    
+        
         // put in some checks to make sure the data is formatted correctly
     
         const product = req.body.product;
@@ -73,6 +76,9 @@ module.exports = require('express').Router()
                     'this is the quantity',
                     quantity
                 )
+            
+                // save to session
+                req.session.cart.push(item);
             
                 // setItems or setItem?
                 // THIS IS ALSO NOT GOING TO WORK WELL

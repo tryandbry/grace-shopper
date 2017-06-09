@@ -37,17 +37,21 @@ export default function reducer(state = initialState, action) {
 }
 
 // action-dispatcher
+// user: gets cart from db, saves it to session and to store
+// guest: saves empty cart to store
 export const getCart = (userId) => {
-    if (isNaN(userId)) 
-        return dispatch => dispatch(setCart([]))
-    return dispatch => axios
+    if (isNaN(userId)) return dispatch => dispatch(setCart([]));
+    else return dispatch => axios
         .get(`/api/user/${userId}/cart`)
         .then(res => res.data)
         .then(cart => dispatch(setCart(cart)))
         .catch(console.error.bind(console));
 }
 
-export const getItem = (userId, product, quantity) => {
+// user: posts item to db, saves to session and to store
+// guest: saves to store
+export const getItem = (product, quantity, userId) => {
+    if (isNaN(userId)) return dispatch(addItem({product, quantity}));
     return dispatch => axios
         .post(`/api/user/${userId}/cart`, {
             product,

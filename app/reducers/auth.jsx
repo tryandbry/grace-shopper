@@ -26,7 +26,7 @@ const testUser = {
 export default function reducer (state=null, action) {
     switch (action.type) {
         case AUTHENTICATED:
-            return action.user || testUser
+            return action.user //|| testUser
     }
     return state
 }
@@ -53,7 +53,7 @@ export const whoami = () =>
         .then(user => dispatch(authenticated(user)))
         .catch(err => dispatch(authenticated(null)))
         .then(auth => {
-            // also get the cart on the session
+            // also get the cart on the session + the store
             if (auth.user) return getCart(auth.user.id);
             else return getCart();
         })

@@ -34,17 +34,7 @@ module.exports = require('express').Router()
             .then(users => res.json(users))
             .catch(next)
     )
-    .post('/', (req, res, next) => {
-        
-        // WHAT"S HAPPENING HERE
-        // console.log(req.session)
-        // sessionOptions = {} // sessionKey = "session" // session = Session {}
-        console.log(Object.keys(req))
-        console.log(Object.keys(req.sessionCookies))
-        console.log(req.sessionCookies.keys)
-        
-        
-        
+    .post('/', (req, res, next) => {        
         User
             .create(req.body)
             .then(user => res.status(201).json(user))
