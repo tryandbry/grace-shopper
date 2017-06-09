@@ -19,9 +19,8 @@ import CheckoutContainer from './containers/CheckoutContainer'
 import Bom from './components/Bom'
 import { fetchBom } from './reducers/bom';
 
-import { getProducts, getCategories } from './reducers/catalog';
+import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
-
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -29,7 +28,7 @@ const ExampleApp = connect(
   ({ user, children }) =>
     <div>
       <nav>
-        {user ? <WhoAmI/> : <Login/>}
+        {user.id ? <WhoAmI/> : <Login/>}
       </nav>
       <Sidebar />
       {children}
@@ -40,6 +39,7 @@ const onEnter = function () {
     store.dispatch(getProducts())
     store.dispatch(getCategories())
 }
+
 
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;
@@ -58,7 +58,7 @@ render(
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
-                <Route path="/cart" component={Cart} />    
+                <Route path="/user/:userId/cart" component={Cart} />    
                 <Route path="/checkout" component={CheckoutContainer} />    
             </Route>
 	    <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} /> 
