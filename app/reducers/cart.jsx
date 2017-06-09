@@ -59,6 +59,6 @@ export const getItem = (product, quantity, userId) => {
         .post(`/api/user/${userId}/cart`, { product, quantity })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
-        .catch(console.error.bind(console));
+        .catch(()=>console.log('error in getItem'));
 
 }

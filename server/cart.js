@@ -48,7 +48,7 @@ module.exports = require('express').Router()
         */
         
         // put in some checks to make sure the data is formatted correctly
-    
+
         const product = req.body.product;
         const quantity = req.body.quantity;
         // no discount yet
@@ -86,7 +86,9 @@ module.exports = require('express').Router()
                 // cause this is a magic method welp
                 return Promise.all(req.cart.setItems([item]), item)
             })
-            .spread((cartPromise, item) => res.status(201).send(item))
+            // .spread((cartPromise, item) => res.status(201).send(item))
+            .then(() => res.status(201).send(req.cart))
+            .catch(next); 
     })
     .param('itemId', (req, res, next, itemId) => {        
         if (isNaN(itemId)) res.sendStatus(404);
@@ -118,11 +120,5 @@ module.exports = require('express').Router()
         console.log('and finally req.body', req.body)
     
         req.item.update(req.body).then(item => res.status(200).send(item));
-    })
-
-
-
-    
-    
-    
+    }) 
     
