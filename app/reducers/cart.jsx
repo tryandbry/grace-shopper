@@ -38,11 +38,12 @@ export default function reducer(state = initialState, action) {
 
 // action-dispatcher
 // user: gets cart from db, saves it to session and to store
-// guest: saves empty cart to store
+// guest: saves empty cart to store and session
 export const getCart = (userId) => {
-    if (isNaN(userId)) return dispatch => dispatch(setCart([]));
-    else return dispatch => axios
-        .get(`/api/user/${userId}/cart`)
+    let backendRoute = `/api/user/${userId}/cart`;
+    if (isNaN(userId)) backendRoute = '/api/guest/cart';
+    return dispatch => axios
+        .get(backendRoute)
         .then(res => res.data)
         .then(cart => dispatch(setCart(cart)))
         .catch(console.error.bind(console));
@@ -51,12 +52,11 @@ export const getCart = (userId) => {
 // user: posts item to db, saves to session and to store
 // guest: saves to store
 export const getItem = (product, quantity, userId) => {
-    if (isNaN(userId)) return dispatch(addItem({product, quantity}));
+    let backendRoute = `/api/user/${userId}/cart`;
+    if (isNaN(userId)) backendRoute = '/api/guest/cart';
+
     return dispatch => axios
-        .post(`/api/user/${userId}/cart`, {
-            product,
-            quantity
-        })
+        .post(`/api/user/${userId}/cart`, { product, quantity })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
         .catch(console.error.bind(console));

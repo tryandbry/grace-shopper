@@ -26,7 +26,7 @@ const testUser = {
 export default function reducer (state=null, action) {
     switch (action.type) {
         case AUTHENTICATED:
-            return action.user //|| testUser
+            return action.user // || testUser
     }
     return state
 }
