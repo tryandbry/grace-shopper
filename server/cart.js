@@ -11,29 +11,36 @@ module.exports = require('express').Router()
         res.status(200).send({ "hey": "hey", "cart": req.cart })
     )
     .post('/', (req, res, next) => {
-        console.log('what is inside me? ', req.body)
         let quantity = req.body.quantity
         let cost = req.body.product.cost
         let cartId;
-        User.findById(req.body.userId, {
+        let userId = req.body.userId
+        //let bomId;
+
+        User.findById(userId, {
             include: {
-                model: Cart
+                model: Cart,
             }
         })
-            //**********************grab userId and cartId and add them to newItem********************************
+                //********************** Need find bomId which can be grabbed using userId ***************
+            //**********************grab bomId and add them to newItem********************************
             .then(user => {
-                console.log('user!#M!#$MM!#$M#M$M#M$M#$M ', user);
-                // console.log(Object.keys(newItem.__proto__));
-                res.sendStatus(200);
+                cartId = user.cart.id;
+            })
+            .then(() => {
+        Item.build({
+            quantity,
+            cost,
+            discount: .45,
+            product_id: req.body.product.id,
+            cart_id: cartId,
+            //bom_id: bomId
+        }).save()
+            .then(() => res.sendStatus(200))
+    })
+
             })
 
-       
-        // let newItem = Item.build({
-        //     quantity,
-        //     cost,
-        //     discount: .45
-        // })
-    })
     .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);
         else {
