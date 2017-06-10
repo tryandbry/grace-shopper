@@ -27,24 +27,81 @@ module.exports = require('express').Router()
         console.log('hitting post to user/id/cart')
 
         const product = req.body.product;
-        const quantity = req.body.quantity;
+        const quantity = Number(req.body.quantity);
         // no discount yet
+        
+        // don't create item if exists
+        const indexOfItem = req.cart
+            .reduce((index, item, i) =>
+                index || (item.product.id == product.id) ? i : index
+            , null);
 
-        Item
-            .create({
-                quantity : Number(quantity),
-                cost : product.cost,
-            })
-            .then(item => Product
-                .findById(product.id)
-                .then(product => item.setProduct(product))
-            )
-            .then(item => {
-                req.cart.setItems([item])
-                req.session.cart = cart // save to session
-                res.status(201).send(item)
-            })
-            .catch(next);
+        if (isNaN(indexOfItem))
+            Item
+                .create({
+                    quantity : quantity,
+                    cost : product.cost,
+                })
+                .then(item => Product
+                    .findById(product.id)
+                    .then(product => item.setProduct(product))
+                )
+                .then(item => {
+                    req.cart.setItems([item])
+                    res.status(201).send(item)
+                })
+                .catch(next);
+        else {
+            /* 
+            Possibly should
+            
+            req.cart[indexOfItem]
+                .getItem({ where : { id : item.id } })
+                .then(item => item
+                    .update({ 
+                        key : 'quantity',
+                        value : quantity
+                    })
+                )
+                .then(item => {
+                    // req.cart should be auto updated hopefully??
+                    
+                    res.status(204).send(item)
+                })
+                .catch(next);
+                
+            
+            
+            also possibly shouldn't use update instance method
+            https://github.com/sequelize/sequelize/issues/2910
+            
+            */
+            
+            
+            
+            const item = req.cart[indexOfItem];
+            Item
+                .findById(item.id)
+                .then(item => item
+                    .update({ 
+                        key : 'quantity',
+                        value : quantity
+                    })
+                )
+                .then(item => {
+                    /* 
+                    question : if I update a value, does the cart also 
+                    update automatically? does sequlize update my associations
+                    too?
+                    */
+                    console.log('\n\n\n\nIf I update a value, does the cart also update? This is in /api/user/:userId/cart POST with item already inside of cart.')
+                    console.log(req.cart)
+                    // req.cart.setItems()
+                    res.status(204).send(item)
+                })
+                .catch(next);
+        }
+        
     })
     .param('itemId', (req, res, next, itemId) => {
         if (isNaN(itemId)) res.sendStatus(404);

@@ -44,8 +44,6 @@ export const getCart = (userId) => {
         ? '/api/guest/cart'
         : `/api/user/${userId}/cart`;
     
-    console.log('THIS IS ACTION DISPATCHER GETCART', backendRoute)
-    
     return dispatch => axios
         .get(backendRoute)
         .then(res => res.data)
@@ -59,8 +57,7 @@ export const getItem = (product, quantity, userId) => {
     const backendRoute = isNaN(userId)
         ? '/api/guest/cart'
         : `/api/user/${userId}/cart`;
-    console.log('\n\n\n\n', userId)
-    console.log('THIS IS ACTION DISPATCHER GETITEM', backendRoute)
+
     return dispatch => axios
         .post(backendRoute, { product, quantity })
         .then(res => res.data)
