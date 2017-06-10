@@ -6,28 +6,35 @@ const FilterCategory = (props) => {
     const categories = props.categories;
     const selectCategory = props.selectCategory;
 
+    console.log("Categories: ",categories);
+
     return (
-        <div>
-        <ul className="list-group">
-            <li 
-                className="list-group-item"
-                onMouseOver={() => selectCategory('all')}
-            >
-                all
-            </li>
-            { 
-                categories && categories
-                    .map(category => (
-                        <li 
-                            className="list-group-item"
-                            key={category.id}
-                            onMouseOver={() => selectCategory(category.id)}
-                        >
-                            {category.name}
-                        </li>
-                    ))
-            }
-        </ul>
+        <div id="filtercategories">
+	  <h3>Categories</h3>
+	  <div className="radio">
+	    <label>
+	      <input 
+	        type="radio"
+		name="categoryRadios"
+		id="categoryAll"
+		value="all"
+		onChange={()=>selectCategory('all')}
+	      />all
+	    </label>
+	  </div>
+	  {categories && categories.map(category =>
+	    <div className="radio">
+	      <label>
+		<input 
+		  type="radio"
+		  name="categoryRadios"
+		  id={`category${category.name}`}
+                  value={category.id}
+                  onChange={()=>selectCategory(category.id)}
+		/>{category.name}
+	      </label>
+	    </div>
+	  )}
         </div>
     );
 }
