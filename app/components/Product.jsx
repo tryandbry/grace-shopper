@@ -59,20 +59,29 @@ class Product extends Component {
         const addItemToCart = this.addItemToCart;
 
         return (
-            <div className="product">
+            <div className="container product">
                 <div>
-                    <h3>{product.name}</h3>
-                    <img src={product.image} className="img-thumbnail" />
-                    <small> {product.description} </small>
-                    <span> Quantity {product.inventory} </span> 
-                    <span> ${product.cost} </span>
+
+                    <div className="row">
+                        <h3>{product.name}</h3>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-2 col-md-2">
+                            <img src={product.image} className="img-thumbnail" />
+                        </div>
+                        <div className="col-lg-2 col-md-2">
+                            <span> In Stock: {product.inventory} </span>
+                            <span> price: ${product.cost} </span>
+                        </div>
+                    </div>
+                    <small> Product Description: {product.description} </small>
 
                     <ProductQuantityChanger 
                         changeQuantity={this.changeQuantity}
                         handleChange={this.handleChange}
                         quantity={this.state.quantity}
                     />
-        
+
                     <button 
                         type="button"
                         className="btn btn-success" 
