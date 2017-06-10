@@ -10,9 +10,9 @@ the entire point of this is to give the guest access to their cart on the sessio
 
 module.exports = require('express').Router()
     .get('/cart', (req, res, next) => {
-        // if (!req.session.cart) req.session.cart = [];
+        console.log('\nsession before getting cart', req.session)
         if (!req.session.cart) req.session.cart = {};
-
+        console.log(req.session)
         // because cart is now an object (for aggregating items)
         // we need to send back to the component an array
         const cart = Object
@@ -32,12 +32,14 @@ module.exports = require('express').Router()
             console.log(item)
             console.log('original', item.quantity)
             item.quantity = item.quantity + quantity;
+            item.updated_at = Date.now();
             console.log(`original + ${quantity}`, req.session.cart[product.id])
         } else {
             item = {
                 quantity : Number(quantity),
-                cost : product.cost,
-                product : product
+                cost : +product.cost,
+                product : product,
+                updated_at : Date.now()
             }
             // save to session
             req.session.cart[product.id] = item;

@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CartItem from './CartItem';
+// import { sortByDateDesc } from '../utils';
 
 // import ProductQuantityChanger from './ProductQuantityChanger';
 
-
 const Cart = (props) => {
-    const items = props.items;
+    /// okay guys
+    /// this doesn't sort for some reason
+    const items = props.items.sort((a, b) => b.updated_at - a.updated_at);
+    console.log(items)
     
     return (
         <div>

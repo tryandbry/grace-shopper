@@ -14,7 +14,7 @@ const ProductQuantityChanger = (props) => {
                         data-action="minus" 
                         data-target="font-size" 
                         onClick={changeQuantity} 
-                    ><span className="glyphicon glyphicon-minus"></span>-
+                    ><span data-action="minus" className="glyphicon glyphicon-minus"></span>
                     </button>
                 </span>
                 <input 
@@ -30,7 +30,7 @@ const ProductQuantityChanger = (props) => {
                         data-action="plus" 
                         data-target="font-size" 
                         onClick={changeQuantity}
-                    ><span className="glyphicon glyphicon-plus"></span>+
+                    ><span data-action="plus" className="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
             </div>

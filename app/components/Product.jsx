@@ -12,8 +12,10 @@ class Product extends Component {
         this.state = {
             quantity: 1
         }
+        
         this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.addItemToCart = this.addItemToCart.bind(this);
     }
 
     changeQuantity(e) {
@@ -30,26 +32,31 @@ class Product extends Component {
     }
 
     handleChange(evt) {
-        const value = evt.target.value;
-        if (value === "") {
-            this.setState({
-                quantity: ""
-            })
-        }
-        else {
-            if (!value.match(/[^0-9"]/)) {
-                this.setState({
-                    quantity: +value
-                })
-            }
-
-        }
+        const value = +evt.target.value;
+        if (isNaN(value)) return;
+        this.setState({ quantity: value })
+    }
+    
+    addItemToCart(e) {
+        e.preventDefault();
+        if (this.state.quantity == 0) return;
+        
+        const product = this.props.selectedProduct;
+        const userId = this.props.userId;
+        const getItem = this.props.getItem;
+        
+        let smallProduct = (
+            ({ id, name, image, cost, description, inventory, updated_at }) => 
+            ({ id, name, image, cost, description, inventory, updated_at })
+        )(product);
+        
+        getItem(smallProduct, this.state.quantity, userId);
+        this.setState({ quantity: 0 });
     }
 
     render() {
         const product = this.props.selectedProduct;
-        const addItemToCart = this.props.getItem;
-        const userId = this.props.userId;
+        const addItemToCart = this.addItemToCart;
 
         return (
             <div className="product">
@@ -67,9 +74,9 @@ class Product extends Component {
                     />
                     
                     <button 
-                        type="button" 
+                        type="button"
                         className="btn btn-success" 
-                        onClick={() => addItemToCart(product, this.state.quantity, userId)}
+                        onClick={addItemToCart}
                     >Add Rock
                     </button>
                 </div>
@@ -90,11 +97,11 @@ class Product extends Component {
 
 
 const mapState = (state) => ({
-    selectedProduct: state.product.product,
-    userId: state.auth.id
+    selectedProduct : state.product.product,
+    userId : state.auth.id
 });
-const mapDispatch = {
-    getItem,
-};
+const mapDispatch = dispatch => dispatch => ({
+    getItem : (product, quantity, userId) => dispatch(getItem(product, quantity, userId))
+});
 
 export default connect(mapState, mapDispatch)(Product);
