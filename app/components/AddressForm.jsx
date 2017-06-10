@@ -16,27 +16,42 @@ export default class AddressForm extends React.Component {
     const title = this.props.title;
 
     return(
-      <div>
-	<h2>Address Form</h2>
+      <div id="shipping">
+	<h2>Shipping Information</h2>
 	<form className="form-horizontal" onSubmit={onSubmit}>
 	  <fieldset>
 	    <legend>{title}</legend>
-	    <div className="form-group">
+	    <div className="form-group col-lg-12 col-md-12">
 	      <label>Address</label>
-	      <input name="address1" onChange={onChangeAddress1} />
+	      <input
+	        className="form-control"
+		name="address1"
+		onChange={onChangeAddress1} />
 	      <label>Address 2</label>
-	      <input name="address2" onChange={onChangeAddress2} />
+	      <input
+	        className="form-control"
+		name="address2"
+		onChange={onChangeAddress2} />
 	      <label>City</label>
-	      <input name="city" onChange={onChangeCity} />
+	      <input
+	        className="form-control"
+		name="city"
+		onChange={onChangeCity} />
 	      <label>State</label>
-	      <input name="state" onChange={onChangeState} />
+	      <input
+	        className="form-control"
+	        name="state"
+		onChange={onChangeState} />
 	      <label>Zip Code</label>
-	      <input name="zipcode" onChange={onChangeZip} />
+	      <input
+	        className="form-control"
+		name="zipcode"
+		onChange={onChangeZip} />
 	    </div>
-	    <div className="form-group">
+	    <div className="form-group col-lg-12 col-md-12">
 	      <button
 		type="submit"
-		className="btn btn-success">
+		className="btn btn-default">
 		Submit Address
 	      </button>
 	    </div>
