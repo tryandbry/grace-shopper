@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux';
 import {fetchBom} from '../reducers/bom';
+import {printPrice} from 'APP/utils';
 
 const TAX_RATE = 0.11;
 
@@ -29,6 +30,7 @@ class Bom extends React.Component {
     },[]);
   }
 
+  /*
   // Name: printPrice
   // Purpose: Formats a float into a "price" string
   // ----------------------------------
@@ -52,6 +54,7 @@ class Bom extends React.Component {
     }
     return `$${dollars}.${cents}`;
   }
+  */
 
   render(){
     console.log("Bom component hit!",this.props);
@@ -102,9 +105,9 @@ class Bom extends React.Component {
 		    <td>{lineitem.id}</td>
 		    <td>{lineitem.name}</td>
 		    <td>{lineitem.description}</td>
-		    <td>{this.printPrice(lineitem.price)}</td>
+		    <td>{printPrice(lineitem.price)}</td>
 		    <td>{lineitem.quantity}</td>
-		    <td>{this.printPrice(lineitem.extended)}</td>
+		    <td>{printPrice(lineitem.extended)}</td>
 		  </tr>
 		)}
 	    </tbody>
@@ -114,19 +117,19 @@ class Bom extends React.Component {
 	    <tbody>
 	      <tr>
 	        <td>Subtotal</td>
-	        <td>{this.printPrice(subtotal)}</td>
+	        <td>{printPrice(subtotal)}</td>
 	      </tr>
 	      <tr>
 	        <td>Tax</td>
-	        <td>{this.printPrice(tax)}</td>
+	        <td>{printPrice(tax)}</td>
 	      </tr>
 	      <tr>
 	        <td>Shipping and Handling</td>
-	        <td>{this.printPrice(shippingAndHandling)}</td>
+	        <td>{printPrice(shippingAndHandling)}</td>
 	      </tr>
 	      <tr>
 	        <td>Grand Total</td>
-	        <td>{this.printPrice(grandtotal)}</td>
+	        <td>{printPrice(grandtotal)}</td>
 	      </tr>
 	    </tbody>
 	  </table>
