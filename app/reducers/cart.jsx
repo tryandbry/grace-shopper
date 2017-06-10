@@ -60,5 +60,5 @@ export const getItem = (product, quantity, userId) => {
         .post(backendRoute, { product, quantity })
         .then(res => res.data)
         .then(item => dispatch(addItem(item)))
-        .catch(() => console.log('error in getItem'));
+        .catch(console.error.bind(console));
 }

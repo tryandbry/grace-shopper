@@ -12,6 +12,7 @@ const setBom = payload=>({
 });
 const unsetBom = bom=>({type: UNSET_BOM});
 
+
 // initial state
 const initialState = {
   id: -1,
@@ -57,3 +58,4 @@ export const fetchBom = id=>{
       .catch(console.error);
     }
 }
+

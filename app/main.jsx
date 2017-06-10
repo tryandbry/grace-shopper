@@ -12,15 +12,18 @@ import NotFound from './components/NotFound'
 
 import FilterCatalog from './components/FilterCatalog'
 
+import UserOrders from './components/UserOrders'
+import UserPage from './components/UserPage'
 import Product from './components/Product'
 import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 import CheckoutContainer from './containers/CheckoutContainer'
 import Bom from './components/Bom'
-import { fetchBom } from './reducers/bom';
+import { fetchBom } from './reducers/bom'
 
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
+import { getUsersOrders } from './reducers/user'
 
 const ExampleApp = connect(
   ({ auth }) => ({ user: auth })
@@ -43,12 +46,16 @@ const onEnter = function () {
 
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;
-    store.dispatch(getProduct(parseInt(productId)))
+    store.dispatch(getProduct(parseInt(productId)));
 }
 
 const fetchBomOnEnter = (nextRouterState)=>{
-  console.log("fetchBomOnEnter: ",nextRouterState);
   fetchBom(nextRouterState.params.id)(store.dispatch);
+}
+
+const onUserOrdersEnter = nextRouterState => {
+    const userId = nextRouterState.params.userId;
+    store.dispatch(getUsersOrders(parseInt(userId)));
 }
 
 render(
@@ -59,7 +66,9 @@ render(
                 <Route path="/catalog" component={FilterCatalog} />
                 <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
                 <Route path="/user/:userId/cart" component={Cart} />    
-                <Route path="/checkout" component={CheckoutContainer} />    
+                <Route path="/checkout" component={CheckoutContainer} />
+                <Route path="/user/:userId/account" component={UserPage} />  
+                <Route path="/user/:userId/account/orders" component={UserOrders} />   
             </Route>
 	    <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} /> 
             <Route path='*' component={NotFound} />
@@ -67,3 +76,4 @@ render(
     </Provider>,
     document.getElementById('main')
 )
+

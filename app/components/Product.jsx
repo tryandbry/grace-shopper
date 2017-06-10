@@ -60,7 +60,7 @@ class Product extends Component {
                     <img src={product.image} className="img-thumbnail" />
                     <small> {product.description} </small>
                     <span> {product.inventory} </span> 
-                    <span> {product.cost} </span>
+                    <span> ${product.cost} </span>
                     <div className="col-lg-2">
                         <div className="input-group">
                             <span className="input-group-btn">
