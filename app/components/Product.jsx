@@ -64,15 +64,15 @@ class Product extends Component {
                     <h3>{product.name}</h3>
                     <img src={product.image} className="img-thumbnail" />
                     <small> {product.description} </small>
-                    <span> {product.inventory} </span> 
-                    <span> {product.cost} </span>
-                    
+                    <span> Quantity {product.inventory} </span> 
+                    <span> ${product.cost} </span>
+
                     <ProductQuantityChanger 
                         changeQuantity={this.changeQuantity}
                         handleChange={this.handleChange}
                         quantity={this.state.quantity}
                     />
-                    
+        
                     <button 
                         type="button"
                         className="btn btn-success" 
