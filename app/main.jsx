@@ -50,10 +50,10 @@ const Main = ({ user, children }) => (
     </nav>
     <div className="row">
       <div className="col-lg-2 col-md-2">
-        <Sidebar />
+	<Sidebar />
       </div>
       <div className="col-lg-10 col-md-10">
-        {children}
+	{children}
       </div>
     </div>
   </div>
