@@ -2,44 +2,57 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
-// userId getting passed in through props, will bomId or need grab bomId in db
-
-const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart  }) => {
-
-    return (
-        <div className="product">
-            <div>
+const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart  }) => (
+    <div className="container product">
+        <div>
+            <div className="row">
                 <h3>{product.name}</h3>
-                <img src={product.image} className="img-thumbnail" />
-                <small> {product.description} </small>
-                <span> Quantity {product.inventory} </span> 
-                <span> ${product.cost} </span>
-
-                <ProductQuantityChanger 
-                    changeQuantity={changeQuantity}
-                    handleChange={handleChange}
-                    quantity={quantity}
-                />
-    
-                <button 
-                    type="button"
-                    className="btn btn-success" 
-                    onClick={addItemToCart}
-                >Add Rock
-                </button>
             </div>
-            <div>
-                {
-                    product.reviews && product.reviews.map(review => (
-                        <div key={review.id}>
-                            <h5><span>{review.user.fullName}</span></h5>
-                            <small>{review.text}</small>
-                        </div>
-                    ))
-                }
+            <div className="row">
+                <div className="col-lg-2 col-md-2">
+                    <img src={product.image} className="img-thumbnail" />
+                </div>
+                <div className="col-lg-2 col-md-2">
+                    <div className="row">
+                    <span className="stock"> In Stock: </span> <span className="quantity"> {product.inventory} </span>
+                    </div>
+                    <div className="row">
+                    <span className="stock"> price: </span> <span className="cost"> ${product.cost} </span>
+                    </div>
+                </div>
+            </div>
+            <div className="row purchase">
+            <ProductQuantityChanger 
+                changeQuantity={changeQuantity}
+                handleChange={handleChange}
+                quantity={quantity}
+            />
+            <button 
+                type="button"
+                className="btn btn-success" 
+                onClick={addItemToCart}
+            >Add Rock
+            </button>
             </div>
         </div>
-    )
-}
+        <div>
+            <div className="row description">
+                <small className="descriptionHeader"> Product Description </small>
+            </div>
+            <div className="row">
+                <div className="well well-lg"> {product.description} </div>
+            </div>
+            {
+                product.reviews && product.reviews.map(review => (
+                    <div key={review.id}>
+                        <h5><span>{review.user.fullName}</span></h5>
+                        <small>{review.text}</small>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+)
+
 
 export default Product;
