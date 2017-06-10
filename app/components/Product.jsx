@@ -70,26 +70,35 @@ class Product extends Component {
                             <img src={product.image} className="img-thumbnail" />
                         </div>
                         <div className="col-lg-2 col-md-2">
-                            <span> In Stock: {product.inventory} </span>
-                            <span> price: ${product.cost} </span>
+                            <div className="row">
+                            <span className="stock"> In Stock: </span> <span className="quantity"> {product.inventory} </span>
+                            </div>
+                            <div className="row">
+                            <span className="stock"> price: </span> <span className="cost"> ${product.cost} </span>
+                            </div>
                         </div>
                     </div>
-                    <small> Product Description: {product.description} </small>
-
+                    <div className="row purchase">
                     <ProductQuantityChanger 
                         changeQuantity={this.changeQuantity}
                         handleChange={this.handleChange}
                         quantity={this.state.quantity}
                     />
-
                     <button 
                         type="button"
                         className="btn btn-success" 
                         onClick={addItemToCart}
                     >Add Rock
                     </button>
+                    </div>
                 </div>
                 <div>
+                    <div className="row description">
+                        <small className="descriptionHeader"> Product Description </small>
+                    </div>
+                    <div className="row">
+                        <div className="well well-lg"> {product.description} </div>
+                    </div>
                     {
                         product.reviews && product.reviews.map(review => (
                             <div key={review.id}>
