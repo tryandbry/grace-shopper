@@ -16,11 +16,14 @@ import Product from './components/Product'
 import Sidebar from './components/Sidebar'
 import Cart from './components/Cart'
 import CheckoutContainer from './containers/CheckoutContainer'
+import ProductContainer from './containers/ProductContainer'
+
 import Bom from './components/Bom'
 import { fetchBom } from './reducers/bom';
 
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
+
 
 /*
 const Main = ({ user, children }) => (
@@ -39,7 +42,7 @@ const Main = ({ user, children }) => (
         <nav className="navbar navbar-inverse bg-inverse">
             <div className="container">
                 <div className="navbar-header">
-                    <a className="navbar-brand" href="#">Rocks</a>
+                    <a className="navbar-brand" href="/">Rocks</a>
                 </div>
                 <div className="collapse navbar-collapse">
                     <ul className="nav navbar-nav navigationBtn">
@@ -47,10 +50,10 @@ const Main = ({ user, children }) => (
                             <a className="nav-link" href="/catalog">Home<span/></a>
                         </li>
                         <li className="nav-item">
-                            <a class="nav-link" href="INSERT_LINK_TO_USERPAGE_HERE">Account</a>
+                            <a className="nav-link" href="INSERT_LINK_TO_USERPAGE_HERE">Account</a>
                         </li>
                         <li className="nav-item">
-                            <a class="nav-link" href="INSERT_LINK_TO_ABOUTPAGE_HERE">About</a>
+                            <a className="nav-link" href="INSERT_LINK_TO_ABOUTPAGE_HERE">About</a>
                         </li>
                     </ul>
                     <div className="nav navbar-nav navbar-right">
@@ -103,7 +106,7 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
-                <Route path="/product/:id" component={Product} onEnter={onProductEnter} />
+                <Route path="/product/:id" component={ProductContainer} onEnter={onProductEnter} />
                 <Route path="/cart" component={Cart} />
                 <Route path="/checkout" component={CheckoutContainer} />
             </Route>
