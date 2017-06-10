@@ -22,7 +22,7 @@ import { fetchBom } from './reducers/bom';
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
 
-
+/*
 const Main = ({ user, children }) => (
     <div>
       <nav>
@@ -31,6 +31,32 @@ const Main = ({ user, children }) => (
       <Sidebar />
       {children}
     </div>
+)
+*/
+
+const Main = ({ user, children }) => (
+  <div className="container">
+    <nav className="navbar navbar-default">
+      <div className="container">
+	<div className="navbar-header">
+	  <a className="navbar-brand" href="#">Rocks</a>
+	</div>
+	<div className="collapse navbar-collapse">
+	  <div className="navbar-form">
+	    {user.id ? <WhoAmI/> : <Login/>}
+	  </div>
+	</div>
+      </div>
+    </nav>
+    <div className="row">
+      <div className="col-lg-2 col-md-2">
+        <Sidebar />
+      </div>
+      <div className="col-lg-10 col-md-10">
+        {children}
+      </div>
+    </div>
+  </div>
 )
 
 const mapState = ({ auth }) => ({ user: auth })
