@@ -66,9 +66,9 @@ class Bom extends React.Component {
     const grandtotal = subtotal + tax + shippingAndHandling;
 
     return(
-      <div className="table-responsive">
-	<h2>BOM</h2>
-	<div id="shipping">
+      <div className="col-lg-12 col-md-12">
+	<h2>Invoice</h2>
+	<div id="shipping" className="table-responsive">
 	  <h3>Order {id}</h3>
 	  <table className="table">
 	    <thead>
@@ -82,20 +82,20 @@ class Bom extends React.Component {
 	      </tr>
 	    </tbody>
 	  </table>
-	  <table className="table">
+	  <table className="table table-striped">
 	    <thead>
 	      <tr>
-		<th>Line Items</th>
+		<th colSpan={6}>Line Items</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	        <tr>
-		  <td>Item</td>
-		  <td>Name</td>
-		  <td>Description</td>
-		  <td>Unit Price</td>
-		  <td>Quantity</td>
-		  <td>Extended Price</td>
+		  <th>Item</th>
+		  <th>Name</th>
+		  <th>Description</th>
+		  <th>Unit Price</th>
+		  <th>Quantity</th>
+		  <th>Extended Price</th>
 		</tr>
 	        {lineItems.map(lineitem=>
 		  <tr key={lineitem.id}>
@@ -110,26 +110,28 @@ class Bom extends React.Component {
 	    </tbody>
 	  </table>
 	  <br />
-	  <table className="table">
-	    <tbody>
-	      <tr>
-	        <td>Subtotal</td>
-	        <td>{this.printPrice(subtotal)}</td>
-	      </tr>
-	      <tr>
-	        <td>Tax</td>
-	        <td>{this.printPrice(tax)}</td>
-	      </tr>
-	      <tr>
-	        <td>Shipping and Handling</td>
-	        <td>{this.printPrice(shippingAndHandling)}</td>
-	      </tr>
-	      <tr>
-	        <td>Grand Total</td>
-	        <td>{this.printPrice(grandtotal)}</td>
-	      </tr>
-	    </tbody>
-	  </table>
+	  <div className="col-lg-6 col-md-6">
+	    <table className="table table-bordered">
+	      <tbody>
+		<tr>
+		  <th>Subtotal</th>
+		  <td>{this.printPrice(subtotal)}</td>
+		</tr>
+		<tr>
+		  <th>Tax</th>
+		  <td>{this.printPrice(tax)}</td>
+		</tr>
+		<tr>
+		  <th>Shipping and Handling</th>
+		  <td>{this.printPrice(shippingAndHandling)}</td>
+		</tr>
+		<tr>
+		  <th>Grand Total</th>
+		  <td>{this.printPrice(grandtotal)}</td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
       </div>
     )
