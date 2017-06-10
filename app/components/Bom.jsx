@@ -113,26 +113,28 @@ class Bom extends React.Component {
 	    </tbody>
 	  </table>
 	  <br />
-	  <table>
-	    <tbody>
-	      <tr>
-	        <td>Subtotal</td>
-	        <td>{printPrice(subtotal)}</td>
-	      </tr>
-	      <tr>
-	        <td>Tax</td>
-	        <td>{printPrice(tax)}</td>
-	      </tr>
-	      <tr>
-	        <td>Shipping and Handling</td>
-	        <td>{printPrice(shippingAndHandling)}</td>
-	      </tr>
-	      <tr>
-	        <td>Grand Total</td>
-	        <td>{printPrice(grandtotal)}</td>
-	      </tr>
-	    </tbody>
-	  </table>
+	  <div className="col-lg-6 col-md-6">
+	    <table className="table table-bordered">
+	      <tbody>
+		<tr>
+		  <td>Subtotal</td>
+		  <td>{printPrice(subtotal)}</td>
+		</tr>
+		<tr>
+		  <td>Tax</td>
+		  <td>{printPrice(tax)}</td>
+		</tr>
+		<tr>
+		  <td>Shipping and Handling</td>
+		  <td>{printPrice(shippingAndHandling)}</td>
+		</tr>
+		<tr>
+		  <td>Grand Total</td>
+		  <td>{printPrice(grandtotal)}</td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
       </div>
     )
