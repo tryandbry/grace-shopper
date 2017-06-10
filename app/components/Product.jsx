@@ -55,45 +55,53 @@ class Product extends Component {
         const userId = this.props.userId;
 
         return (
-            <div className="product">
+            <div className="container product">
                 <div>
-                    <h3>{product.name}</h3>
-                    <img src={product.image} className="img-thumbnail" />
-                    <small> {product.description} </small>
-                    <span> Quantity {product.inventory} </span> 
-                    <span> ${product.cost} </span>
+                    <div className="row">
+                        <h3>{product.name}</h3>
+                    </div>
+                    <div className="row">
+                        <div class="col-lg-2 col-md-2">
+                            <img src={product.image} className="img-thumbnail" />
+                        </div>
+                        <div class="col-lg-2 col-md-2">
+                            <span> In Stock: {product.inventory} </span>
+                            <span> price: ${product.cost} </span>
+                        </div>
+                    </div>
+                    <small> Product Description: {product.description} </small>
                     <div className="col-lg-2">
                         <div className="input-group">
                             <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="minus" 
-                                    data-target="font-size" 
-                                    onClick={() => this.handleMinusQuantity()} 
+                                <button
+                                    className="btn btn-default value-control"
+                                    data-action="minus"
+                                    data-target="font-size"
+                                    onClick={() => this.handleMinusQuantity()}
                                 ><span className="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>
-                            <input 
-                                type="text" 
-                                onChange={this.handleChange} 
-                                value={this.state.quantity} 
-                                className="form-control" 
-                                id="font-size" 
+                            <input
+                                type="text"
+                                onChange={this.handleChange}
+                                value={this.state.quantity}
+                                className="form-control"
+                                id="font-size"
                             />
                             <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="plus" 
-                                    data-target="font-size" 
+                                <button
+                                    className="btn btn-default value-control"
+                                    data-action="plus"
+                                    data-target="font-size"
                                     onClick={() => this.handleAddQuantity()}
                                 ><span className="glyphicon glyphicon-plus"></span>
                                 </button>
                             </span>
                         </div>
                     </div>
-                    <button 
-                        type="button" 
-                        className="btn btn-success" 
+                    <button
+                        type="button"
+                        className="btn btn-success"
                         onClick={() => addItemToCart(product, this.state.quantity, userId)}
                     >Add Rock
                     </button>
