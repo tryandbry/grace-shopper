@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import CartItems from './CartItems';
 
 const Cart = (props) => {
-    const items = props.items || [];
+    const items = props.items;
     
     return (
         <div>

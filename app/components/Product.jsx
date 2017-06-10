@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getItem } from '../reducers/cart';
+import ProductQuantityChanger from './ProductQuantityChanger';
 
 // userId getting passed in through props, will bomId or need grab bomId in db
 
@@ -62,35 +63,14 @@ class Product extends Component {
                     <small> {product.description} </small>
                     <span> {product.inventory} </span> 
                     <span> {product.cost} </span>
-                    <div className="col-lg-2">
-                        <div className="input-group">
-                            <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="minus" 
-                                    data-target="font-size" 
-                                    onClick={() => this.handleMinusQuantity()} 
-                                ><span className="glyphicon glyphicon-minus"></span>-
-                                </button>
-                            </span>
-                            <input 
-                                type="text" 
-                                onChange={this.handleChange} 
-                                value={this.state.quantity} 
-                                className="form-control" 
-                                id="font-size" 
-                            />
-                            <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="plus" 
-                                    data-target="font-size" 
-                                    onClick={() => this.handleAddQuantity()}
-                                ><span className="glyphicon glyphicon-plus"></span>+
-                                </button>
-                            </span>
-                        </div>
-                    </div>
+                    
+                    <ProductQuantityChanger 
+                        handleAddQuantity={this.handleAddQuantity}
+                        handleMinusQuantity={this.handleMinusQuantity}
+                        handleChange={this.handleChange}
+                        quantity={this.state.quantity}
+                    />
+                    
                     <button 
                         type="button" 
                         className="btn btn-success" 
