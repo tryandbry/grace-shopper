@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getItem } from '../reducers/cart';
+import { printPrice } from 'APP/utils';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
 // userId getting passed in through props, will bomId or need grab bomId in db
@@ -25,7 +26,7 @@ class Product extends Component {
         let newQuantity = this.state.quantity;
         
         if (type == 'plus' && (this.state.quantity < maxQuantity)) newQuantity++
-        else if (type == 'minus' && (this.state.quantity > 0)) newQuantity--
+        else if (type == 'minus' && (this.state.quantity > 1)) newQuantity--
         else return;
         
         this.setState({ quantity : newQuantity })
