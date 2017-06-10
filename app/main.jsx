@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
-import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
-import {render} from 'react-dom'
-import {connect, Provider} from 'react-redux'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { render } from 'react-dom'
+import { connect, Provider } from 'react-redux'
 
 import store from './store'
 import Jokes from './components/Jokes'
@@ -35,28 +35,44 @@ const Main = ({ user, children }) => (
 */
 
 const Main = ({ user, children }) => (
-  <div className="container">
-    <nav className="navbar navbar-default">
-      <div className="container">
-	<div className="navbar-header">
-	  <a className="navbar-brand" href="#">Rocks</a>
-	</div>
-	<div className="collapse navbar-collapse">
-	  <div className="navbar-form">
-	    {user.id ? <WhoAmI/> : <Login/>}
-	  </div>
-	</div>
-      </div>
-    </nav>
-    <div className="row">
-      <div className="col-lg-2 col-md-2">
-        <Sidebar />
-      </div>
-      <div className="col-lg-10 col-md-10">
-        {children}
-      </div>
+    <div className="container">
+        <nav className="navbar navbar-inverse bg-inverse">
+            <div className="container">
+                <div className="navbar-header">
+                    <a className="navbar-brand" href="#">Rocks</a>
+                </div>
+                <div className="collapse navbar-collapse">
+                    <ul className="nav navbar-nav navigationBtn">
+                        <li className="nav-item">
+                            <a className="nav-link" href="/catalog">Home<span/></a>
+                        </li>
+                        <li className="nav-item">
+                            <a class="nav-link" href="INSERT_LINK_TO_USERPAGE_HERE">Account</a>
+                        </li>
+                        <li className="nav-item">
+                            <a class="nav-link" href="INSERT_LINK_TO_ABOUTPAGE_HERE">About</a>
+                        </li>
+                    </ul>
+                    <div className="nav navbar-nav navbar-right">
+                        <ul className="navbar-nav">
+                            <li className="nav-link" href="INSERT_CART_LINK_HERE">
+                                <span className="glyphicon glyphicon-shopping-cart cart"></span>
+                            </li>
+                        </ul>
+                        {user.id ? <WhoAmI /> : <Login />}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div className="row">
+            <div className="col-lg-2 col-md-2">
+                <Sidebar />
+            </div>
+            <div className="col-lg-10 col-md-10">
+                {children}
+            </div>
+        </div>
     </div>
-  </div>
 )
 
 const mapState = ({ auth }) => ({ user: auth })
@@ -76,9 +92,9 @@ const onProductEnter = function (nextRouterState) {
     store.dispatch(getProduct(parseInt(productId)))
 }
 
-const fetchBomOnEnter = (nextRouterState)=>{
-  console.log("fetchBomOnEnter: ",nextRouterState);
-  fetchBom(nextRouterState.params.id)(store.dispatch);
+const fetchBomOnEnter = (nextRouterState) => {
+    console.log("fetchBomOnEnter: ", nextRouterState);
+    fetchBom(nextRouterState.params.id)(store.dispatch);
 }
 
 render(
@@ -87,11 +103,11 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
-                <Route path="/product/:id" component={Product} onEnter={onProductEnter}/>
-                <Route path="/cart" component={Cart} />    
-                <Route path="/checkout" component={CheckoutContainer} />    
+                <Route path="/product/:id" component={Product} onEnter={onProductEnter} />
+                <Route path="/cart" component={Cart} />
+                <Route path="/checkout" component={CheckoutContainer} />
             </Route>
-	    <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} /> 
+            <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} />
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,

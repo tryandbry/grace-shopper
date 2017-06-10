@@ -60,8 +60,8 @@ class Product extends Component {
                     <h3>{product.name}</h3>
                     <img src={product.image} className="img-thumbnail" />
                     <small> {product.description} </small>
-                    <span> {product.inventory} </span> 
-                    <span> {product.cost} </span>
+                    <span> Quantity {product.inventory} </span> 
+                    <span> ${product.cost} </span>
                     <div className="col-lg-2">
                         <div className="input-group">
                             <span className="input-group-btn">
@@ -70,7 +70,7 @@ class Product extends Component {
                                     data-action="minus" 
                                     data-target="font-size" 
                                     onClick={() => this.handleMinusQuantity()} 
-                                ><span className="glyphicon glyphicon-minus"></span>-
+                                ><span className="glyphicon glyphicon-minus"></span>
                                 </button>
                             </span>
                             <input 
@@ -86,7 +86,7 @@ class Product extends Component {
                                     data-action="plus" 
                                     data-target="font-size" 
                                     onClick={() => this.handleAddQuantity()}
-                                ><span className="glyphicon glyphicon-plus"></span>+
+                                ><span className="glyphicon glyphicon-plus"></span>
                                 </button>
                             </span>
                         </div>
