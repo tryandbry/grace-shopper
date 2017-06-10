@@ -1,10 +1,9 @@
 import React from 'react';
 
 const ProductQuantityChanger = (props) => {
-    const handleMinusQuantity = props.handleMinusQuantity;
-    const handleAddQuantity = props.handleAddQuantity;
+    const changeQuantity = props.changeQuantity;
     const handleChange = props.handleChange;
-    const quantity = props.quantity
+    const quantity = props.quantity;
     
     return (
         <div className="col-lg-2">
@@ -14,14 +13,14 @@ const ProductQuantityChanger = (props) => {
                         className="btn btn-default value-control" 
                         data-action="minus" 
                         data-target="font-size" 
-                        onClick={() => handleMinusQuantity()} 
+                        onClick={changeQuantity} 
                     ><span className="glyphicon glyphicon-minus"></span>-
                     </button>
                 </span>
                 <input 
                     type="text" 
                     onChange={handleChange} 
-                    value={quantity} 
+                    value={quantity}
                     className="form-control" 
                     id="font-size" 
                 />
@@ -30,7 +29,7 @@ const ProductQuantityChanger = (props) => {
                         className="btn btn-default value-control" 
                         data-action="plus" 
                         data-target="font-size" 
-                        onClick={() => handleAddQuantity()}
+                        onClick={changeQuantity}
                     ><span className="glyphicon glyphicon-plus"></span>+
                     </button>
                 </span>

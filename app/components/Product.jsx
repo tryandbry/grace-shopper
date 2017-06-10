@@ -12,25 +12,21 @@ class Product extends Component {
         this.state = {
             quantity: 1
         }
-        this.handleAddQuantity = this.handleAddQuantity.bind(this);
-        this.handleMinusQuantity = this.handleMinusQuantity.bind(this);
+        this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleAddQuantity() {
-        this.setState({
-            quantity: this.state.quantity + 1
-        })
-        console.log('the quantity is? ', this.state.quantity);
-    }
-
-    handleMinusQuantity() {
-        if (this.state.quantity - 1) {
-            this.setState({
-                quantity: parseInt(this.state.quantity - 1)
-            })
-        }
-        console.log('minus.. ', this.state.quantity)
+    changeQuantity(e) {
+        e.preventDefault();
+        const type = e.target.getAttribute('data-action');
+        const maxQuantity = this.props.selectedProduct.inventory;
+        let newQuantity = this.state.quantity;
+        
+        if (type == 'plus' && (this.state.quantity < maxQuantity)) newQuantity++
+        else if (type == 'minus' && (this.state.quantity > 0)) newQuantity--
+        else return;
+        
+        this.setState({ quantity : newQuantity })
     }
 
     handleChange(evt) {
@@ -65,8 +61,7 @@ class Product extends Component {
                     <span> {product.cost} </span>
                     
                     <ProductQuantityChanger 
-                        handleAddQuantity={this.handleAddQuantity}
-                        handleMinusQuantity={this.handleMinusQuantity}
+                        changeQuantity={this.changeQuantity}
                         handleChange={this.handleChange}
                         quantity={this.state.quantity}
                     />
