@@ -18,6 +18,28 @@
 .account {
     padding-left: 100px;
 }
+.quantity {
+    font-size: 30px;
+}
+.cost {
+    font-size: 30px;
+    color: green;
+}
+.stock {
+    font-weight: bold;
+    font-size: 30px;
+
+}
+.descriptionHeader {
+    font-weight: bold;
+    font-size: 15px;
+}
+.description {
+    padding-top: 30px;
+}
+.purchase {
+    padding-top: 15px;
+}
 ul {
     list-style-type: none;
 }

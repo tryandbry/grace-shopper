@@ -69,11 +69,11 @@ class Bom extends React.Component {
     const grandtotal = subtotal + tax + shippingAndHandling;
 
     return(
-      <div>
-	<h2>BOM</h2>
-	<div id="shipping">
+      <div className="col-lg-12 col-md-12">
+	<h2>Invoice</h2>
+	<div id="shipping" className="table-responsive">
 	  <h3>Order {id}</h3>
-	  <table>
+	  <table className="table">
 	    <thead>
 	      <tr>
 		<th>Shipping Address</th>
@@ -85,20 +85,20 @@ class Bom extends React.Component {
 	      </tr>
 	    </tbody>
 	  </table>
-	  <table>
+	  <table className="table table-striped">
 	    <thead>
 	      <tr>
-		<th>Line Items</th>
+		<th colSpan={6}>Line Items</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	        <tr>
-		  <td>Item</td>
-		  <td>Name</td>
-		  <td>Description</td>
-		  <td>Unit Price</td>
-		  <td>Quantity</td>
-		  <td>Extended Price</td>
+		  <th>Item</th>
+		  <th>Name</th>
+		  <th>Description</th>
+		  <th>Unit Price</th>
+		  <th>Quantity</th>
+		  <th>Extended Price</th>
 		</tr>
 	        {lineItems.map(lineitem=>
 		  <tr key={lineitem.id}>
