@@ -22,10 +22,8 @@ import { fetchBom } from './reducers/bom';
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
 
-const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
-)(
-  ({ user, children }) =>
+/*
+const Main = ({ user, children }) => (
     <div>
       <nav>
         {user.id ? <WhoAmI/> : <Login/>}
@@ -34,6 +32,39 @@ const ExampleApp = connect(
       {children}
     </div>
 )
+*/
+
+const Main = ({ user, children }) => (
+  <div className="container">
+    <nav className="navbar navbar-default">
+      <div className="container">
+	<div className="navbar-header">
+	  <a className="navbar-brand" href="#">Rocks</a>
+	</div>
+	<div className="collapse navbar-collapse">
+	  <div className="navbar-form">
+	    {user.id ? <WhoAmI/> : <Login/>}
+	  </div>
+	</div>
+      </div>
+    </nav>
+    <div className="row">
+      <div className="col-lg-2 col-md-2">
+        <Sidebar />
+      </div>
+      <div className="col-lg-10 col-md-10">
+        {children}
+      </div>
+    </div>
+  </div>
+)
+
+const mapState = ({ auth }) => ({ user: auth })
+const ExampleApp = connect(mapState)(Main)
+
+
+
+
 
 const onEnter = function () {
     store.dispatch(getProducts())
