@@ -66,11 +66,11 @@ class Bom extends React.Component {
     const grandtotal = subtotal + tax + shippingAndHandling;
 
     return(
-      <div>
+      <div className="table-responsive">
 	<h2>BOM</h2>
 	<div id="shipping">
 	  <h3>Order {id}</h3>
-	  <table>
+	  <table className="table">
 	    <thead>
 	      <tr>
 		<th>Shipping Address</th>
@@ -82,7 +82,7 @@ class Bom extends React.Component {
 	      </tr>
 	    </tbody>
 	  </table>
-	  <table>
+	  <table className="table">
 	    <thead>
 	      <tr>
 		<th>Line Items</th>
@@ -110,7 +110,7 @@ class Bom extends React.Component {
 	    </tbody>
 	  </table>
 	  <br />
-	  <table>
+	  <table className="table">
 	    <tbody>
 	      <tr>
 	        <td>Subtotal</td>
