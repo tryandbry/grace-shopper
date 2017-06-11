@@ -50,5 +50,9 @@ export const whoami = () =>
         .then(res => res.data)
         .then(user => dispatch(authenticated(user)))
         .catch(err => dispatch(authenticated(null)))
+        .then(auth => {
+            console.log("whoami dispatcher", auth)
+            return auth
+        })
         .then(auth => dispatch(getCart(auth.user.id)))
         .catch(console.error.bind(console));

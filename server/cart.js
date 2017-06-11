@@ -6,35 +6,30 @@ const Product = db.model('product');
 const Cart = db.model('cart');
 const User = db.model('user');
 
+/*
+These routes are for logged in users to their cart
+guests go to /api/guest/cart
+*/
+
 module.exports = require('express').Router()
-    .get('/', (req, res, next) => {
-        // note, only api/user/:userId/cart for each user
-        // others use api/guest/cart
-        
-        req.session.cart = req.cart;
-        res.status(200).send(req.cart)
-    })
+    .get('/', (req, res, next) => res.status(200).send(req.cart.items))
     .post('/', (req, res, next) => {
-        /*
-        When creating a new item in the Cart
-        You must send as your post 
-        (after clicking button on product page)
-            req.body = { product , quantity } user/:userid/cart
-        */
-
-        // put in some checks to make sure the data is formatted correctly
-
-        console.log('hitting post to user/id/cart')
-
         const product = req.body.product;
         const quantity = Number(req.body.quantity);
         // no discount yet
         
         // don't create item if exists
-        const indexOfItem = req.cart
+        const indexOfItem = req.cart.items
             .reduce((index, item, i) =>
                 index || (item.product.id == product.id) ? i : index
-            , null);
+            , undefined);
+
+        console.log(
+            'hitting post to user/id/cart',
+            '\nindex of item', indexOfItem, isNaN(indexOfItem),
+            '\nproduct', product,
+            '\nquantity', quantity
+        )
 
         if (isNaN(indexOfItem))
             Item
@@ -47,58 +42,21 @@ module.exports = require('express').Router()
                     .then(product => item.setProduct(product))
                 )
                 .then(item => {
-                    req.cart.setItems([item])
+                    req.cart.setItems([...req.cart.items, item]) // this line seems super jenk
                     res.status(201).send(item)
                 })
                 .catch(next);
         else {
             /* 
-            Possibly should
-            
-            req.cart[indexOfItem]
-                .getItem({ where : { id : item.id } })
-                .then(item => item
-                    .update({ 
-                        key : 'quantity',
-                        value : quantity
-                    })
-                )
-                .then(item => {
-                    // req.cart should be auto updated hopefully??
-                    
-                    res.status(204).send(item)
-                })
-                .catch(next);
-                
-            
-            
             also possibly shouldn't use update instance method
             https://github.com/sequelize/sequelize/issues/2910
-            
             */
-            
-            
-            
-            const item = req.cart[indexOfItem];
+                        
+            const item = req.cart.items[indexOfItem];
             Item
                 .findById(item.id)
-                .then(item => item
-                    .update({ 
-                        key : 'quantity',
-                        value : quantity
-                    })
-                )
-                .then(item => {
-                    /* 
-                    question : if I update a value, does the cart also 
-                    update automatically? does sequlize update my associations
-                    too?
-                    */
-                    console.log('\n\n\n\nIf I update a value, does the cart also update? This is in /api/user/:userId/cart POST with item already inside of cart.')
-                    console.log(req.cart)
-                    // req.cart.setItems()
-                    res.status(204).send(item)
-                })
+                .then(item => item.update({ quantity: item.quantity + quantity}))
+                .then(item => res.status(204).send(item))
                 .catch(next);
         }
         

@@ -66,16 +66,18 @@ const backendRoute = (userId) =>
     ? '/api/guest/cart'
     : `/api/user/${userId}/cart`
 
+const resToData = (res) => res.data
+
 // action-dispatcher
 export const getCart = (userId) => dispatch => axios
     .get(backendRoute(userId))
-    .then(res => res.data)
+    .then(resToData)
     .then(cart => dispatch(setCart(cart)))
     .catch(console.error.bind(console));
 
 export const postItem = (product, quantity, userId) => dispatch => axios
     .post(backendRoute(userId), { product, quantity })
-    .then(res => res.data)
+    .then(resToData)
     .then(item => dispatch(addItem(item)))
     .catch(() => console.log('error in getItem'));
 
@@ -86,10 +88,7 @@ export const deleteItem = (item, userId) => dispatch => axios
 
 export const putItem = (productId, quantity, userId) => dispatch => axios
     .put(backendRoute(userId) + `/${productId}`, { quantity })
-    .then(res => {
-        console.log(productId, res.data.quantity)
-        return res.data
-    })
+    .then(resToData)
     .then(item => dispatch(updateItem(productId, quantity)))
     .catch(() => console.log('error in putItem'))
 
