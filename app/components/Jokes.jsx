@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class BonesJokes extends Component {
+export default class BonesJokes extends React.Component {
   componentDidMount() {
     this.nextJoke()
   }
