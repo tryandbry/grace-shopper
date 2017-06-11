@@ -106,6 +106,7 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
+                <Route path="/catalog/:category" component={FilterCatalog} />
                 <Route path="/product/:id" component={ProductContainer} onEnter={onProductEnter} />
                 <Route path="/cart" component={Cart} />
                 <Route path="/checkout" component={CheckoutContainer} />
