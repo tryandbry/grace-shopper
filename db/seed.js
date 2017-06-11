@@ -63,8 +63,8 @@ const generateRockDescription = ()=>{
 //BEGIN seed data arrays
 //##########################################
 var users = [
-  { email: "peter@familyguy.com", name: "Peter Griffin", cart_id: 1 },
-  { email: "pikachu@pokemon.com", name: "Pika Pikachu",  cart_id: 2 },
+  { email: "peter@familyguy.com", name: "Peter Griffin", cart_id: 1, password: '123' },
+  { email: "pikachu@pokemon.com", name: "Pika Pikachu",  cart_id: 2, password: '123' },
 ];
 
 var carts = users.map((e,i)=>({}));
@@ -165,14 +165,27 @@ if(module === require.main){
     //populate Cart
     promises.push(Cart.bulkCreate(carts));
 
-    return promises;
+    return Promise.all(promises);
   })
   .then(()=>{
     let promises = [];
     //populate Product
     promises.push(Product.bulkCreate(rocks));
+
+    return Promise.all(promises);
+  })
+  .then(()=>{
+    let promises = [];
     //populate User
-    promises.push(User.bulkCreate(users));
+    //promises.push(User.bulkCreate(users));
+    promises.push(User.create(users[0]));
+    promises.push(User.create(users[1]));
+
+    return Promise.all(promises);
+  })
+  .then(()=>{
+    let promises = [];
+
     //populate Category
     promises.push(Category.bulkCreate(categories));
     //populate Review
@@ -182,7 +195,7 @@ if(module === require.main){
     //populate Item
     promises.push(Item.bulkCreate(items));
 
-    return promises;
+    return Promise.all(promises);
   });
 
   Promise.all(promiseArray)
