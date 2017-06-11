@@ -22,11 +22,13 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                 </div>
             </div>
             <div className="row purchase">
-            <ProductQuantityChanger 
-                changeQuantity={changeQuantity}
-                handleChange={handleChange}
-                quantity={quantity}
-            />
+                <div className="col-lg-2">
+                <ProductQuantityChanger 
+                    changeQuantity={changeQuantity}
+                    handleChange={handleChange}
+                    quantity={quantity}
+                />
+                </div>
             <button 
                 type="button"
                 className="btn btn-success" 
