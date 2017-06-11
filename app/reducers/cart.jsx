@@ -3,6 +3,7 @@ import axios from 'axios';
 // actions
 const SET_CART = 'SET_CART';
 const ADD_ITEM = 'ADD_ITEM';
+const REMOVE_ITEM = 'REMOVE_ITEM';
 
 // action-creators
 const setCart = cart => ({
@@ -13,7 +14,10 @@ const addItem = item => ({
     type: ADD_ITEM,
     item
 })
-
+const removeItem = item => ({
+    type: REMOVE_ITEM,
+    item
+});
 
 // reducer
 const initialState = {
@@ -29,6 +33,13 @@ export default function reducer(state = initialState, action) {
         case (ADD_ITEM):
             newState.item = action.item;
             newState.items = [...state.items, action.item];
+            break;
+        case (REMOVE_ITEM):
+            const productId = action.item.product.id;
+            newState.item = action.item;
+            newState.items = state
+                .items
+                .filter(item => item.product.id !== productId);
             break;
         default:
             return state;
@@ -60,6 +71,7 @@ export const postItem = (product, quantity, userId) => dispatch => axios
 //
 // }
 
-export const deleteItem = (productId, userId) => dispatch => axios
-    .delete(backendRoute(userId) + `/${productId}`)
+export const deleteItem = (item, userId) => dispatch => axios
+    .delete(backendRoute(userId) + `/${item.product.id}`)
+    .then(() => dispatch(removeItem(item)))
     .catch(() => console.log('error in deleteItem'));
