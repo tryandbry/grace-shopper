@@ -22,19 +22,23 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                 </div>
             </div>
             <div className="row purchase">
-                <div className="col-lg-2">
-                <ProductQuantityChanger 
-                    changeQuantity={changeQuantity}
-                    handleChange={handleChange}
-                    quantity={quantity}
-                />
+                <div className="container">
+                    <div className="col-lg-2">
+                        <ProductQuantityChanger 
+                            changeQuantity={changeQuantity}
+                            handleChange={handleChange}
+                            quantity={quantity}
+                        />
+                    </div>
+                    <div className="col-lg-2">
+                        <button 
+                            type="button"
+                            className="btn btn-success" 
+                            onClick={addItemToCart}
+                        >Add Rock
+                        </button>
+                    </div>
                 </div>
-            <button 
-                type="button"
-                className="btn btn-success" 
-                onClick={addItemToCart}
-            >Add Rock
-            </button>
             </div>
         </div>
         <div>

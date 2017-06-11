@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProductQuantityChanger = ({ changeQuantity, handleChange, quantity }) => (
-    <div>
+    <div className="container">
         <div className="input-group">
             <span className="input-group-btn">
                 <button 

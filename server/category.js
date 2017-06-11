@@ -18,10 +18,10 @@ module.exports = require('express').Router()
             .then(categories => res.send(categories))
             .catch(next);
     })
-    .get('/:categoryId', (req, res, next) => {
+    .get('/:categoryName', (req, res, next) => {
         Category
             .findOne({
-                where : { name : req.params.categoryId }
+                where : { name : req.params.categoryName }
             })
             .then(category => res.send(category))
             .catch(next);

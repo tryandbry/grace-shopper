@@ -48,19 +48,10 @@ export default function reducer(state = initialState, action) {
                 .filter(item => item.product.id !== productId);
             break;
         case (UPDATE_ITEM):
-            // const index = newState
-            //     .items
-            //     .map(item => item.product.id)
-            //     .indexOf(action.item.product.id)
-            //
-            // newState.items[index].product
-            
-            // console.log(newState.items.filter(item => item.product.id == action.productId))
-            
             newState
                 .items
-                .filter(item => item.product.id == action.productId)[0]
-                .quantity = action.quantity;
+                .filter(item => (item.product.id == action.productId))[0]
+                .quantity = action.quantity
             break;
         default:
             return state;
@@ -96,10 +87,10 @@ export const deleteItem = (item, userId) => dispatch => axios
 export const putItem = (productId, quantity, userId) => dispatch => axios
     .put(backendRoute(userId) + `/${productId}`, { quantity })
     .then(res => {
-        console.log(res.data)
-        //res.data
+        console.log(productId, res.data.quantity)
+        return res.data
     })
-    .then(item => dispatch(changeItem(productId, item.quantity)))
+    .then(item => dispatch(updateItem(productId, quantity)))
     .catch(() => console.log('error in putItem'))
 
 

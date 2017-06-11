@@ -28,12 +28,8 @@ module.exports = require('express').Router()
         // check to see if product is already in cart
         if (req.session.cart[product.id]) {
             item = req.session.cart[product.id]
-            console.log('\n\n\n\nproduct in cart')
-            console.log(item)
-            console.log('original', item.quantity)
             item.quantity = item.quantity + quantity;
             item.updated_at = Date.now();
-            console.log(`original + ${quantity}`, req.session.cart[product.id])
         } else {
             item = {
                 quantity : Number(quantity),
@@ -43,10 +39,8 @@ module.exports = require('express').Router()
             }
             // save to session
             req.session.cart[product.id] = item;
-            console.log('product NOT in cart')
         }
         res.status(201).send(item);
-        console.log('item now in cart', req.session.cart)
     })
     .delete('/cart/:productId', (req, res, next) => {
         delete req.session.cart[req.params.productId];
@@ -54,13 +48,6 @@ module.exports = require('express').Router()
     })
     .put('/cart/:productId', (req, res, next) => {
         const item = req.session.cart[req.params.productId];
-        
-        /*
-        because the Item is not passing down the correct 
-        quantity, we will append 1 each time (see ProductOrItemContainer)
-        */
-        console.log(item.quantity, req.body.quantity) //
-        
-        item.quantity = item.quantity + req.body.quantity;
+        item.quantity = req.body.quantity;
         res.status(200).send(item);
     })

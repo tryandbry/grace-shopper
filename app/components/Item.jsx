@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
 
-const Item = ({ item, changeQuantity, handleChange, addItemToCart, removeItemFromCart }) => (
+const Item = ({ item, changeQuantity, quantity, handleChange, removeItemFromCart }) => (
     <div className="container item">
         <div className="row">
             <div className="col-lg-2 col-md-2">
@@ -28,7 +28,7 @@ const Item = ({ item, changeQuantity, handleChange, addItemToCart, removeItemFro
                     <ProductQuantityChanger 
                         changeQuantity={changeQuantity}
                         handleChange={handleChange}
-                        quantity={item.quantity}
+                        quantity={quantity}
                     />
                 </div>
             </div>

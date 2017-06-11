@@ -18,14 +18,7 @@ class ProductOrItemContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            /* 
-            this doesn't work well, 
-            item passes undefined for some unknown reason to this prop, 
-            even though it really really shouldn't
-            this is fixed in the backend
-            */ 
-            quantity: this.props.quantity || 1
-            // quantity: 1
+            quantity: this.props.productOrItem.quantity || 1
         }
         
         this.changeQuantity = this.changeQuantity.bind(this);
@@ -38,45 +31,36 @@ class ProductOrItemContainer extends Component {
         e.preventDefault();
         const plusOrMinus = e.target.getAttribute('data-action');
         const { productOrItem, type, putItem, userId } = this.props;
+        const maxQuantity = (type == "Item")
+            ? productOrItem.product.inventory
+            : productOrItem.inventory;
         
-        console.log('quantity', this.props.quantity, this.state.quantity)
-        
-        let maxQuantity;
-        if (type == "Item") {
-            maxQuantity = productOrItem.product.inventory;
-            console.log('ITEM QUANTITY', this.state.quantity)
-        } else {
-            maxQuantity = productOrItem.inventory;
-        }
-        
-        let newQuantity;
+        let newQuantity = this.state.quantity;
         if (plusOrMinus == 'plus' && (this.state.quantity < maxQuantity)) 
-            newQuantity = 1;
+            newQuantity++;
         else if (plusOrMinus == 'minus' && (this.state.quantity > 0)) 
-            newQuantity = -1;
-        else 
-            return;
+            newQuantity--;
+        else return;
         
-        // set state
-        // also change store and session/db if you are on the
+        // change store and session/db if you are on the
         // Cart -> this -> Item -> ProductQuantityChanger flow
-        if (type == "Item") {
+        if (type == "Item")
             putItem(productOrItem.product.id, newQuantity, userId);
-            this.setState({ quantity : newQuantity })
-        } else
-            this.setState({ quantity : this.state.quantity + newQuantity })
+        
+        this.setState({ quantity : newQuantity })
     }
 
     handleChange(evt) {
+        // form
         const value = +evt.target.value;
         if (isNaN(value)) return;
         this.setState({ quantity: value })
     }
     
     addItemToCart(e) {
+        // button on Product 
         e.preventDefault();
         if (this.state.quantity == 0) return;
-        
         const { product, userId, postItem } = this.props;
         
         // rm eager loaded lists (reviews, categories)
@@ -90,6 +74,7 @@ class ProductOrItemContainer extends Component {
     }
 
     removeItemFromCart(e) {
+        // button on Cart
         e.preventDefault();
         
         // should we do an undo?? Like, when you delete an item, you can undo it
