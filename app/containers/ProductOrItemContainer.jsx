@@ -42,8 +42,6 @@ class ProductOrItemContainer extends Component {
             newQuantity--;
         else return;
         
-        // change store and session/db if you are on the
-        // Cart -> this -> Item -> ProductQuantityChanger flow
         if (type == 'Item')
             putItem(productOrItem.product.id, newQuantity, userId);
         
@@ -55,10 +53,6 @@ class ProductOrItemContainer extends Component {
         const value = +evt.target.value;
         if (isNaN(value)) return;
         
-        this.setState({ quantity: value })
-        
-        // change store and session/db if you are on the
-        // Cart -> this -> Item -> ProductQuantityChanger flow
         if (this.props.type == 'Item') {
             const { putItem, productOrItem, userId } = this.props
             putItem(productOrItem.product.id, value, userId)
