@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postItem , deleteItem } from '../reducers/cart';
+import { postItem , deleteItem, putItem } from '../reducers/cart';
 // import ProductQuantityChanger from './ProductQuantityChanger';
 import Product from '../components/Product';
 import Item from '../components/Item';
@@ -18,7 +18,14 @@ class ProductOrItemContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 1
+            /* 
+            this doesn't work well, 
+            item passes undefined for some unknown reason to this prop, 
+            even though it really really shouldn't
+            this is fixed in the backend
+            */ 
+            quantity: this.props.quantity || 1
+            // quantity: 1
         }
         
         this.changeQuantity = this.changeQuantity.bind(this);
@@ -29,15 +36,35 @@ class ProductOrItemContainer extends Component {
 
     changeQuantity(e) {
         e.preventDefault();
-        const type = e.target.getAttribute('data-action');
-        const maxQuantity = this.props.selectedProduct.inventory;
-        let newQuantity = this.state.quantity;
+        const plusOrMinus = e.target.getAttribute('data-action');
+        const { productOrItem, type, putItem, userId } = this.props;
         
-        if (type == 'plus' && (this.state.quantity < maxQuantity)) newQuantity++
-        else if (type == 'minus' && (this.state.quantity > 0)) newQuantity--
-        else return;
+        console.log('quantity', this.props.quantity, this.state.quantity)
         
-        this.setState({ quantity : newQuantity })
+        let maxQuantity;
+        if (type == "Item") {
+            maxQuantity = productOrItem.product.inventory;
+            console.log('ITEM QUANTITY', this.state.quantity)
+        } else {
+            maxQuantity = productOrItem.inventory;
+        }
+        
+        let newQuantity;
+        if (plusOrMinus == 'plus' && (this.state.quantity < maxQuantity)) 
+            newQuantity = 1;
+        else if (plusOrMinus == 'minus' && (this.state.quantity > 0)) 
+            newQuantity = -1;
+        else 
+            return;
+        
+        // set state
+        // also change store and session/db if you are on the
+        // Cart -> this -> Item -> ProductQuantityChanger flow
+        if (type == "Item") {
+            putItem(productOrItem.product.id, newQuantity, userId);
+            this.setState({ quantity : newQuantity })
+        } else
+            this.setState({ quantity : this.state.quantity + newQuantity })
     }
 
     handleChange(evt) {
@@ -66,7 +93,7 @@ class ProductOrItemContainer extends Component {
         e.preventDefault();
         
         // should we do an undo?? Like, when you delete an item, you can undo it
-        // like, the item turns pale but doesn't delete until later!
+        // maybe the item turns pale but doesn't delete until later!
         // will worry about it later
                 
         const { productOrItem, userId, deleteItem } = this.props;
@@ -103,7 +130,8 @@ const mapState = (state) => ({
 });
 const mapDispatch = dispatch => dispatch => ({
     postItem : (product, quantity, userId) => dispatch(postItem(product, quantity, userId)),
-    deleteItem : (itemId, userId) => dispatch(deleteItem(itemId, userId))
+    deleteItem : (itemId, userId) => dispatch(deleteItem(itemId, userId)),
+    putItem : (productId, quantity, userId) => dispatch(putItem(productId, quantity, userId))
 });
 
 export default connect(mapState, mapDispatch)(ProductOrItemContainer);

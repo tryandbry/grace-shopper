@@ -15,10 +15,9 @@ const FilterCategory = ({ categories, selectCategory }) => (
         { 
             categories && categories
                 .map(category => (
-                    <Link to={`/catalog/${category.name}` }>
+                    <Link to={`/catalog/${category.name}`} key={category.id}>
                     <li 
                         className="list-group-item"
-                        key={category.id}
                         onMouseOver={() => selectCategory(category.name)}
                         onClick={() => selectCategory(category.name)}
                     >

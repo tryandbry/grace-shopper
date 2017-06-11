@@ -53,5 +53,14 @@ module.exports = require('express').Router()
         res.sendStatus(204);
     })
     .put('/cart/:productId', (req, res, next) => {
-        // TODO
+        const item = req.session.cart[req.params.productId];
+        
+        /*
+        because the Item is not passing down the correct 
+        quantity, we will append 1 each time (see ProductOrItemContainer)
+        */
+        console.log(item.quantity, req.body.quantity) //
+        
+        item.quantity = item.quantity + req.body.quantity;
+        res.status(200).send(item);
     })
