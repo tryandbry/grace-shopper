@@ -2,6 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
+/*
+    be careful using item.quantity, which is not tied to state
+    (local state in ProductOrIemConatiner)
+    whereas quantity is!
+*/
 
 const Item = ({ item, changeQuantity, quantity, handleChange, removeItemFromCart }) => (
     <div className="container item">
@@ -19,10 +24,10 @@ const Item = ({ item, changeQuantity, quantity, handleChange, removeItemFromCart
                     <h4> { item.product.name } </h4>
                 </div>
                 <div className="row">
-                    <span className=""> quantity { item.quantity } times cost { item.cost } </span>
+                    <span className=""> quantity { quantity } times cost { item.cost } </span>
                 </div>
                 <div className="row">
-                    <span className=""> total { item.quantity * item.cost } </span>
+                    <span className=""> total { quantity * item.cost } </span>
                 </div>
                 <div className="row">
                     <ProductQuantityChanger 

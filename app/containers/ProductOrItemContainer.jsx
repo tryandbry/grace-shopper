@@ -31,7 +31,7 @@ class ProductOrItemContainer extends Component {
         e.preventDefault();
         const plusOrMinus = e.target.getAttribute('data-action');
         const { productOrItem, type, putItem, userId } = this.props;
-        const maxQuantity = (type == "Item")
+        const maxQuantity = (type == 'Item')
             ? productOrItem.product.inventory
             : productOrItem.inventory;
         
@@ -44,7 +44,7 @@ class ProductOrItemContainer extends Component {
         
         // change store and session/db if you are on the
         // Cart -> this -> Item -> ProductQuantityChanger flow
-        if (type == "Item")
+        if (type == 'Item')
             putItem(productOrItem.product.id, newQuantity, userId);
         
         this.setState({ quantity : newQuantity })
@@ -54,6 +54,16 @@ class ProductOrItemContainer extends Component {
         // form
         const value = +evt.target.value;
         if (isNaN(value)) return;
+        
+        this.setState({ quantity: value })
+        
+        // change store and session/db if you are on the
+        // Cart -> this -> Item -> ProductQuantityChanger flow
+        if (this.props.type == 'Item') {
+            const { putItem, productOrItem, userId } = this.props
+            putItem(productOrItem.product.id, value, userId)
+        }
+        
         this.setState({ quantity: value })
     }
     
