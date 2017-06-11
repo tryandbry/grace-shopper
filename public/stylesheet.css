@@ -40,6 +40,9 @@
 .purchase {
     padding-top: 15px;
 }
+.btn-google {
+  width: 100%;
+}
 ul {
     list-style-type: none;
 }

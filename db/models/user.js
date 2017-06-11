@@ -1,4 +1,5 @@
 'use strict'
+const chalk = require('chalk');
 
 // bcrypt docs: https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcryptjs'),
@@ -69,6 +70,7 @@ module.exports.associations = (User, {OAuth, Review, Bom, Cart}) => {
 }
 
 function setEmailAndPassword(user) {
+  console.log(chalk.bold.green("Executing setEmailAndPassword!"));
   user.email = user.email && user.email.toLowerCase()
   if (!user.password) return Promise.resolve(user)
 
