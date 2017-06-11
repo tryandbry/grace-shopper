@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getItem } from '../reducers/cart';
+import { postItem , deleteItem } from '../reducers/cart';
 // import ProductQuantityChanger from './ProductQuantityChanger';
 import Product from '../components/Product';
 import Item from '../components/Item';
@@ -11,7 +11,6 @@ import Item from '../components/Item';
     Must take 
         props.type = "Item" || "Product"
         props.productOrItem = {...}
-    also set props.key = an id
 */
 
 
@@ -25,6 +24,7 @@ class ProductOrItemContainer extends Component {
         this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addItemToCart = this.addItemToCart.bind(this);
+        this.removeItemFromCart = this.removeItemFromCart.bind(this);
     }
 
     changeQuantity(e) {
@@ -50,9 +50,7 @@ class ProductOrItemContainer extends Component {
         e.preventDefault();
         if (this.state.quantity == 0) return;
         
-        const product = this.props.selectedProduct;
-        const userId = this.props.userId;
-        const getItem = this.props.getItem;
+        const { product, userId, postItem } = this.props;
         
         // rm eager loaded lists (reviews, categories)
         let smallProduct = (
@@ -60,13 +58,25 @@ class ProductOrItemContainer extends Component {
             ({ id, name, image, cost, description, inventory, updated_at })
         )(product);
         
-        getItem(smallProduct, this.state.quantity, userId);
-        this.setState({ quantity: 0 });
+        postItem(smallProduct, this.state.quantity, userId);
+        
+    }
+
+    removeItemFromCart(e) {
+        e.preventDefault();
+        
+        // should we do an undo?? Like, when you delete an item, you can undo it
+        // like, the item turns pale but doesn't delete until later!
+        // will worry about it later
+        
+        const { productOrItem, userId, deleteItem } = this.props;
+        deleteItem(productOrItem.product.id, userId);
+        this.setState({ quantity: -1 });
     }
 
     render() {
         const { type, productOrItem } = this.props;
-                
+        
         return (<div>{
             (type == 'Item')
             ? <Item
@@ -74,7 +84,7 @@ class ProductOrItemContainer extends Component {
                 changeQuantity={this.changeQuantity}
                 handleChange={this.handleChange}
                 quantity={this.state.quantity}
-                addItemToCart={this.addItemToCart}
+                removeItemFromCart={this.removeItemFromCart}
               />
             : <Product
                 product={productOrItem}
@@ -92,7 +102,8 @@ const mapState = (state) => ({
     userId : state.auth.id
 });
 const mapDispatch = dispatch => dispatch => ({
-    getItem : (product, quantity, userId) => dispatch(getItem(product, quantity, userId))
+    postItem : (product, quantity, userId) => dispatch(postItem(product, quantity, userId)),
+    deleteItem : (itemId, userId) => dispatch(deleteItem(itemId, userId))
 });
 
 export default connect(mapState, mapDispatch)(ProductOrItemContainer);

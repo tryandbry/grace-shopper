@@ -123,7 +123,7 @@ module.exports = require('express').Router()
     .delete('/:itemId', (req, res, next) => {
         req.item.destroy().then(() => res.sendStatus(204));
     })
-    .put('/:itemId/', (req, res, next) => {
+    .put('/:itemId', (req, res, next) => {
         /*
         Literally the only thing you can (need to) update is the quantity
         every post to this route sends as req.body = quantity

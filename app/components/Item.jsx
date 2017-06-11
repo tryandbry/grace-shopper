@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
 
-const Item = ({ item, changeQuantity, handleChange, addItemToCart }) => (
+const Item = ({ item, changeQuantity, handleChange, addItemToCart, removeItemFromCart }) => (
     <div className="container item">
         <div className="row">
             <div className="col-lg-2 col-md-2">
@@ -30,6 +30,16 @@ const Item = ({ item, changeQuantity, handleChange, addItemToCart }) => (
                         handleChange={handleChange}
                         quantity={item.quantity}
                     />
+                </div>
+            </div>
+            <div className="col-lg-2 col-md-2">
+                <div className="row">
+                    <button 
+                        type="button"
+                        className="btn btn-success" 
+                        onClick={removeItemFromCart}
+                    >Delete Rock
+                    </button>
                 </div>
             </div>
         </div>

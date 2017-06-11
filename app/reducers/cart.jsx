@@ -50,13 +50,16 @@ export const getCart = (userId) => dispatch => axios
     .then(cart => dispatch(setCart(cart)))
     .catch(console.error.bind(console));
 
-export const getItem = (product, quantity, userId) => dispatch => axios
+export const postItem = (product, quantity, userId) => dispatch => axios
     .post(backendRoute(userId), { product, quantity })
     .then(res => res.data)
     .then(item => dispatch(addItem(item)))
     .catch(() => console.log('error in getItem'));
 
-// export const editItem = (userId) => {
+// export const putItem = (userId) => {
 //
 // }
-// export const deleteItem
+
+export const deleteItem = (productId, userId) => dispatch => axios
+    .delete(backendRoute(userId) + `/${productId}`)
+    .catch(() => console.log('error in deleteItem'));

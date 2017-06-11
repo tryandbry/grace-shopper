@@ -48,3 +48,10 @@ module.exports = require('express').Router()
         res.status(201).send(item);
         console.log('item now in cart', req.session.cart)
     })
+    .delete('/cart/:itemId', (req, res, next) => {
+        delete req.session.cart[req.params.itemId];
+        res.sendStatus(204);
+    })
+    .put('/cart/:itemId', (req, res, next) => {
+        
+    })
