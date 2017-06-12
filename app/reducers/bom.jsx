@@ -47,11 +47,13 @@ export default function reducer(state = initialState, action) {
 }
 
 // dispatchers
-export const fetchBom = id => dispatch => axios
-    .get(`/api/bom/${id}`)
-    .then(res => res.data)
-    .then(bom => {
-    	//console.log('fetchBom result: ',bom);
-    	dispatch(setBom(bom));
-    })
-    .catch(console.error)
+export const fetchBom = id=>{
+    return dispatch=>{
+      axios.get(`/api/bom/${id}`)
+      .then(bom=>{
+	//console.log('fetchBom result: ',bom);
+	dispatch(setBom(bom.data));
+      })
+      .catch(console.error);
+    }
+}
