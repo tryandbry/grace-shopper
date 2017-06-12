@@ -51,8 +51,7 @@ export const fetchBom = id=>{
     return dispatch=>{
       axios.get(`/api/bom/${id}`)
       .then(bom=>{
-	//console.log('fetchBom result: ',bom);
-	dispatch(setBom(bom.data));
+	return dispatch(setBom(bom.data));
       })
       .catch(console.error);
     }
