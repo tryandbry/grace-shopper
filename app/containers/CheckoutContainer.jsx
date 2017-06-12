@@ -61,6 +61,7 @@ class CheckoutContainer extends React.Component {
     render () {
         console.log('Checkout State\n', this.state)
         const onChange = this.onChange;
+        const { order } = this.props;
         
         return (
             <div id="checkout">
@@ -84,6 +85,7 @@ class CheckoutContainer extends React.Component {
                         title={"Review"}
                       />
                     : <Receipt 
+                        order={order}
                       />
                     }
             </div>
@@ -92,7 +94,8 @@ class CheckoutContainer extends React.Component {
 }
 
 const mapState = state => ({
-    userId : state.auth.id
+    userId : state.auth.id,
+    order : state.order
 });
 const mapDispatch = {
     postOrder
