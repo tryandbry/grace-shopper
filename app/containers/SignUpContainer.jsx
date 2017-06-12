@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SignUp from '../components/SignUp';
+import {newUser} from 'APP/app/reducers/auth';
 
 class SignUpContainer extends React.Component {
     constructor() {
@@ -54,6 +55,13 @@ class SignUpContainer extends React.Component {
 	if(errorMsgs.length){
 	    this.setState({errorMsgs});
 	}
+	else {
+	  console.log("dispatching to create a new user!");
+	  this.props.newUser(this.state.firstName,
+	                     this.state.lastName,
+			     this.state.email,
+			     this.state.password);
+	}
     }
 
     render () {
@@ -70,7 +78,7 @@ class SignUpContainer extends React.Component {
 }
 
 //const mapState;
-//const mapDispatch;
+const mapDispatch = {newUser};
 
 //export default connect(mapState,mapDispatch)(CheckoutContainer);
-export default connect()(SignUpContainer);
+export default connect(null,mapDispatch)(SignUpContainer);

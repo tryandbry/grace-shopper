@@ -2,17 +2,10 @@ import React from 'react';
 import {login} from 'APP/app/reducers/auth';
 import {connect} from 'react-redux';
 
-class SignUp extends React.Component{
+export default class SignUp extends React.Component{
   constructor(){
     super();
   }
-
-  /*
-  handleSubmit(evt){
-    evt.preventDefault();
-    this.props.login(evt.target.username.value, evt.target.password.value)
-  }
-  */
 
   render(){
     const onSubmit = this.props.onSubmit;
@@ -60,5 +53,5 @@ class SignUp extends React.Component{
   }
 }
 
-const mapDispatch = {login};
-export default connect(null, mapDispatch)(SignUp);
+//const mapDispatch = {login};
+//export default connect(null, mapDispatch)(SignUp);

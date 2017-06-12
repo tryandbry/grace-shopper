@@ -32,6 +32,10 @@ export default function reducer (state={}, action) {
 }
 
 // action-dispatchers
+export const newUser = (firstName,lastName,email,password)=>
+  dispatch => axios
+        .post('/api/user',{firstName,lastName,email,password})
+
 export const login = (username, password) =>
   dispatch => axios
         .post('/api/auth/login/local', {username, password})
