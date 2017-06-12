@@ -5,7 +5,8 @@ const Item = db.model('item');
 const Product = db.model('product');
 
 /*
-the entire point of this is to give the guest access to their cart on the session
+the entire point of this is to give the guest access to their 
+cart and order on the session
 */
 
 module.exports = require('express').Router()
@@ -50,4 +51,46 @@ module.exports = require('express').Router()
         const item = req.session.cart[req.params.productId];
         item.quantity = req.body.quantity;
         res.status(200).send(item);
+    })
+    .get('/order', (req, res, next) => {
+        if (!req.session.order) req.session.order = {};
+        res.status(200).send(req.session.order)
+    })
+    .post('/order', (req, res, next) => {
+        const order = req.body;
+        
+        /////// ORDER
+        // flowState: 0,
+        // shipAddress1: "",
+        // shipAddress2: "",
+        // shipCity: "",
+        // shipState: "",
+        // shipZip: "",
+        // paymentAddress1: "",
+        // paymentAddress2: "",
+        // paymentCity: "",
+        // paymentState: "",
+        // paymentZip: "",
+        // creditcard: "",
+        // expiration: "",
+        // ccv: "",
+        /////// BOM
+        // shipping
+        // status
+        // user_id
+        /////// USER
+        // email
+        // firstName
+        // lastName
+        
+        const shipping = `${order.shipAddress1}\n${order.shipAddress2}\n${order.shipCity}, ${order.shipState} ${order.shipZip}`
+        const paymentAddress = `${order.paymentAddress1}\n${order.paymentAddress2}\n${order.paymentCity}, ${order.paymentState} ${order.paymentZip}`
+        
+        let newOrder = {
+            shippingAddress: shipping,
+            billingAddress: paymentAddress,
+            items: req.cart,
+            status: 'created'
+        }
+        res.status(201).send(newOrder)
     })
