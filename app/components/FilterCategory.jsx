@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSelectedCategory } from '../reducers/catalog';
+import { Link } from 'react-router';
 
 const FilterCategory = ({ categories, selectCategory }) => (
     <div>
@@ -14,13 +15,15 @@ const FilterCategory = ({ categories, selectCategory }) => (
         { 
             categories && categories
                 .map(category => (
+                    <Link to={`/catalog/${category.name}`} key={category.id}>
                     <li 
                         className="list-group-item"
-                        key={category.id}
-                        onMouseOver={() => selectCategory(category.id)}
+                        onMouseOver={() => selectCategory(category.name)}
+                        onClick={() => selectCategory(category.name)}
                     >
                         {category.name}
                     </li>
+                    </Link>
                 ))
         }
     </ul>

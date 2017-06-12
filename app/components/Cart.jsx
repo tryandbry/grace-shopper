@@ -9,12 +9,13 @@ const Cart = ({ items }) => (
         items
             .sort((a, b) => b.updated_at - a.updated_at)
             .map(item => (
+                <div className="row" key={item.product.id}>
                 <ProductOrItemContainer
                     type='Item'
                     productOrItem={item} 
-                    key={item.product.id}
                     selectedProduct={item.product}
                 />
+                </div>
             ))
     }</div>
     

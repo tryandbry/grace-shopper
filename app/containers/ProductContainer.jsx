@@ -7,7 +7,7 @@ const ProductContainer = ({ product }) => (
         type="Product"
         productOrItem={product}
         key={product.id}
-        selectedProduct={product}
+        product={product}
     />
 )
 
