@@ -84,7 +84,7 @@ class ProductOrItemContainer extends Component {
         // should we do an undo?? Like, when you delete an item, you can undo it
         // maybe the item turns pale but doesn't delete until later!
         // will worry about it later
-                
+        
         const { productOrItem, userId, deleteItem } = this.props;
         deleteItem(productOrItem, userId);
         this.setState({ quantity: 0 });
