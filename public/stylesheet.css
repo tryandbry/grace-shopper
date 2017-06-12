@@ -46,6 +46,12 @@
 .btn-google {
   width: 100%;
 }
+.whoami-user-name {
+  color: #ffffff;
+}
+.btn-logout {
+  background-color: #000000;
+}
 ul {
     list-style-type: none;
 }
