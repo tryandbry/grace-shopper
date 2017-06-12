@@ -59,8 +59,8 @@ const Main = ({ user, children }) => (
                     </ul>
                     <div className="nav navbar-nav navbar-right">
                         <ul className="navbar-nav">
-                            <li className="nav-link" href="INSERT_CART_LINK_HERE">
-                                <span className="glyphicon glyphicon-shopping-cart cart"></span>
+                            <li className="nav-link">
+                                 <a href="/cart" className="glyphicon glyphicon-shopping-cart cart active"></a>
                             </li>
                         </ul>
                         {user.id ? <WhoAmI /> : <Login />}
