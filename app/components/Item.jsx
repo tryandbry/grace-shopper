@@ -2,27 +2,42 @@ import React from 'react';
 import { Link } from 'react-router';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
+/*
+    be careful using item.quantity, which is not tied to state
+    (local state in ProductOrIemConatiner)
+    whereas quantity is!
+*/
 
-const Item = ({ item, changeQuantity, handleChange, quantity, addItemToCart }) => (
-    <div>
-        <Link
-        to={`/product/${item.product.id}`}
-        key={item.product.id}
-        ><img src={ item.product.image } />
-        </Link>
-        { item.product.name }
-        {
-            ( item.quantity < item.product.inventory )
-            ? item.quantity
-            : item.product.inventory
-        }
-        <ProductQuantityChanger 
-            changeQuantity={changeQuantity}
-            handleChange={handleChange}
-            quantity={quantity}
-        />
-
-        { item.cost }
+const Item = ({ item, changeQuantity, quantity, handleChange, removeItemFromCart }) => (
+    <div className="container item">
+        <div className="row">
+            <div className="col-lg-2 col-md-2">
+                <Link
+                to={`/product/${item.product.id}`}
+                key={item.product.id}
+                >
+                    <img src={ item.product.image } className="img-thumbnail" />
+                </Link>
+            </div>
+            <div className="col-lg-2 col-md-2">
+                <h4> { item.product.name } </h4>
+            </div>
+            <div className="col-lg-2 col-md-2">
+                <span className=""> quantity { quantity } times cost { item.cost } </span>
+                <span className=""> total { quantity * item.cost } </span>
+                <ProductQuantityChanger 
+                    changeQuantity={changeQuantity}
+                    handleChange={handleChange}
+                    quantity={quantity}
+                />
+                <button 
+                    type="button"
+                    className="btn btn-success" 
+                    onClick={removeItemFromCart}
+                >Delete Rock
+                </button>
+            </div>
+        </div>
     </div>
 )
 

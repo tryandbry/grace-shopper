@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getItem } from '../reducers/cart';
+import { postItem , deleteItem, putItem } from '../reducers/cart';
 // import ProductQuantityChanger from './ProductQuantityChanger';
 import Product from '../components/Product';
 import Item from '../components/Item';
@@ -11,7 +11,6 @@ import Item from '../components/Item';
     Must take 
         props.type = "Item" || "Product"
         props.productOrItem = {...}
-    also set props.key = an id
 */
 
 
@@ -19,40 +18,54 @@ class ProductOrItemContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: 1
+            quantity: this.props.productOrItem.quantity || 1
         }
         
         this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addItemToCart = this.addItemToCart.bind(this);
+        this.removeItemFromCart = this.removeItemFromCart.bind(this);
     }
 
     changeQuantity(e) {
         e.preventDefault();
-        const type = e.target.getAttribute('data-action');
-        const maxQuantity = this.props.selectedProduct.inventory;
-        let newQuantity = this.state.quantity;
+        const plusOrMinus = e.target.getAttribute('data-action');
+        const { productOrItem, type, putItem, userId } = this.props;
+        const maxQuantity = (type == 'Item')
+            ? productOrItem.product.inventory
+            : productOrItem.inventory;
         
-        if (type == 'plus' && (this.state.quantity < maxQuantity)) newQuantity++
-        else if (type == 'minus' && (this.state.quantity > 0)) newQuantity--
+        let newQuantity = this.state.quantity;
+        if (plusOrMinus == 'plus' && (this.state.quantity < maxQuantity)) 
+            newQuantity++;
+        else if (plusOrMinus == 'minus' && (this.state.quantity > 0)) 
+            newQuantity--;
         else return;
+        
+        if (type == 'Item')
+            putItem(productOrItem.product.id, newQuantity, userId);
         
         this.setState({ quantity : newQuantity })
     }
 
     handleChange(evt) {
+        // form
         const value = +evt.target.value;
         if (isNaN(value)) return;
+        
+        if (this.props.type == 'Item') {
+            const { putItem, productOrItem, userId } = this.props
+            putItem(productOrItem.product.id, value, userId)
+        }
+        
         this.setState({ quantity: value })
     }
     
     addItemToCart(e) {
+        // button on Product 
         e.preventDefault();
         if (this.state.quantity == 0) return;
-        
-        const product = this.props.selectedProduct;
-        const userId = this.props.userId;
-        const getItem = this.props.getItem;
+        const { product, userId, postItem } = this.props;
         
         // rm eager loaded lists (reviews, categories)
         let smallProduct = (
@@ -60,13 +73,26 @@ class ProductOrItemContainer extends Component {
             ({ id, name, image, cost, description, inventory, updated_at })
         )(product);
         
-        getItem(smallProduct, this.state.quantity, userId);
+        postItem(smallProduct, this.state.quantity, userId);
+        
+    }
+
+    removeItemFromCart(e) {
+        // button on Cart
+        e.preventDefault();
+        
+        // should we do an undo?? Like, when you delete an item, you can undo it
+        // maybe the item turns pale but doesn't delete until later!
+        // will worry about it later
+                
+        const { productOrItem, userId, deleteItem } = this.props;
+        deleteItem(productOrItem, userId);
         this.setState({ quantity: 0 });
     }
 
     render() {
         const { type, productOrItem } = this.props;
-                
+        
         return (<div>{
             (type == 'Item')
             ? <Item
@@ -74,7 +100,7 @@ class ProductOrItemContainer extends Component {
                 changeQuantity={this.changeQuantity}
                 handleChange={this.handleChange}
                 quantity={this.state.quantity}
-                addItemToCart={this.addItemToCart}
+                removeItemFromCart={this.removeItemFromCart}
               />
             : <Product
                 product={productOrItem}
@@ -92,7 +118,9 @@ const mapState = (state) => ({
     userId : state.auth.id
 });
 const mapDispatch = dispatch => dispatch => ({
-    getItem : (product, quantity, userId) => dispatch(getItem(product, quantity, userId))
+    postItem : (product, quantity, userId) => dispatch(postItem(product, quantity, userId)),
+    deleteItem : (itemId, userId) => dispatch(deleteItem(itemId, userId)),
+    putItem : (productId, quantity, userId) => dispatch(putItem(productId, quantity, userId))
 });
 
 export default connect(mapState, mapDispatch)(ProductOrItemContainer);

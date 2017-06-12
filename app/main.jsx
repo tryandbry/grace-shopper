@@ -9,6 +9,7 @@ import Jokes from './components/Jokes'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
+import LoginPage from './components/LoginPage'
 
 import FilterCatalog from './components/FilterCatalog'
 
@@ -106,11 +107,13 @@ render(
             <Route path="/" component={ExampleApp} onEnter={onEnter}>
                 <IndexRedirect to="/catalog" />
                 <Route path="/catalog" component={FilterCatalog} />
+                <Route path="/catalog/:category" component={FilterCatalog} />
                 <Route path="/product/:id" component={ProductContainer} onEnter={onProductEnter} />
                 <Route path="/cart" component={Cart} />
                 <Route path="/checkout" component={CheckoutContainer} />
             </Route>
             <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} />
+            <Route path='/login' component={LoginPage} />
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,
