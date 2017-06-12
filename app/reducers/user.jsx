@@ -47,16 +47,16 @@ export default function reducer(state = initialState, action) {
 
 // dispatchers
 
-export const getUsersOrders = id => {
+export const getUsersOrders = userId => {
     return dispatch => {
-        axios.get(`/api/user/${user.id}/orders`)
+        axios.get(`/api/user/${userId}/orders`)
         .then(res => res.data)
         .then(orders => dispatch(retrieveUserOrders(orders)))
         .catch(console.error.bind(console));
     }
 }
 
-export const createReview = (rating, text) => {
+export const createReview = (rating, text, userId) => {
     return dispatch => axios
         .post(`/api/user/${userId}/reviews`, {
             rating,
