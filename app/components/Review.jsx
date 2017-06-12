@@ -1,18 +1,15 @@
 import React from 'react'
+import Cart from'./Cart'
 
-export default class Review extends React.Component {
-  constructor(){
-    super();
-  }
+const Review = ({  }) => {
 
-  render(){
+    return (
+        <div>
+        <h2>Review</h2>
 
-    return(
-      <div>
-	<h2>Review</h2>
-
-      </div>
+        </div>
     )
-  }
 }
 
+
+export default Review
