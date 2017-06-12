@@ -1,6 +1,7 @@
 import React from 'react';
 import {login} from 'APP/app/reducers/auth';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
 class LoginPage extends React.Component{
   constructor(){
@@ -12,6 +13,7 @@ class LoginPage extends React.Component{
   handleSubmit(evt){
     evt.preventDefault();
     this.props.login(evt.target.username.value, evt.target.password.value)
+    browserHistory.push('/');
   }
 
   render(){
@@ -19,9 +21,8 @@ class LoginPage extends React.Component{
     return (
       <div className="container">
         <div className="row">
-	  <div className="col-lg-4 col-md-4" />
-	  <div id="login" className="col-lg-4 col-md-4">
-	    <h1>Rocks</h1>
+	  <h1>Rocks</h1>
+	  <div id="login" className="col-lg-5 col-md-5">
 	    <form className="form-horizontal" onSubmit={this.handleSubmit}>
 	      <fieldset>
 	        <legend>Log In</legend>
@@ -36,13 +37,23 @@ class LoginPage extends React.Component{
 		</div>
 	      </fieldset>
 	    </form>
-	    <br />
-	    <h3>Or sign in with Google</h3>
+	  </div>
+	  <div className="col-lg-2 col-md-2">
+	    <p>Or</p>
+	  </div>
+	  <div className="col-lg-5 col-md-5">
+	    <h4>Sign in with Google</h4>
 	    <a href="/api/auth/login/google">
-	      <button className="btn btn-success btn-google">Google</button>
+	      <button className="btn btn-default">Google</button>
 	    </a>
 	  </div>
-	  <div className="col-lg-4 col-md-4" />
+	  <div className="col-lg-12 col-md-12">
+	    <p>Don't have a login yet?  Sign up!</p>
+	    <h4>Sign Up</h4>
+	    <a href="/signup">
+	      <button className="btn btn-success btn-google">Sign Up</button>
+	    </a>
+	  </div>
 	</div>
       </div>
     );

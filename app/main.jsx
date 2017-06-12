@@ -10,6 +10,8 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import LoginPage from './components/LoginPage'
+import SignUpContainer from './containers/SignUpContainer'
+
 
 import FilterCatalog from './components/FilterCatalog'
 
@@ -60,11 +62,16 @@ const Main = ({ user, children }) => (
                     </ul>
                     <div className="nav navbar-nav navbar-right">
                         <ul className="navbar-nav">
-                            <li className="nav-link" href="INSERT_CART_LINK_HERE">
-                                <span className="glyphicon glyphicon-shopping-cart cart"></span>
+                            <li className="nav-link">
+                                 <a href="/cart" className="glyphicon glyphicon-shopping-cart cart active"></a>
                             </li>
+			    {user.id ? <WhoAmI /> :
+			      <div className="nav navbar-nav">
+				<li><a href="/login"><button className="btn btn-primary">Login</button></a></li>
+				<li><a href="/signup"><button className="btn btn-primary">Sign Up</button></a></li>
+			      </div>
+			    }
                         </ul>
-                        {user.id ? <WhoAmI /> : <Login />}
                     </div>
                 </div>
             </div>
@@ -115,6 +122,7 @@ render(
             </Route>
             <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} />
             <Route path='/login' component={LoginPage} />
+            <Route path='/signup' component={SignUpContainer} />
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,

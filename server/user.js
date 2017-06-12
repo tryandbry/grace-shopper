@@ -7,6 +7,7 @@ const Item = db.model('item')
 const Cart = db.model('cart')
 const Review = db.model('review')
 const Bom = db.model('bom')
+const chalk = require('chalk');
 const Product = db.model('product')
 
 const {mustBeLoggedIn, forbidden} = require('./auth.filters')
@@ -18,7 +19,6 @@ Create User
 -> param : req.user/userId/cartId/cart
 Get User
 -> send you off to cart.js
-
 
 // TODO
 // write mustBeLoggedIn, other auth filter functions
@@ -46,17 +46,18 @@ module.exports = require('express').Router()
             .catch(next)
     )
     .post('/', (req, res, next) => {        
-        User
-            .create(req.body)
-            .then(user => res.status(201).json(user))
-            // .catch(next)
-            /*
-                this is not going well
-                this error is dumb and sorta just dissapears
-            */
+	console.log(chalk.bold.red("POST to /api/user/"),req.body);
+	Promise.all([User.create(req.body),Cart.create()])
+	    .then(data=>{
+		console.error(chalk.bold.red("Create new user and cart"),data);
+		data[0].setCart(data[1])
+		.then(user=>{
+		    res.send(user);
+		});
+	    })
             .catch(err => {
-                const message = 'WARNING: we didnt authenticate because of duplicate email'
-                res.status(204).send({ message, error: err.errors })
+		console.error(chalk.bold.red("Unable to create new user"),err);
+		res.sendStatus(500);
             })
         }
     )
