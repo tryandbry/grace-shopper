@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AddressForm from '../components/AddressForm';
 import Payment from '../components/Payment';
 import Review from '../components/Review';
-import { postOrder } from '../reducers/order'
+// import { postOrder } from '../reducers/order'
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -43,7 +43,7 @@ class CheckoutContainer extends React.Component {
 
     onSubmitBuy = e => {
       e.preventDefault();
-      buy(this.state, this.props.cart)
+      // buy(this.state, this.props.cart)
       this.setState({ flowState: 3 });
     }
 
@@ -92,9 +92,9 @@ const mapState = state => ({
     cart : state.cart.items,
     userId : state.auth.id
 });
-const mapDispatch = dispatch => ({
-    buy : (order, cart) => dispatch(postOrder(order, cart))
-});
+// const mapDispatch = dispatch => ({
+//     buy : (order, cart) => dispatch(postOrder(order, cart))
+// });
 
-export default connect(mapState, mapDispatch)(CheckoutContainer);
-// export default connect()(CheckoutContainer);
+// export default connect(mapState, mapDispatch)(CheckoutContainer);
+export default connect(mapState)(CheckoutContainer);
