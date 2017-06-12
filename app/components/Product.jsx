@@ -4,7 +4,7 @@ import { getItem } from '../reducers/cart';
 import { printPrice } from 'APP/utils';
 import ProductQuantityChanger from './ProductQuantityChanger';
 
-// userId getting passed in through props, will bomId or need grab bomId in db
+// use printPrice on price and fix the 0 problem again on quantity but that is now in other quantity page
 
 class Product extends Component {
 
