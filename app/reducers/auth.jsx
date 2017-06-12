@@ -35,6 +35,9 @@ export default function reducer (state={}, action) {
 export const newUser = (firstName,lastName,email,password)=>
   dispatch => axios
         .post('/api/user',{firstName,lastName,email,password})
+	.then(user=>{
+	  console.log("returned new user:",user);
+	})
 
 export const login = (username, password) =>
   dispatch => axios

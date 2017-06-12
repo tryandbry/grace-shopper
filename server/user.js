@@ -41,20 +41,17 @@ module.exports = require('express').Router()
     )
     .post('/', (req, res, next) => {        
 	console.log(chalk.bold.red("POST to /api/user/"),req.body);
-        User
-            .create(req.body)
-	    .then(user =>{
-		console.log(chalk.bold.red("Created new user!"),user);
-		res.sendStatus(200);
+	Promise.all([User.create(req.body),Cart.create()])
+	    .then(data=>{
+		console.error(chalk.bold.red("Create new user and cart"),data);
+		data[0].setCart(data[1])
+		.then(user=>{
+		    res.send(user);
+		});
 	    })
-            //.then(user => res.status(201).json(user))
             .catch(err => {
-		/*
-                const message = 'WARNING: we didnt authenticate because of duplicate email'
-                res.status(204).send({ message, error: err.errors })
-		*/
 		console.error(chalk.bold.red("Unable to create new user"),err);
-		next(err);
+		res.sendStatus(500);
             })
         }
     )
