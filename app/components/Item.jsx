@@ -20,32 +20,22 @@ const Item = ({ item, changeQuantity, quantity, handleChange, removeItemFromCart
                 </Link>
             </div>
             <div className="col-lg-2 col-md-2">
-                <div className="row">
-                    <h4> { item.product.name } </h4>
-                </div>
-                <div className="row">
-                    <span className=""> quantity { quantity } times cost { item.cost } </span>
-                </div>
-                <div className="row">
-                    <span className=""> total { quantity * item.cost } </span>
-                </div>
-                <div className="row">
-                    <ProductQuantityChanger 
-                        changeQuantity={changeQuantity}
-                        handleChange={handleChange}
-                        quantity={quantity}
-                    />
-                </div>
+                <h4> { item.product.name } </h4>
             </div>
             <div className="col-lg-2 col-md-2">
-                <div className="row">
-                    <button 
-                        type="button"
-                        className="btn btn-success" 
-                        onClick={removeItemFromCart}
-                    >Delete Rock
-                    </button>
-                </div>
+                <span className=""> quantity { quantity } times cost { item.cost } </span>
+                <span className=""> total { quantity * item.cost } </span>
+                <ProductQuantityChanger 
+                    changeQuantity={changeQuantity}
+                    handleChange={handleChange}
+                    quantity={quantity}
+                />
+                <button 
+                    type="button"
+                    className="btn btn-success" 
+                    onClick={removeItemFromCart}
+                >Delete Rock
+                </button>
             </div>
         </div>
     </div>
