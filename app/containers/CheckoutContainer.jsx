@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import AddressForm from '../components/AddressForm';
 import Payment from '../components/Payment';
 import Review from '../components/Review';
-// import { postOrder } from '../reducers/order'
+import Receipt from '../components/Receipt';
+import { postOrder } from '../reducers/order';
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -27,6 +28,7 @@ class CheckoutContainer extends React.Component {
 
     	this.onSubmitShipping = this.onSubmitShipping.bind(this);
     	this.onSubmitPayment = this.onSubmitPayment.bind(this);
+        this.onSubmitBuy = this.onSubmitBuy.bind(this);
     	this.onChange = this.onChange.bind(this);
     }
 
@@ -42,8 +44,9 @@ class CheckoutContainer extends React.Component {
     }
 
     onSubmitBuy = e => {
+      console.log('onSubmitBuy in checkoutcontainer')
       e.preventDefault();
-      // buy(this.state, this.props.cart)
+      this.props.postOrder(this.state, this.props.userId)
       this.setState({ flowState: 3 });
     }
 
@@ -89,12 +92,11 @@ class CheckoutContainer extends React.Component {
 }
 
 const mapState = state => ({
-    cart : state.cart.items,
     userId : state.auth.id
 });
-// const mapDispatch = dispatch => ({
-//     buy : (order, cart) => dispatch(postOrder(order, cart))
-// });
+const mapDispatch = {
+    postOrder
+};
 
 // export default connect(mapState, mapDispatch)(CheckoutContainer);
-export default connect(mapState)(CheckoutContainer);
+export default connect(mapState, mapDispatch)(CheckoutContainer);

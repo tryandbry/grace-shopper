@@ -2,16 +2,19 @@ import axios from 'axios';
 
 // actions
 const BUY = 'BUY';
+// const SET_CURRENT_ORDER = 'SET_CURRENT_ORDER';
 
 // action-creators
 const addOrder = order => ({
     type : BUY,
     order
 });
+// const setCurrentOrder = o
 
 // initial state
 const initialState = {
-    order : [] // array of objects { orderInfo, cartItems }
+    order : [],
+    currentOrder : {}
 };
 
 // reducer
@@ -21,6 +24,7 @@ export default function reducer(state = initialState, action) {
         case (BUY):
             newState.order.push(action.order)
             break;
+        // case ()
         default:
             return state;
     }
@@ -37,8 +41,13 @@ const backendRoute = (userId) =>
 const resToData = (res) => res.data
 
 // dispatchers
-export const postOrder = (order, cart, userId) => dispatch => axios
-    .post(backendRoute(userId), { order, cart })
-    .then(resToData)
-    .then(order => dispatch(addOrder(order)))
-    .catch(() => console.log('error in buy'))
+export const postOrder = (order, userId) => dispatch => {
+    console.log('postOrder in order reducer')
+    axios
+    .post(backendRoute(userId), order)
+    .then(res => {
+        console.log('postOrder in order reducer', res)
+        return res.data
+    })
+    .then(order => dispatch(addOrder(order))) // this order != input order
+    .catch(() => console.log('error in buy'))}
