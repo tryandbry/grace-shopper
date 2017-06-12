@@ -2,7 +2,7 @@ import React from 'react';
 import {login} from 'APP/app/reducers/auth';
 import {connect} from 'react-redux';
 
-class LoginPage extends React.Component{
+class SignUp extends React.Component{
   constructor(){
     super();
 
@@ -19,15 +19,19 @@ class LoginPage extends React.Component{
     return (
       <div className="container">
         <div className="row">
-	  <h1>Rocks</h1>
-	  <div id="login" className="col-lg-5 col-md-5">
+	  <h1>Create a new user</h1>
+	  <div id="signup" className="col-lg-12 col-md-12">
 	    <form className="form-horizontal" onSubmit={this.handleSubmit}>
 	      <fieldset>
-	        <legend>Log In</legend>
+	        <legend>User details</legend>
 		<div className="form-group">
-		  <label>User Name</label>
-		  <input className="form-control" name="username" />
-		  <label>Password</label>
+		  <label>first name</label>
+		  <input className="form-control" name="firstname" />
+		  <label>last name</label>
+		  <input className="form-control" name="lastname" />
+		  <label>email</label>
+		  <input className="form-control" name="email" />
+		  <label>password</label>
 		  <input className="form-control" name="password" type="password" />
 		</div>
 		<div className="form-group">
@@ -36,22 +40,6 @@ class LoginPage extends React.Component{
 	      </fieldset>
 	    </form>
 	  </div>
-	  <div className="col-lg-2 col-md-2">
-	    <p>Or</p>
-	  </div>
-	  <div className="col-lg-5 col-md-5">
-	    <h4>Sign in with Google</h4>
-	    <a href="/api/auth/login/google">
-	      <button className="btn btn-default">Google</button>
-	    </a>
-	  </div>
-	  <div className="col-lg-12 col-md-12">
-	    <p>Don't have a login yet?  Sign up!</p>
-	    <h4>Sign Up</h4>
-	    <a href="/*FILL ME IN*/">
-	      <button className="btn btn-success btn-google">Sign Up</button>
-	    </a>
-	  </div>
 	</div>
       </div>
     );
@@ -59,4 +47,4 @@ class LoginPage extends React.Component{
 }
 
 const mapDispatch = {login};
-export default connect(null, mapDispatch)(LoginPage);
+export default connect(null, mapDispatch)(SignUp);
