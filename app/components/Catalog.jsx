@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { printPrice } from 'APP/utils'
 const Catalog = ({ products }) => (
-    <div className="center">
+    <div>
         <h3>Catalog</h3>
         <div className="row">
             {
