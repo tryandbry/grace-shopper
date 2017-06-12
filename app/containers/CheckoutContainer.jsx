@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AddressForm from '../components/AddressForm';
 import Payment from '../components/Payment';
 import Review from '../components/Review';
-import { buy } from '../reducers/bom'
+import { postOrder } from '../reducers/order'
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -31,22 +31,20 @@ class CheckoutContainer extends React.Component {
     }
 
     // handlers for AddressForm
-    onSubmitShipping = (event) => {
-      event.preventDefault();
-      this.setState({flowState: 1});
+    onSubmitShipping = e => {
+      e.preventDefault();
+      this.setState({ flowState: 1 });
     }
 
-    onSubmitPayment = (event) => {
-      event.preventDefault();
-      this.setState({flowState: 2});
+    onSubmitPayment = e => {
+      e.preventDefault();
+      this.setState({ flowState: 2 });
     }
 
-    onSubmitBuy = (event) => {
-      event.preventDefault();
-      
-      buy(this.state)
-      
-      this.setState({flowState: 3});
+    onSubmitBuy = e => {
+      e.preventDefault();
+      buy(this.state, this.props.cart)
+      this.setState({ flowState: 3 });
     }
 
     // form change
@@ -90,9 +88,12 @@ class CheckoutContainer extends React.Component {
     }
 }
 
-const mapState = null;
+const mapState = state => ({
+    cart : state.cart.items,
+    userId : state.auth.id
+});
 const mapDispatch = dispatch => ({
-    buy
+    buy : (order, cart) => dispatch(postOrder(order, cart))
 });
 
 export default connect(mapState, mapDispatch)(CheckoutContainer);

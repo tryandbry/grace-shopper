@@ -59,7 +59,7 @@ export default function reducer(state = initialState, action) {
     return newState;
 }
 
-// user: gets cart from db, saves it to session and to store
+// user: gets cart from db, saves to store
 // guest: saves empty cart to session and store
 const backendRoute = (userId) => 
     isNaN(userId)
