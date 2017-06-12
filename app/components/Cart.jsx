@@ -22,7 +22,7 @@ const Cart = ({ items }) => (
     </div>
 )
 
-const mapState = (state) => ({
+const mapState = state => ({
     items : state.cart.items
 });
 

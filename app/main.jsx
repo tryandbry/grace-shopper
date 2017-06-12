@@ -20,10 +20,11 @@ import CheckoutContainer from './containers/CheckoutContainer'
 import ProductContainer from './containers/ProductContainer'
 
 import Bom from './components/Bom'
-import { fetchBom } from './reducers/bom';
+
 
 import { getProducts, getCategories } from './reducers/catalog'
 import { getProduct } from './reducers/product'
+import { fetchBom } from './reducers/bom';
 
 
 /*
