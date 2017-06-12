@@ -46,10 +46,12 @@ class CheckoutContainer extends React.Component {
     }
 
     onSubmitBuy = e => {
-      console.log('onSubmitBuy in checkoutcontainer')
       e.preventDefault();
       this.props.postOrder(this.state, this.props.userId)
-      this.setState({ flowState: 3 });
+      .then(()=>{
+	this.props.fetchBom(this.props.order.id);
+	this.setState({ flowState: 3 });
+      })
     }
 
     // form change
@@ -61,10 +63,7 @@ class CheckoutContainer extends React.Component {
     }
 
     render () {
-        console.log('Checkout State\n', this.state)
         const onChange = this.onChange;
-        const { order } = this.props;
-	const fetchBom = this.props.fetchBom;
         
         return (
             <div id="checkout">
@@ -87,10 +86,7 @@ class CheckoutContainer extends React.Component {
                         onSubmit={this.onSubmitBuy}
                         title={"Review"}
                       />
-                    : 
-		    <Receipt 
-                        order={order}
-                      />
+                    : <Receipt />
                     }
             </div>
         );

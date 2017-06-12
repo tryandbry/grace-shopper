@@ -30,8 +30,6 @@ class Bom extends React.Component {
   }
 
   render(){
-    console.log("Bom component hit!",this.props);
-
     const shipping = this.props.bom.shipping;
     const id = this.props.bom.id;
     const lineItems = this.assembleLineItems();
