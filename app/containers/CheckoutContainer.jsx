@@ -5,6 +5,8 @@ import Payment from '../components/Payment';
 import Review from '../components/Review';
 import Receipt from '../components/Receipt';
 import { postOrder } from '../reducers/order';
+import Bom from '../components/Bom';
+import { fetchBom } from '../reducers/bom';
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -62,6 +64,7 @@ class CheckoutContainer extends React.Component {
         console.log('Checkout State\n', this.state)
         const onChange = this.onChange;
         const { order } = this.props;
+	const fetchBom = this.props.fetchBom;
         
         return (
             <div id="checkout">
@@ -84,7 +87,8 @@ class CheckoutContainer extends React.Component {
                         onSubmit={this.onSubmitBuy}
                         title={"Review"}
                       />
-                    : <Receipt 
+                    : 
+		    <Receipt 
                         order={order}
                       />
                     }
@@ -98,8 +102,8 @@ const mapState = state => ({
     order : state.order
 });
 const mapDispatch = {
-    postOrder
+    postOrder,
+    fetchBom,
 };
 
-// export default connect(mapState, mapDispatch)(CheckoutContainer);
 export default connect(mapState, mapDispatch)(CheckoutContainer);
