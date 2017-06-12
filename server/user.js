@@ -47,8 +47,12 @@ module.exports = require('express').Router()
     )
     .post('/', (req, res, next) => {        
 	console.log(chalk.bold.red("POST to /api/user/"),req.body);
+      //TODO: consider Promise.props({user: User.create(), cart: Cart.create()})
+      //TODO: you could also potentially put this logic in a preCreate sequelize hook
 	Promise.all([User.create(req.body),Cart.create()])
+      // then ({user, cart }) => 
 	    .then(data=>{
+        //TODO: why console.error?
 		console.error(chalk.bold.red("Create new user and cart"),data);
 		data[0].setCart(data[1])
 		.then(user=>{

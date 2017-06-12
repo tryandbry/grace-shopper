@@ -10,6 +10,7 @@ module.exports = router;
 
 router.route('/:id')
 // return BOM and associated Items and Products
+//TODO: why do we have this as well as an order router if they are getting to the same table (BOM)?
 .get(function(req,res,next){
   //find the Bom and eager load Item(s)
   Bom.findOne({

@@ -20,6 +20,7 @@ module.exports = require('express').Router()
         
         // don't create item if exists
         const indexOfItem = req.cart.items
+      //TODO: why reduce vs. Array.prototype.find()?
             .reduce((index, item, i) =>
                 index || (item.product.id == product.id) ? i : index
             , undefined);
@@ -34,11 +35,17 @@ module.exports = require('express').Router()
         // possibly shouldn't use update instance method
         // https://github.com/sequelize/sequelize/issues/2910
         
+        // TODO: multiline if else blocks should be wrapped in braces
         if (isNaN(indexOfItem))
             Item
                 .create({
                     quantity : quantity,
+                  //TODO: you're getting the cost from the body of the request
+                  // I could request with a cost of 0... you want to get the price from the product
+                  // on the req.cart.items[i].product
+                  // or if the item wasn't in the cart already you should look it up
                     cost : product.cost,
+                  //TODO: isn't updated at something sequalize does for you?
                     updated_at : Date.now()
                 })
                 .then(item => Product

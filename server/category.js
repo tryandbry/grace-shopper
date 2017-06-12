@@ -18,6 +18,7 @@ module.exports = require('express').Router()
             .then(categories => res.send(categories))
             .catch(next);
     })
+//TODO: id or query for category name
     .get('/:categoryName', (req, res, next) => {
         Category
             .findOne({

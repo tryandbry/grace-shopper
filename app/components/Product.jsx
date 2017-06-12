@@ -43,6 +43,20 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
             <div className="col-lg-6 col-md-6">
                 <small className="descriptionHeader"> Product Description </small>
                 <div className="well well-lg"> {product.description} </div>
+                {/* TODO:  usually when you map over something it should be it's own component */}
+                {/* TODO:  I also like to pull all logic from the jsx into class methods so you'd have a have
+                    renderReviews() {
+                      return this.products.reviews((review) => <Review review={review} />)
+                    }
+                    render(){
+                      return (
+                        <div>
+                        ...
+                        {this.renderReviews()}
+                        </div>
+                      )
+                    }
+                  */}
                 {
                     product.reviews && product.reviews.map(review => (
                         <div key={review.id}>

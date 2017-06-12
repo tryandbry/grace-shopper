@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory, Link } from 'react-router'
 import { render } from 'react-dom'
 import { connect, Provider } from 'react-redux'
 
@@ -40,7 +40,7 @@ const Main = ({ user, children }) => (
     </div>
 )
 */
-
+// TOOD: why aren't these routes covered in react router?
 const Main = ({ user, children }) => (
     <div className="container">
         <nav className="navbar navbar-inverse bg-inverse">
@@ -51,7 +51,8 @@ const Main = ({ user, children }) => (
                 <div className="collapse navbar-collapse">
                     <ul className="nav navbar-nav navigationBtn">
                         <li className="nav-item">
-                            <a className="nav-link" href="/catalog">Home<span/></a>
+                          {/* TODO: use Links from react router to not fetch the document again*/}
+                            <Link className="nav-link" to="/catalog">Home<span/></Link>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="INSERT_LINK_TO_USERPAGE_HERE">Account</a>
@@ -103,7 +104,7 @@ const fetchBomOnEnter = (nextRouterState) => {
     console.log("fetchBomOnEnter: ", nextRouterState);
     fetchBom(nextRouterState.params.id)(store.dispatch);
 }
-
+// TODO: link to signup
 render(
     <Provider store={store}>
         <Router history={browserHistory}>

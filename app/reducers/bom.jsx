@@ -33,6 +33,7 @@ export default function reducer(state = initialState, action) {
             newState.products = action.products.slice();
             break;
         case (UNSET_BOM):
+        //TODO: consider reseting to initial State
             newState.id = null;
             newState.shipping = null;
             newState.status = null;
