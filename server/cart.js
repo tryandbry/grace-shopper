@@ -30,7 +30,10 @@ module.exports = require('express').Router()
             '\nproduct', product,
             '\nquantity', quantity
         )
-
+        
+        // possibly shouldn't use update instance method
+        // https://github.com/sequelize/sequelize/issues/2910
+        
         if (isNaN(indexOfItem))
             Item
                 .create({
@@ -46,49 +49,39 @@ module.exports = require('express').Router()
                     res.status(201).send(item)
                 })
                 .catch(next);
-        else {
-            /* 
-            also possibly shouldn't use update instance method
-            https://github.com/sequelize/sequelize/issues/2910
-            */
-                        
-            const item = req.cart.items[indexOfItem];
+        else            
             Item
-                .findById(item.id)
-                .then(item => item.update({ quantity: item.quantity + quantity}))
-                .then(item => res.status(204).send(item))
+                .findById(req.cart.items[indexOfItem].id)
+                .then(item => item.update({ quantity: item.quantity + quantity }))
+                .then(item => res.status(200).send(item))
                 .catch(next);
-        }
-        
     })
-    .param('itemId', (req, res, next, itemId) => {
-        if (isNaN(itemId)) res.sendStatus(404);
+    .param('productId', (req, res, next, productId) => {
+        if (isNaN(productId)) res.sendStatus(404);
         else {
-
-            // itemId
-            req.itemId = itemId;
-
             Item
-                .findById(itemId)
+                .findOne({ where : { product_id : +productId } })
                 .then(item => {
-                    // item
+                    if (!item) next(404);
+                    
                     req.item = item;
                     next();
                 })
                 .catch(next);
         }
     })
-    .delete('/:itemId', (req, res, next) => {
-        req.item.destroy().then(() => res.sendStatus(204));
-    })
-    .put('/:itemId', (req, res, next) => {
+    .put('/:productId', (req, res, next) => {
         /*
         Literally the only thing you can (need to) update is the quantity
         every post to this route sends as req.body = quantity
         */
-        console.log('here we are updating a cart item /api/:userId/cart/:itemId')
-        console.log('ids', req.userId, req.itemId)
+        console.log('\n\nhere we are updating a cart item /api/:userId/cart/:itemId')
+        console.log('ids', req.userId, req.params.productId)
+        console.log('item', req.item)
         console.log('and finally req.body', req.body)
 
         req.item.update(req.body).then(item => res.status(200).send(item));
+    })
+    .delete('/:productId', (req, res, next) => {
+        req.item.destroy().then(() => res.sendStatus(204));
     })

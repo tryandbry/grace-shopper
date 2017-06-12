@@ -10,23 +10,11 @@ export const authenticated = user => ({
     user: user || {}
 })
 
-
-// // test user as auth is not working yet
-// const testUser = {
-//     id : 2,
-//     email : "pikachu@pokemon.com",
-//     firstName : "Pika",
-//     lastName : "Pikachu",
-//     isAdmin : false,
-//     triggerNewPassword : false,
-//     cart_id : 2
-// }
-
 // reducer
 export default function reducer (state={}, action) {
     switch (action.type) {
         case AUTHENTICATED:
-            return action.user // || testUser
+            return action.user
     }
     return state
 }

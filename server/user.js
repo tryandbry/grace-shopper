@@ -72,7 +72,7 @@ module.exports = require('express').Router()
 
     // .use(mustBeLoggedIn)
     .param('userId', (req, res, next, userId) => {
-        if (isNaN(userId)) next(404); // res.sendStatus(404);
+        if (isNaN(userId)) next(404);
         else {
             // userId
             req.userId = userId;
