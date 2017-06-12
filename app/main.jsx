@@ -64,8 +64,13 @@ const Main = ({ user, children }) => (
                             <li className="nav-link">
                                  <a href="/cart" className="glyphicon glyphicon-shopping-cart cart active"></a>
                             </li>
+			    {user.id ? <WhoAmI /> :
+			      <div className="nav navbar-nav">
+				<li><a href="/login"><button className="btn btn-primary">Login</button></a></li>
+				<li><a href="/signup"><button className="btn btn-primary">Sign Up</button></a></li>
+			      </div>
+			    }
                         </ul>
-                        {user.id ? <WhoAmI /> : <Login />}
                     </div>
                 </div>
             </div>
