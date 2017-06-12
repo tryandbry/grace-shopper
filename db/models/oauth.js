@@ -63,6 +63,10 @@ module.exports = db => {
         name: profile.displayName,
 	email: profile.emails[0].value,
       })
+      .then(user =>
+        OAuth.Cart.create()
+	.then(cart=>user.setCart(cart))
+      )
       .then(user => db.Promise.props({
         user,
         _setOauthUser: oauth.setUser(user)
@@ -100,10 +104,11 @@ module.exports = db => {
   return OAuth
 }
 
-module.exports.associations = (OAuth, {User}) => {
+module.exports.associations = (OAuth, {User,Cart}) => {
   // Create a static association between the OAuth and User models.
   // This lets us refer to OAuth.User above, when we need to create
   // a user.
   OAuth.User = User
+  OAuth.Cart = Cart
   OAuth.belongsTo(User)
 }
