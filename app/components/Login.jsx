@@ -2,8 +2,8 @@ import React from 'react'
 
 export const Login = ({ login }) => (
   <form className="login" onSubmit={evt => {
-    evt.preventDefault()
-    login(evt.target.username.value, evt.target.password.value)
+    evt.preventDefault();
+    login(evt.target.username.value, evt.target.password.value);
   } }>
     <input name="username" />
     <input name="password" type="password" />

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SignUp from '../components/SignUp';
-import {newUser} from 'APP/app/reducers/auth';
+import {newUser,login} from 'APP/app/reducers/auth';
+import { browserHistory } from 'react-router';
 
 class SignUpContainer extends React.Component {
     constructor() {
@@ -60,7 +61,12 @@ class SignUpContainer extends React.Component {
 	  this.props.newUser(this.state.firstName,
 	                     this.state.lastName,
 			     this.state.email,
-			     this.state.password);
+			     this.state.password)
+	  .then(res=>res.data)
+	  .then(user=>{
+	    this.props.login(user.email,user.password);
+	    browserHistory.push('/');
+	  });
 	}
     }
 
@@ -78,7 +84,7 @@ class SignUpContainer extends React.Component {
 }
 
 //const mapState;
-const mapDispatch = {newUser};
+const mapDispatch = {newUser,login};
 
 //export default connect(mapState,mapDispatch)(CheckoutContainer);
 export default connect(null,mapDispatch)(SignUpContainer);

@@ -1,6 +1,7 @@
 import React from 'react';
 import {login} from 'APP/app/reducers/auth';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
 class LoginPage extends React.Component{
   constructor(){
@@ -12,6 +13,7 @@ class LoginPage extends React.Component{
   handleSubmit(evt){
     evt.preventDefault();
     this.props.login(evt.target.username.value, evt.target.password.value)
+    browserHistory.push('/');
   }
 
   render(){
