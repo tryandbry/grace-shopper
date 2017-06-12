@@ -5,12 +5,15 @@ const Item = db.model('item');
 const Bom = db.model('bom');
 const Product = db.model('product');
 const router = require('express').Router();
+const chalk = require('chalk');
 
 module.exports = router;
 
 router.route('/:id')
 // return BOM and associated Items and Products
 .get(function(req,res,next){
+  console.log(chalk.bold.red("BOM route hit!"),req.params.id);
+  if(!req.params.id) res.sendStatus(404);
   //find the Bom and eager load Item(s)
   Bom.findOne({
     where: {

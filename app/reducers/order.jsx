@@ -10,21 +10,17 @@ const addOrder = order => ({
 });
 
 // initial state
-const initialState = {
-    order : [] // array of objects { orderInfo, cartItems }
-};
+const initialState = {};
 
 // reducer
 export default function reducer(state = initialState, action) {
-    let newState = Object.assign({}, initialState)
     switch (action.type) {
         case (BUY):
-            newState.order.push(action.order)
+            return action.order;
             break;
         default:
             return state;
     }
-    return newState;
 }
 
 // user: from db
@@ -37,8 +33,8 @@ const backendRoute = (userId) =>
 const resToData = (res) => res.data
 
 // dispatchers
-export const postOrder = (order, cart, userId) => dispatch => axios
-    .post(backendRoute(userId), { order, cart })
+export const postOrder = (order, userId) => dispatch => axios
+    .post(backendRoute(userId), order)
     .then(resToData)
-    .then(order => dispatch(addOrder(order)))
+    .then(order => dispatch(addOrder(order))) // this order != input order
     .catch(() => console.log('error in buy'))

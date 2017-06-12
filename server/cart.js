@@ -84,9 +84,11 @@ module.exports = require('express').Router()
         console.log('item', req.item)
         console.log('and finally req.body', req.body)
 
+        // still working on sorting (updated_at) small bug somewhere
+
         req.item
             .update(req.body)
-            // .then(item => item.update({ updated_at: Date.now() }))
+            // .then(item => item.update({ updated_at: Date.now() })) 
             .then(item => res.status(200).send(item))
             .catch(next);
     })

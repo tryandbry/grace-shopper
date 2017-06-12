@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import AddressForm from '../components/AddressForm';
 import Payment from '../components/Payment';
 import Review from '../components/Review';
-// import { postOrder } from '../reducers/order'
+import Receipt from '../components/Receipt';
+import { postOrder } from '../reducers/order';
+import Bom from '../components/Bom';
+import { fetchBom } from '../reducers/bom';
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -27,6 +30,7 @@ class CheckoutContainer extends React.Component {
 
     	this.onSubmitShipping = this.onSubmitShipping.bind(this);
     	this.onSubmitPayment = this.onSubmitPayment.bind(this);
+        this.onSubmitBuy = this.onSubmitBuy.bind(this);
     	this.onChange = this.onChange.bind(this);
     }
 
@@ -43,8 +47,11 @@ class CheckoutContainer extends React.Component {
 
     onSubmitBuy = e => {
       e.preventDefault();
-      // buy(this.state, this.props.cart)
-      this.setState({ flowState: 3 });
+      this.props.postOrder(this.state, this.props.userId)
+      .then(()=>{
+	this.props.fetchBom(this.props.order.id);
+	this.setState({ flowState: 3 });
+      })
     }
 
     // form change
@@ -56,7 +63,6 @@ class CheckoutContainer extends React.Component {
     }
 
     render () {
-        console.log('Checkout State\n', this.state)
         const onChange = this.onChange;
         
         return (
@@ -80,8 +86,7 @@ class CheckoutContainer extends React.Component {
                         onSubmit={this.onSubmitBuy}
                         title={"Review"}
                       />
-                    : <Receipt 
-                      />
+                    : <Receipt />
                     }
             </div>
         );
@@ -89,12 +94,12 @@ class CheckoutContainer extends React.Component {
 }
 
 const mapState = state => ({
-    cart : state.cart.items,
-    userId : state.auth.id
+    userId : state.auth.id,
+    order : state.order
 });
-// const mapDispatch = dispatch => ({
-//     buy : (order, cart) => dispatch(postOrder(order, cart))
-// });
+const mapDispatch = {
+    postOrder,
+    fetchBom,
+};
 
-// export default connect(mapState, mapDispatch)(CheckoutContainer);
-export default connect(mapState)(CheckoutContainer);
+export default connect(mapState, mapDispatch)(CheckoutContainer);
