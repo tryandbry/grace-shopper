@@ -39,6 +39,7 @@ module.exports = require('express').Router()
                 .create({
                     quantity : quantity,
                     cost : product.cost,
+                    updated_at : Date.now()
                 })
                 .then(item => Product
                     .findById(product.id)
@@ -52,7 +53,10 @@ module.exports = require('express').Router()
         else            
             Item
                 .findById(req.cart.items[indexOfItem].id)
-                .then(item => item.update({ quantity: item.quantity + quantity }))
+                .then(item => item.update({ 
+                    quantity: item.quantity + quantity, 
+                    // updated_at : Date.now() 
+                }))
                 .then(item => res.status(200).send(item))
                 .catch(next);
     })
@@ -73,14 +77,18 @@ module.exports = require('express').Router()
     .put('/:productId', (req, res, next) => {
         /*
         Literally the only thing you can (need to) update is the quantity
-        every post to this route sends as req.body = quantity
+        every post to this route sends as req.body = { quantity }
         */
         console.log('\n\nhere we are updating a cart item /api/:userId/cart/:itemId')
         console.log('ids', req.userId, req.params.productId)
         console.log('item', req.item)
         console.log('and finally req.body', req.body)
 
-        req.item.update(req.body).then(item => res.status(200).send(item));
+        req.item
+            .update(req.body)
+            // .then(item => item.update({ updated_at: Date.now() }))
+            .then(item => res.status(200).send(item))
+            .catch(next);
     })
     .delete('/:productId', (req, res, next) => {
         req.item.destroy().then(() => res.sendStatus(204));

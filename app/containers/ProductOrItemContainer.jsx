@@ -87,7 +87,7 @@ class ProductOrItemContainer extends Component {
                 
         const { productOrItem, userId, deleteItem } = this.props;
         deleteItem(productOrItem, userId);
-        this.setState({ quantity: -1 });
+        this.setState({ quantity: 0 });
     }
 
     render() {
