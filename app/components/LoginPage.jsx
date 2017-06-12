@@ -50,7 +50,7 @@ class LoginPage extends React.Component{
 	  <div className="col-lg-12 col-md-12">
 	    <p>Don't have a login yet?  Sign up!</p>
 	    <h4>Sign Up</h4>
-	    <a href="/*FILL ME IN*/">
+	    <a href="/signup">
 	      <button className="btn btn-success btn-google">Sign Up</button>
 	    </a>
 	  </div>
