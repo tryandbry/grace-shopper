@@ -1,5 +1,5 @@
 const db = require('APP/db');
-const {Product} = db;
+const {Product,User} = db;
 const {expect} = require('chai');
 
 describe('Back-end tests',function(){
@@ -7,12 +7,19 @@ describe('Back-end tests',function(){
     db.didSync
     .then(()=>db.sync({force: true}))
     .then(()=>{
-      return Product.create({
-	name: 'rock',
-	cost: 1243.34,
-	description: 'I am a rock',
-	inventory: 1000,
-      })
+      return Promise.all([
+        Product.create({
+	  name: 'rock',
+	  cost: 1243.34,
+	  description: 'I am a rock',
+	  inventory: 1000,
+	}),
+	User.create({
+	  email: "test@test.com",
+	  name: "First Last",
+	  password: "123",
+	}),
+      ]);
     })
     .then(()=>done())
     .catch(error=>{
@@ -21,17 +28,18 @@ describe('Back-end tests',function(){
   });
 
   describe('Sequelize models',function(){
-    let product;
-
-    beforeEach('add one Product instance',function(){
-      return Product.findOne()
-      .then(data=>{
-	product = data;
-	//console.log(product.get('name'));
-      })
-    });
 
     describe('Product',function(){
+      let product;
+
+      beforeEach('retrieve product instance',function(){
+	return Product.findOne()
+	.then(data=>{
+	  product = data;
+	  //console.log(product.get('name'));
+	})
+      });
+
       it('instance has the expected schema',function(){
 	expect(product.get('name')).to.equal('rock');
 	expect(product.get('description')).to.equal('I am a rock');
@@ -39,5 +47,36 @@ describe('Back-end tests',function(){
 	expect(product.get('inventory')).to.be.an.integer;
       });
     });
+
+    describe('User',function(){
+      let user;
+
+      beforeEach('retrieve user instance',function(){
+	return User.findOne()
+	.then(data=>{
+	  user = data;
+	})
+      });
+
+      it('instance has the expected schema',function(){
+	expect(user.get('fullName')).to.equal('First Last');
+	expect(user.get('firstName')).to.equal('First');
+	expect(user.get('lastName')).to.equal('Last');
+	expect(user.get('email')).to.equal('test@test.com');
+      });
+
+      it('validates email',function(){
+	const newUser = User.build();
+	return newUser.validate()
+	.then(err=> {
+	  expect(err).to.be.an('object');
+	  let a = err.errors.filter(e=>
+	    e.type == 'notNull Violation' &&
+	    e.path == 'email');
+	  expect(a).to.not.have.length(0);
+	});
+      });
+    });
+
   });
 });
