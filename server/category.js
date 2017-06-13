@@ -18,10 +18,11 @@ module.exports = require('express').Router()
             .then(categories => res.send(categories))
             .catch(next);
     })
-    .get('/:categoryId', (req, res, next) => {
+    // TODO id instead of categoryName
+    .get('/:categoryName', (req, res, next) => {
         Category
             .findOne({
-                where : { id : req.params.categoryId }
+                where : { name : req.params.categoryName }
             })
             .then(category => res.send(category))
             .catch(next);

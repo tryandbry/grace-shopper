@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSelectedCategory } from '../reducers/catalog';
+import { Link } from 'react-router';
 
 const FilterCategory = (props) => {
     const categories = props.categories;
@@ -36,16 +37,13 @@ const FilterCategory = (props) => {
 	    </div>
 	  )}
         </div>
-    );
+    )
 }
 
-
-const mapState = (state) => ({
+const mapState = state => ({
     categories : state.catalog.categories,
 });
-const mapDispatch = (dispatch) => ({
-    selectCategory : function (id) {
-        dispatch(getSelectedCategory(id));
-    }
+const mapDispatch = dispatch => ({
+    selectCategory : id => dispatch(getSelectedCategory(id))
 });
 export default connect(mapState, mapDispatch)(FilterCategory);

@@ -1,125 +1,60 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { getItem } from '../reducers/cart';
+import ProductQuantityChanger from './ProductQuantityChanger';
+import { printPrice } from 'APP/utils'
 
-// userId getting passed in through props, will bomId or need grab bomId in db
-
-class Product extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            quantity: 1
-        }
-        this.handleAddQuantity = this.handleAddQuantity.bind(this);
-        this.handleMinusQuantity = this.handleMinusQuantity.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleAddQuantity() {
-        this.setState({
-            quantity: this.state.quantity + 1
-        })
-        console.log('the quantity is? ', this.state.quantity);
-    }
-
-    handleMinusQuantity() {
-        if (this.state.quantity - 1) {
-            this.setState({
-                quantity: parseInt(this.state.quantity - 1)
-            })
-        }
-        console.log('minus.. ', this.state.quantity)
-    }
-
-    handleChange(evt) {
-        const value = evt.target.value;
-        if (value === "") {
-            this.setState({
-                quantity: ""
-            })
-        }
-        else {
-            if (!value.match(/[^0-9"]/)) {
-                this.setState({
-                    quantity: +value
-                })
-            }
-
-        }
-    }
-
-    render() {
-        const product = this.props.selectedProduct;
-        const addItemToCart = this.props.getItem;
-        const userId = this.props.userId;
-
-        return (
-            <div className="product">
-                <div>
-                    <h3>{product.name}</h3>
-                    <img src={product.image} className="img-thumbnail" />
-                    <small> {product.description} </small>
-                    <span> {product.inventory} </span> 
-                    <span> {product.cost} </span>
-                    <div className="col-lg-2">
-                        <div className="input-group">
-                            <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="minus" 
-                                    data-target="font-size" 
-                                    onClick={() => this.handleMinusQuantity()} 
-                                ><span className="glyphicon glyphicon-minus"></span>-
-                                </button>
-                            </span>
-                            <input 
-                                type="text" 
-                                onChange={this.handleChange} 
-                                value={this.state.quantity} 
-                                className="form-control" 
-                                id="font-size" 
-                            />
-                            <span className="input-group-btn">
-                                <button 
-                                    className="btn btn-default value-control" 
-                                    data-action="plus" 
-                                    data-target="font-size" 
-                                    onClick={() => this.handleAddQuantity()}
-                                ><span className="glyphicon glyphicon-plus"></span>+
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <button 
-                        type="button" 
-                        className="btn btn-success" 
-                        onClick={() => addItemToCart(product, this.state.quantity, userId)}
-                    >Add Rock
-                    </button>
-                </div>
-                <div>
-                    {
-                        product.reviews && product.reviews.map(review => (
-                            <div key={review.id}>
-                                <h5><span>{review.user.fullName}</span></h5>
-                                <small>{review.text}</small>
-                            </div>
-                        ))
-                    }
-                </div>
+const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart  }) => (
+    <div className="container product">
+        <div className="row">
+            <div className="col-lg-3 col-md-3">
+                <h3>{product.name}</h3>
             </div>
-        )
-    }
-}
+        </div>
+        <div className="row">
+            <div className="col-lg-3 col-md-3">
+                <img src={product.image} className="img-thumbnail" />
+            </div>
+            <div className="col-lg-3 col-md-3">
+                <span className="stock"> In Stock: </span> 
+                <span className="quantity"> {product.inventory} </span>
+                <div></div>
+                <span className="stock"> price: </span> 
+                <span className="cost"> {printPrice(product.cost)} </span>
+            </div>
+        </div>
+        <div className="row purchase">
+            <div className="col-lg-3 col-md-3">
+                <ProductQuantityChanger 
+                    changeQuantity={changeQuantity}
+                    handleChange={handleChange}
+                    quantity={quantity}
+                />
+            </div>
+            <div className="col-lg-3 col-md-3">
+                <span><button 
+                    type="button"
+                    className="btn btn-success" 
+                    onClick={addItemToCart}
+                >Add Rock
+                </button></span>
+            </div>
+        </div>
+        <div className="row description">
+            <div className="col-lg-6 col-md-6">
+                <small className="descriptionHeader"> Product Description </small>
+                <div className="well well-lg"> {product.description} </div>
+                {
+                    product.reviews && product.reviews.map(review => (
+                        <div key={review.id}>
+                            <h5><span>{review.user.fullName}</span></h5>
+                            <small>{review.text}</small>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+)
 
 
-const mapState = (state) => ({
-    selectedProduct: state.product.product,
-    userId: state.auth.id
-});
-const mapDispatch = {
-    getItem,
-};
-
-export default connect(mapState, mapDispatch)(Product);
+export default Product;

@@ -10,28 +10,20 @@ export const authenticated = user => ({
     user: user || {}
 })
 
-
-// // test user as auth is not working yet
-// const testUser = {
-//     id : 2,
-//     email : "pikachu@pokemon.com",
-//     firstName : "Pika",
-//     lastName : "Pikachu",
-//     isAdmin : false,
-//     triggerNewPassword : false,
-//     cart_id : 2
-// }
-
 // reducer
 export default function reducer (state={}, action) {
     switch (action.type) {
         case AUTHENTICATED:
-            return action.user // || testUser
+            return action.user
     }
     return state
 }
 
 // action-dispatchers
+export const newUser = (firstName,lastName,email,password)=>
+  dispatch => axios
+        .post('/api/user',{firstName,lastName,email,password})
+
 export const login = (username, password) =>
   dispatch => axios
         .post('/api/auth/login/local', {username, password})
@@ -50,5 +42,9 @@ export const whoami = () =>
         .then(res => res.data)
         .then(user => dispatch(authenticated(user)))
         .catch(err => dispatch(authenticated(null)))
+        .then(auth => {
+            console.log("whoami dispatcher", auth)
+            return auth
+        })
         .then(auth => dispatch(getCart(auth.user.id)))
         .catch(console.error.bind(console));

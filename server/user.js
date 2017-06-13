@@ -1,23 +1,14 @@
 'use strict'
 
+// const { User, Item, Cart, Review, Bom, Product }, db = require('APP/db')
 const db = require('APP/db')
 const User = db.model('user')
 const Item = db.model('item')
 const Cart = db.model('cart')
 const Review = db.model('review')
 const Bom = db.model('bom')
-
-// const Product = db.model('product')
-
-// TODO
-// login with session using post('/')
-// write mustBeLoggedIn, other auth filter functions
-    // The forbidden middleware will fail *all* requests to list users.
-    // Remove it if you want to allow anyone to list all users on the site.
-    //
-    // If you want to only let admins list all the users, then you'll
-    // have to add a role column to the users table to support
-    // the concept of admin users.
+const chalk = require('chalk');
+const Product = db.model('product')
 
 const {mustBeLoggedIn, forbidden} = require('./auth.filters')
 
@@ -28,6 +19,22 @@ Create User
 -> param : req.user/userId/cartId/cart
 Get User
 -> send you off to cart.js
+
+// TODO
+// write mustBeLoggedIn, other auth filter functions
+    // The forbidden middleware will fail *all* requests to list users.
+    // Remove it if you want to allow anyone to list all users on the site.
+    //
+    // If you want to only let admins list all the users, then you'll
+    // have to add a role column to the users table to support
+    // the concept of admin users.
+
+
+Browser warning
+    when I call next() in the app.param('userId')
+    I get a warning that 
+    a promise was created in a handler at but was not returned from it, 
+    see http://goo.gl/rRqMUw
 */
 
 
@@ -39,71 +46,73 @@ module.exports = require('express').Router()
             .catch(next)
     )
     .post('/', (req, res, next) => {        
-        User
-            .create(req.body)
-            .then(user => res.status(201).json(user))
-            // .catch(next)
-            /*
-                this is not going well
-                this error is dumb and sorta just dissapears
-            */
+    	console.log(chalk.bold.red("POST to /api/user/"), req.body);
+        
+        // logic can be put in a beforeCreate sequelize hook
+        Promise
+            .all([ User.create(req.body), Cart.create() ])
+	        .then(([user, cart]) => {
+                console.log('Create new user and cart', user);
+                user
+                    .setCart(cart)
+                    .then(user => res.send(user))
+    	    })
             .catch(err => {
-                const message = 'WARNING: we didnt authenticate because of duplicate email'
-                res.status(204).send({ message, error: err.errors })
+                console.error(chalk.bold.red("Unable to create new user"), err);
+                res.sendStatus(500);
             })
-        }
-    )
+    })
     
     /* 
     these routes are only hit by user for their own id
     I am adding a lot of information before the passport
-    will add all these things later
+    req.user
+    will add all these things
     but for now this is how it goes
     
-    TODO: authentication
     */
+
     // .use(mustBeLoggedIn)
     .param('userId', (req, res, next, userId) => {
-        if (isNaN(userId)) next(404); // res.sendStatus(404);
+        if (isNaN(userId)) next(404);
         else {
-            
             // userId
             req.userId = userId;
 
-            User // findById
+            User
                 .findOne({
                     where : { id : userId },
-                    include : [ Cart, Review, Bom ]
+                    // include : [ Cart, Review, Bom ]
+                    // include : [{ all: true, nested: true }]
+                    include : [
+                        { 
+                            model: Cart, 
+                            include: [{ model: Item, include: [ Product ] }] 
+                        },
+                        { model: Review, include: [ Product ] },
+                        { model: Bom, include: [ Item ] } // items, user
+                    ]
                 })
                 .then(user => {
                     if (!user) next(404);
-                                        
-                    /*
-                        
-                        JUSTIN
-                        TOGGLE THIS LINE
-                        IF YOU NEED USER INFORMATION
-                        FROM THE USER TABLE
-                        
-                    */
-                    // req.user = user;
+                    
+                    // *all* user information -> all eagerly loaded welp
                     req.account = user;
                     
-                    req.cart = user.cart;
-                    req.session.cart = user.cart;
+                    // grab cart items off req.cart.items
+                    req.cart = user.cart 
                     
+                    // arrays with reviews and orders
                     req.reviews = user.reviews;
                     req.orders = user.boms;
                     
-                    next(); // I get a warning that 
-// a promise was created in a handler at but was not returned from it, see http://goo.gl/rRqMUw
+                    next();
                 })
                 .catch(next);
         }
     })
-    .get('/:userId', (req, res, next) =>
-        res.status(200).send(req.user)
-    )
+    .get('/:userId', (req, res, next) => res.status(200).send(req.user))
     .use('/:userId/cart', require('./cart'))
+    .use('/:userId/orders', require('./orders'))
     
-    // this last line moves the cart api to cart.js
+    // these last lines move the cart/orders api to cart.js/orders.js

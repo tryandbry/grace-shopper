@@ -35,8 +35,15 @@ if (!reasonableName.test(pkg.name)) {
 const env = process.env
     , secretsFile = resolve(require('homedir')(), `.${pkg.name}.env`)
 
+console.log(chalk.bold.green("secretsFile:"));
+console.log(secretsFile);
+
 try {
   Object.assign(env, require(secretsFile))
+  console.log(chalk.bold.green("secretsFile:"));
+  console.log(require(secretsFile));
+  //console.log(chalk.bold.green("loaded the following env parameters from secretsFile:"));
+  //console.log(env);
 } catch (error) {
   debug('%s: %s', secretsFile, error.message)
   debug('%s: env file not found or invalid, moving on', secretsFile)

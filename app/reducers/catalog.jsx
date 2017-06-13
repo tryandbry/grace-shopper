@@ -64,14 +64,14 @@ export const getCategories = () => {
         .then(categories => dispatch(setCategories(categories)))
         .catch(console.error.bind(console));
 }
-export const getSelectedCategory = (categoryId) => {
+export const getSelectedCategory = (categoryName) => {
     
     ////// WOAH I NEED A CODE REVIEW
-    if (categoryId === 'all')
+    if (categoryName === 'all')
         return (dispatch) => dispatch({ type: RESET_CATEGORIES });
     
     return dispatch => axios
-        .get(`/api/category/${categoryId}`)
+        .get(`/api/category/${categoryName}`)
         .then(resToData)
         .then(category => dispatch(selectCategory(category)))
         .catch(console.error.bind(console));

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import {fetchBom} from '../reducers/bom';
+import {printPrice} from 'APP/utils';
 
 const TAX_RATE = 0.11;
 
@@ -29,33 +29,7 @@ class Bom extends React.Component {
     },[]);
   }
 
-  // Name: printPrice
-  // Purpose: Formats a float into a "price" string
-  // ----------------------------------
-  printPrice(num){
-    let temp = `${num}`.split('.');
-    let cents;
-    let dollars = "";
-    let buffer = temp[0].split('');
-    //process dollars
-    for(let i=0;buffer.length;i++){
-      if(i != 0 && i%3 == 0) dollars = ',' + dollars;
-      dollars = buffer.pop() + dollars;
-    }
-    //process cents
-    if(temp.length == 1) cents = "00";
-    if(temp.length == 2){
-      cents = temp[1].slice(0,2);
-      for(let i=cents.length;i<2;i++){
-	cents += "0";
-      }
-    }
-    return `$${dollars}.${cents}`;
-  }
-
   render(){
-    console.log("Bom component hit!",this.props);
-
     const shipping = this.props.bom.shipping;
     const id = this.props.bom.id;
     const lineItems = this.assembleLineItems();
@@ -66,11 +40,11 @@ class Bom extends React.Component {
     const grandtotal = subtotal + tax + shippingAndHandling;
 
     return(
-      <div>
-	<h2>BOM</h2>
-	<div id="shipping">
+      <div className="col-lg-12 col-md-12">
+	<h2>Invoice</h2>
+	<div id="shipping" className="table-responsive">
 	  <h3>Order {id}</h3>
-	  <table>
+	  <table className="table">
 	    <thead>
 	      <tr>
 		<th>Shipping Address</th>
@@ -82,54 +56,56 @@ class Bom extends React.Component {
 	      </tr>
 	    </tbody>
 	  </table>
-	  <table>
+	  <table className="table table-striped">
 	    <thead>
 	      <tr>
-		<th>Line Items</th>
+		<th colSpan={6}>Line Items</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	        <tr>
-		  <td>Item</td>
-		  <td>Name</td>
-		  <td>Description</td>
-		  <td>Unit Price</td>
-		  <td>Quantity</td>
-		  <td>Extended Price</td>
+		  <th>Item</th>
+		  <th>Name</th>
+		  <th>Description</th>
+		  <th>Unit Price</th>
+		  <th>Quantity</th>
+		  <th>Extended Price</th>
 		</tr>
 	        {lineItems.map(lineitem=>
 		  <tr key={lineitem.id}>
 		    <td>{lineitem.id}</td>
 		    <td>{lineitem.name}</td>
 		    <td>{lineitem.description}</td>
-		    <td>{this.printPrice(lineitem.price)}</td>
+		    <td>{printPrice(lineitem.price)}</td>
 		    <td>{lineitem.quantity}</td>
-		    <td>{this.printPrice(lineitem.extended)}</td>
+		    <td>{printPrice(lineitem.extended)}</td>
 		  </tr>
 		)}
 	    </tbody>
 	  </table>
 	  <br />
-	  <table>
-	    <tbody>
-	      <tr>
-	        <td>Subtotal</td>
-	        <td>{this.printPrice(subtotal)}</td>
-	      </tr>
-	      <tr>
-	        <td>Tax</td>
-	        <td>{this.printPrice(tax)}</td>
-	      </tr>
-	      <tr>
-	        <td>Shipping and Handling</td>
-	        <td>{this.printPrice(shippingAndHandling)}</td>
-	      </tr>
-	      <tr>
-	        <td>Grand Total</td>
-	        <td>{this.printPrice(grandtotal)}</td>
-	      </tr>
-	    </tbody>
-	  </table>
+	  <div className="col-lg-6 col-md-6">
+	    <table className="table table-bordered">
+	      <tbody>
+		<tr>
+		  <td>Subtotal</td>
+		  <td>{printPrice(subtotal)}</td>
+		</tr>
+		<tr>
+		  <td>Tax</td>
+		  <td>{printPrice(tax)}</td>
+		</tr>
+		<tr>
+		  <td>Shipping and Handling</td>
+		  <td>{printPrice(shippingAndHandling)}</td>
+		</tr>
+		<tr>
+		  <td>Grand Total</td>
+		  <td>{printPrice(grandtotal)}</td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
 	</div>
       </div>
     )
@@ -138,6 +114,4 @@ class Bom extends React.Component {
 
 const mapState = state=>Object.assign({},state);
 
-const mapDispatch = {fetchBom};
-
-export default connect(mapState,mapDispatch)(Bom);
+export default connect(mapState)(Bom);
