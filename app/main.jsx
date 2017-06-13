@@ -101,7 +101,7 @@ const onEnter = function () {
 }
 
 const onOrdersEnter = () => {                 // monica change this to a component will mount on userpage or figure another way but userid on state is async and not loading in time as is
-    console.log('userId? ', store.getState().auth.user.id);
+    console.log('userId? ', store.getState());
     const userId = store;
     store.dispatch(getUsersOrders(userId));
 }

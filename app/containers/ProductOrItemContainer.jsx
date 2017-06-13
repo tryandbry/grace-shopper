@@ -18,13 +18,16 @@ class ProductOrItemContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: this.props.productOrItem.quantity || 1
+            quantity: this.props.productOrItem.quantity || 1,
+            review: '',
+            dirty: false
         }
         
         this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addItemToCart = this.addItemToCart.bind(this);
         this.removeItemFromCart = this.removeItemFromCart.bind(this);
+        this.handleReviewForm = this.handleReviewForm.bind(this);
     }
 
     changeQuantity(e) {
@@ -90,6 +93,15 @@ class ProductOrItemContainer extends Component {
         this.setState({ quantity: 0 });
     }
 
+    handleReviewForm(e) {
+        const review = e.target.value
+        console.log('real time review input ', review);
+        this.setState({
+            review,
+            dirty: true
+        });
+    }
+
     render() {
         const { type, productOrItem } = this.props;
         
@@ -108,6 +120,7 @@ class ProductOrItemContainer extends Component {
                 handleChange={this.handleChange}
                 quantity={this.state.quantity}
                 addItemToCart={this.addItemToCart}
+                handleReviewForm={this.handleReviewForm}
               />
         }</div>)
     }
