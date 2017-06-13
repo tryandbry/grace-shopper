@@ -60,12 +60,12 @@ render(
                 <Route path="/cart" component={Cart} />
                 <Route path="/checkout" component={CheckoutContainer} />
                 <Route path="/account" component={UserPage} />
+                <Route path='/about' component={About} />
             </Route>
             <Route path="/bom/:id" component={Bom} onEnter={fetchBomOnEnter} />
             <Route path='/login' component={LoginPage} />
             <Route path='/signup' component={SignUpContainer} />
             <Route path='/logout' component={Logout} />
-            <Route path='/about' component={About} />
             <Route path='*' component={NotFound} />
         </Router>
     </Provider>,

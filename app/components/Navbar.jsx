@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import Cart from './Cart'
+import About from './About'
+import Account from './UserPage'
 
 
 const Navbar = ({ user }) => (
@@ -19,18 +22,28 @@ const Navbar = ({ user }) => (
 
     <div className="collapse navbar-collapse">
       <ul className="nav navbar-nav">
-        <li className=""><Link className="nav-link" to="/account">Account<span/></Link></li>
-        <li className=""><Link className="nav-link" to="/about">About<span/></Link></li>
+        <li className=""><Link to="/account" component={Account}>Account<span/></Link></li>
+        <li className=""><Link to="/about" component={About}>About<span/></Link></li>
       </ul>
           
       {
         user.id
         ? <ul className="nav navbar-nav navbar-right">
-          <li className=""><a href="/logout">Logout<span/></a></li>
+              <li className="">
+                  <Link to="/cart" component={Cart}>
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                  </Link>
+              </li>
+              <li className=""><a href="/logout">Logout<span/></a></li>
           </ul>
-        :  <ul className="nav navbar-nav navbar-right">
-            <li className=""><a href="/login">Login<span/></a></li>
-            <li className=""><a href="/about">Signup<span/></a></li>
+        : <ul className="nav navbar-nav navbar-right">
+              <li className="">
+                  <Link to="/cart" component={Cart}>
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                  </Link>
+              </li>
+              <li className=""><a href="/login">Login<span/></a></li>
+              <li className=""><a href="/about">Signup<span/></a></li>
           </ul>
       }
     </div>
