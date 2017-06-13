@@ -5,6 +5,8 @@ import Payment from '../components/Payment';
 import Review from '../components/Review';
 import Receipt from '../components/Receipt';
 import { postOrder } from '../reducers/order';
+import Bom from '../components/Bom';
+import { fetchBom } from '../reducers/bom';
 
 class CheckoutContainer extends React.Component {
     constructor() {
@@ -44,10 +46,12 @@ class CheckoutContainer extends React.Component {
     }
 
     onSubmitBuy = e => {
-      console.log('onSubmitBuy in checkoutcontainer')
       e.preventDefault();
       this.props.postOrder(this.state, this.props.userId)
-      this.setState({ flowState: 3 });
+      .then(()=>{
+	this.props.fetchBom(this.props.order.id);
+	this.setState({ flowState: 3 });
+      })
     }
 
     // form change
@@ -59,9 +63,7 @@ class CheckoutContainer extends React.Component {
     }
 
     render () {
-        console.log('Checkout State\n', this.state)
         const onChange = this.onChange;
-        const { order } = this.props;
         
         return (
             <div id="checkout">
@@ -84,9 +86,7 @@ class CheckoutContainer extends React.Component {
                         onSubmit={this.onSubmitBuy}
                         title={"Review"}
                       />
-                    : <Receipt 
-                        order={order}
-                      />
+                    : <Receipt />
                     }
             </div>
         );
@@ -98,8 +98,8 @@ const mapState = state => ({
     order : state.order
 });
 const mapDispatch = {
-    postOrder
+    postOrder,
+    fetchBom,
 };
 
-// export default connect(mapState, mapDispatch)(CheckoutContainer);
 export default connect(mapState, mapDispatch)(CheckoutContainer);

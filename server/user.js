@@ -7,6 +7,7 @@ const Item = db.model('item')
 const Cart = db.model('cart')
 const Review = db.model('review')
 const Bom = db.model('bom')
+const chalk = require('chalk');
 const Product = db.model('product')
 
 const {mustBeLoggedIn, forbidden} = require('./auth.filters')
@@ -18,7 +19,6 @@ Create User
 -> param : req.user/userId/cartId/cart
 Get User
 -> send you off to cart.js
-
 
 // TODO
 // write mustBeLoggedIn, other auth filter functions
@@ -46,20 +46,22 @@ module.exports = require('express').Router()
             .catch(next)
     )
     .post('/', (req, res, next) => {        
-        User
-            .create(req.body)
-            .then(user => res.status(201).json(user))
-            // .catch(next)
-            /*
-                this is not going well
-                this error is dumb and sorta just dissapears
-            */
+    	console.log(chalk.bold.red("POST to /api/user/"), req.body);
+        
+        // logic can be put in a beforeCreate sequelize hook
+        Promise
+            .all([ User.create(req.body), Cart.create() ])
+	        .then(([user, cart]) => {
+                console.log('Create new user and cart', user);
+                user
+                    .setCart(cart)
+                    .then(user => res.send(user))
+    	    })
             .catch(err => {
-                const message = 'WARNING: we didnt authenticate because of duplicate email'
-                res.status(204).send({ message, error: err.errors })
+                console.error(chalk.bold.red("Unable to create new user"), err);
+                res.sendStatus(500);
             })
-        }
-    )
+    })
     
     /* 
     these routes are only hit by user for their own id
@@ -83,7 +85,10 @@ module.exports = require('express').Router()
                     // include : [ Cart, Review, Bom ]
                     // include : [{ all: true, nested: true }]
                     include : [
-                        { model: Cart, include: [{ model: Item, include: [ Product ] }] },
+                        { 
+                            model: Cart, 
+                            include: [{ model: Item, include: [ Product ] }] 
+                        },
                         { model: Review, include: [ Product ] },
                         { model: Bom, include: [ Item ] } // items, user
                     ]
@@ -106,10 +111,8 @@ module.exports = require('express').Router()
                 .catch(next);
         }
     })
-    .get('/:userId', (req, res, next) =>
-        res.status(200).send(req.user)
-    )
+    .get('/:userId', (req, res, next) => res.status(200).send(req.user))
     .use('/:userId/cart', require('./cart'))
     .use('/:userId/orders', require('./orders'))
     
-    // this last line moves the cart api to cart.js
+    // these last lines move the cart/orders api to cart.js/orders.js
