@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 import Cart from './Cart'
 import About from './About'
 import Account from './UserPage'
-
+import FilterCatalog from './FilterCatalog'
 
 const Navbar = ({ user }) => (
 <nav className="navbar navbar-default">
@@ -17,36 +17,43 @@ const Navbar = ({ user }) => (
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </button>
-      <a className="navbar-brand" href="/catalog">Rocks</a>
+      <Link className="navbar-brand" to="/catalog" component={FilterCatalog}>Rocks</Link>
     </div>
 
-    <div className="collapse navbar-collapse">
-      <ul className="nav navbar-nav">
-        <li className=""><Link to="/account" component={Account}>Account<span/></Link></li>
-        <li className=""><Link to="/about" component={About}>About<span/></Link></li>
-      </ul>
-          
+            
       {
         user.id
-        ? <ul className="nav navbar-nav navbar-right">
-              <li className="">
-                  <Link to="/cart" component={Cart}>
-                      <span className="glyphicon glyphicon-shopping-cart"></span>
-                  </Link>
-              </li>
-              <li className=""><a href="/logout">Logout<span/></a></li>
-          </ul>
-        : <ul className="nav navbar-nav navbar-right">
-              <li className="">
-                  <Link to="/cart" component={Cart}>
-                      <span className="glyphicon glyphicon-shopping-cart"></span>
-                  </Link>
-              </li>
-              <li className=""><a href="/login">Login<span/></a></li>
-              <li className=""><a href="/about">Signup<span/></a></li>
-          </ul>
+        ? <div className="collapse navbar-collapse">            
+              <ul className="nav navbar-nav">
+                 <li className=""><Link to="/account" component={Account}>Account<span/></Link></li>
+                 <li className=""><Link to="/about" component={About}>About<span/></Link></li>
+              </ul>
+          
+              <ul className="nav navbar-nav navbar-right">
+                  <li className="">
+                      <Link to="/cart" component={Cart}>
+                          <span className="glyphicon glyphicon-shopping-cart"></span>
+                      </Link>
+                  </li>
+                  <li className=""><a href="/logout">Logout<span/></a></li>
+              </ul>
+          </div>
+
+        : <div className="collapse navbar-collapse">            
+              <ul className="nav navbar-nav">
+                 <li className=""><Link to="/about" component={About}>About<span/></Link></li>
+              </ul>
+              <ul className="nav navbar-nav navbar-right">
+                  <li className="">
+                      <Link to="/cart" component={Cart}>
+                          <span className="glyphicon glyphicon-shopping-cart"></span>
+                      </Link>
+                  </li>
+                  <li className=""><a href="/login">Login<span/></a></li>
+                  <li className=""><a href="/signup">Signup<span/></a></li>
+              </ul>
+          </div>
       }
-    </div>
       
   </div>
 </nav>
