@@ -4,7 +4,7 @@ import {printPrice} from 'APP/utils';
 
 const TAX_RATE = 0.11;
 
-class Bom extends React.Component {
+export class Bom extends React.Component {
   constructor(){
     super();
 
