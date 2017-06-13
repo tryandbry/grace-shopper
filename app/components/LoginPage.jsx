@@ -19,44 +19,56 @@ class LoginPage extends React.Component{
   render(){
 
     return (
-      <div className="container">
-        <div className="row">
-	  <h1>Rocks</h1>
-	  <div id="login" className="col-lg-5 col-md-5">
-	    <form className="form-horizontal" onSubmit={this.handleSubmit}>
-	      <fieldset>
-	        <legend>Log In</legend>
-		<div className="form-group">
-		  <label>User Name</label>
-		  <input className="form-control" name="username" />
-		  <label>Password</label>
-		  <input className="form-control" name="password" type="password" />
-		</div>
-		<div className="form-group">
-		  <button type="submit" className="btn btn-default">Submit</button>
-		</div>
-	      </fieldset>
-	    </form>
-	  </div>
-	  <div className="col-lg-2 col-md-2">
-	    <p>Or</p>
-	  </div>
-	  <div className="col-lg-5 col-md-5">
-	    <h4>Sign in with Google</h4>
-	    <a href="/api/auth/login/google">
-	      <button className="btn btn-default">Google</button>
-	    </a>
-	  </div>
-	  <div className="col-lg-12 col-md-12">
-	    <p>Don't have a login yet?  Sign up!</p>
-	    <h4>Sign Up</h4>
-	    <a href="/signup">
-	      <button className="btn btn-success btn-google">Sign Up</button>
-	    </a>
-	  </div>
-	</div>
-      </div>
-    );
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-1 col-md-1">
+                </div>
+        
+                <div className="col-lg-4 col-md-4">
+                <h1>Rocks</h1>
+                </div>
+            </div>
+        
+            <hr/>
+
+            <div className="row" id="login">
+                <div className="col-lg-2 col-md-2">
+                </div>
+        
+                <div className="col-lg-3 col-md-3">
+                    <h3>Log in</h3>
+                </div>
+        
+                <div className="col-lg-4 col-md-4">
+                    <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                        <fieldset>
+                            <div className="form-group">
+                                <label>User Name</label>
+                                <input className="form-control" name="username" />
+                                <label>Password</label>
+                                <input className="form-control" name="password" type="password" />
+                            </div>
+                            <div className="form-group right">
+                                <button type="submit" className="btn btn-default btn-block btn-success">Submit</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <br/><br/><br/>
+            <div className="row">
+                <div className="col-lg-5 col-md-5">
+                </div>
+        
+                <div className="col-lg-4 col-md-4">
+                    <a href="/api/auth/login/google">
+                        <button className="btn btn-default btn-block btn-danger">or sign up with Google</button>
+                    </a>
+                </div>
+            </div>
+        
+        </div>
+    )
   }
 }
 
