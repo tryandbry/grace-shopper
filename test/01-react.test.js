@@ -1,13 +1,13 @@
 import React from 'react';
-import {createStore} from 'redux';
+//import {createStore} from 'redux';
 
 import chai, {expect} from 'chai'; // provides expect(), assert(), and should()
 import chaiEnzyme from 'chai-enzyme';
 chai.use(chaiEnzyme());
 import {shallow} from 'enzyme'; // React testing wrapper
-import {spy} from 'sinon'; //spies 
-import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
+//import {spy} from 'sinon'; //spies 
+//import sinonChai from 'sinon-chai';
+//chai.use(sinonChai);
 //import faker from 'faker';
 
 import {Bom} from 'APP/app/components/Bom';
@@ -68,13 +68,16 @@ describe('React tests', function(){
     });
 
     it('includes the order number in the title',function(){
-      //expect(bomWrapper.find('#shipping h3')).to.have.html('<h3>Order 1</h3>');
-      expect(bomWrapper.findWhere(n=>n.text() == 'Order 1')).to.have.length(1);
+      expect(bomWrapper.findWhere(n=>n.text() == 'Order 1')).to.not.have.length(0);
+    });
+
+    it('renders the shipping address',function(){
+      let a = bomWrapper.findWhere(n=>n.text() == "31 Spooner St.\nQuahog, RI 01234");
+      expect(a).to.not.have.length(0);
     });
 
     it('renders data for each line item in a table',function(){
       let tabledata = bomWrapper.find('td');
-      //console.log('tabledata:',tabledata.contains('dino poo'));
       expect(tabledata.contains('dino poo')).to.be.true;
       expect(tabledata.contains("Shiny like a diamond.  \'cuz it\'s a diamond.")).to.be.true;
       expect(tabledata.contains('$234,974.22')).to.be.true;
@@ -84,24 +87,10 @@ describe('React tests', function(){
       expect(tabledata.contains("A porous rock perfect for exfoliation in the shower or classroom.")).to.be.true;
     });
 
-    it('renders summary data in a table',function(){
+    it('renders the subtotal in a table',function(){
       let tabledata = bomWrapper.find('td');
 
       expect(tabledata.contains('$333,560.94')).to.be.true; //subtotal
     });
   });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
