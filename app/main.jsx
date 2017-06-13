@@ -1,6 +1,7 @@
 'use strict'
+
 import React from 'react'
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import { Router, Route, IndexRedirect, browserHistory, Link } from 'react-router'
 import { render } from 'react-dom'
 import { connect, Provider } from 'react-redux'
 
@@ -51,13 +52,13 @@ const Main = ({ user, children }) => (
                 <div className="collapse navbar-collapse">
                     <ul className="nav navbar-nav navigationBtn">
                         <li className="nav-item">
-                            <a className="nav-link" href="/catalog">Home<span/></a>
+                            <Link className="nav-link" to="/catalog">Home<span/></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="INSERT_LINK_TO_USERPAGE_HERE">Account</a>
+                            <Link className="nav-link" to="/account">Account<span/></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="INSERT_LINK_TO_ABOUTPAGE_HERE">About</a>
+                            <Link className="nav-link" to="/about">About<span/></Link>
                         </li>
                     </ul>
                     <div className="nav navbar-nav navbar-right">
@@ -65,12 +66,14 @@ const Main = ({ user, children }) => (
                             <li className="nav-link">
                                  <a href="/cart" className="glyphicon glyphicon-shopping-cart cart active"></a>
                             </li>
-			    {user.id ? <WhoAmI /> :
-			      <div className="nav navbar-nav">
-				<li><a href="/login"><button className="btn btn-primary">Login</button></a></li>
-				<li><a href="/signup"><button className="btn btn-primary">Sign Up</button></a></li>
-			      </div>
-			    }
+            			    {
+                                user.id 
+                                ? <WhoAmI /> 
+                                : <div className="nav navbar-nav">
+                    				<li><a href="/login"><button className="btn btn-primary">Login</button></a></li>
+                    				<li><a href="/signup"><button className="btn btn-primary">Sign Up</button></a></li>
+            			          </div>
+            			    }
                         </ul>
                     </div>
                 </div>

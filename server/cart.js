@@ -17,40 +17,30 @@ module.exports = require('express').Router()
         const product = req.body.product;
         const quantity = Number(req.body.quantity);
         // no discount yet
-        
-        // don't create item if exists
-        const indexOfItem = req.cart.items
-            .reduce((index, item, i) =>
-                index || (item.product.id == product.id) ? i : index
-            , undefined);
+        const item = req.cart.items
+            .find(item => item.product.id == product.id)
 
-        console.log(
-            'hitting post to user/id/cart',
-            '\nindex of item', indexOfItem, isNaN(indexOfItem),
-            '\nproduct', product,
-            '\nquantity', quantity
-        )
-        
         // possibly shouldn't use update instance method
         // https://github.com/sequelize/sequelize/issues/2910
-        
-        if (isNaN(indexOfItem))
-            Item
-                .create({
-                    quantity : quantity,
-                    cost : product.cost,
-                    updated_at : Date.now()
-                })
-                .then(item => Product
-                    .findById(product.id)
-                    .then(product => item.setProduct(product))
+                
+        // if (isNaN(indexOfItem)) {
+        if (!item) {
+            Product
+                .findById(product.id)
+                .then(product => Item
+                    .create({
+                        quantity : quantity,
+                        cost : product.cost,
+                        // updated_at : Date.now() // trying to sort
+                    })
+                    .then(item => item.setProduct(product))
                 )
                 .then(item => {
-                    req.cart.setItems([...req.cart.items, item]) // this line seems super jenk
+                    req.cart.setItems([...req.cart.items, item])
                     res.status(201).send(item)
                 })
                 .catch(next);
-        else            
+        } else {
             Item
                 .findById(req.cart.items[indexOfItem].id)
                 .then(item => item.update({ 
@@ -59,6 +49,7 @@ module.exports = require('express').Router()
                 }))
                 .then(item => res.status(200).send(item))
                 .catch(next);
+        }
     })
     .param('productId', (req, res, next, productId) => {
         if (isNaN(productId)) res.sendStatus(404);
