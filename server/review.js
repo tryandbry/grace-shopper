@@ -8,6 +8,8 @@ module.exports = require('express').Router()
         const text = req.body.text;
         const productId = req.body.productId;
 
+        console.log('hit review route/n/n/n/n', rating,text,productId)
+
         Review.create({
             rating,
             text,

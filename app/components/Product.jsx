@@ -5,7 +5,7 @@ import { printPrice } from 'APP/utils'
 
 //need add reviewchange somewhere to take in input in real time........
 
-const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart, handleReviewForm }) => (
+const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart, handleReviewForm, handleStarChange, onReviewSubmit }) => (
     <div className="container product">
         <div className="row">
             <div className="col-lg-3 col-md-3">
@@ -51,6 +51,15 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                             <label for="inputlg">Leave a Review?</label>
                             <div className="row">
                                 <textarea className="form-control" rows="5" id="comment" onChange={handleReviewForm}></textarea>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-6 col-md-6 col-sm-6">
+                                    <input id="input-id" type="number" className="rating" min={0} max={5} step={0.5} data-size="lg" onChange={handleStarChange} />
+                                </div>
+                                <div className="col-lg-3 col-md-3 col-sm-3"/>
+                                <div className="col-lg-3 col-md-3 col-sm-3">
+                                    <button type="button" className="btn btn-success" onClick={onReviewSubmit}> Submit Review </button>
+                                </div>
                             </div>
                         </div>
                     </div>
