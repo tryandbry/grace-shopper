@@ -51,7 +51,7 @@ module.exports = require('express').Router()
         // logic can be put in a beforeCreate sequelize hook
         Promise
             .all([ User.create(req.body), Cart.create() ])
-	        .spread((user, cart) => {
+	        .then(([user, cart]) => {
                 console.log('Create new user and cart', user);
                 user
                     .setCart(cart)
