@@ -25,10 +25,7 @@
     "test": "mocha test/ --compilers js:babel-register",
     "test-watch": "npm run test -- --watch --reporter=min",
     "seed": "node db/seed.js",
-    "deploy-heroku": "bin/deploy-heroku.sh",
-    "lint": "esw . --ignore-path .gitignore --ext '.js,.jsx'",
-    "lint-watch": "npm run lint -- -w",
-    "prepush": "npm run lint && npm run test"
+    "deploy-heroku": "bin/deploy-heroku.sh"
   },
   "repository": {
     "type": "git",
