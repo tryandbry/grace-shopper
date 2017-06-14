@@ -32,3 +32,15 @@ module.exports = require('express').Router()
             .then(deleted => res.send('Deleted!'))
             .catch(next)
     })
+
+    .get('/:id/reviews', (req, res, next) => {
+        Review.findAll({ where: { product_id: req.params.id } })
+            .then(reviews => {
+                let productRating = reviews.reduce((prev, curr) => {
+                    return prev + parseInt(curr.rating)
+                }, 0)
+                productRating /= reviews.length;
+                res.send(`${productRating}`);
+            }
+            )
+    })

@@ -113,6 +113,6 @@ module.exports = require('express').Router()
     })
     .get('/:userId', (req, res, next) => res.status(200).send(req.user))
     .use('/:userId/cart', require('./cart'))
-    .use('/:userId/orders', require('./orders'))
+    .use('/:userId/review', require('./review'))
     
     // these last lines move the cart/orders api to cart.js/orders.js

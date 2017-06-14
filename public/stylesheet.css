@@ -72,3 +72,10 @@ ul {
     padding-left: 20%;
     text-decoration: underline;
 }
+.reviewTxt {
+    font-weight: bold;
+}
+.averageRating {
+    font-size: 20px;
+    color: purple;
+}

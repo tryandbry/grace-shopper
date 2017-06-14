@@ -3,7 +3,6 @@ import axios from 'axios';
 // action
 
 let GET_USER_ORDERS = 'GET_USER_ORDERS';
-let ADD_REVIEW = 'ADD_REVIEW';
 
 // action creators
 const retrieveUserOrders = orders => ({
@@ -11,16 +10,11 @@ const retrieveUserOrders = orders => ({
     orders
 })
 
-const addReview = review => ({
-    type: ADD_REVIEW,
-    review
-})
 
 // reducer
 
 const initialState = {
-    review: {},
-    orders: [],
+    orders: []
 };
 
 export default function reducer(state = initialState, action) {
@@ -28,9 +22,6 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case (GET_USER_ORDERS):
             newState.orders = action.orders;
-            break;
-        case (ADD_REVIEW):
-            newState.review = action.review;
             break;
         default:
             return state;
@@ -54,15 +45,4 @@ export const getUsersOrders = userId => {
         .then(orders => dispatch(retrieveUserOrders(orders)))
         .catch(console.error.bind(console));
     }
-}
-
-export const createReview = (rating, text, userId) => {
-    return dispatch => axios
-        .post(`/api/user/${userId}/reviews`, {
-            rating,
-            text
-        })
-        .then(res => res.data)
-        .then(review => dispatch(createReview(review)))
-        .catch(console.error.bind(console))
 }

@@ -26,7 +26,7 @@ import Bom from './components/Bom'
 
 // import { getUsersOrders } from './reducers/user'
 import { getProducts, getCategories } from './reducers/catalog'
-import { getProduct } from './reducers/product'
+import { getProduct, averageRating } from './reducers/product'
 import { fetchBom } from './reducers/bom'
 
 const onEnter = function () {
@@ -34,11 +34,13 @@ const onEnter = function () {
     store.dispatch(getCategories())
 }
 
+
 // const onOrdersEnter = () => {                 // monica change this to a component will mount on userpage or figure another way but userid on state is async and not loading in time as is
 //     console.log('userId? ', store.getState().auth.user.id);
 //     const userId = store;
 //     store.dispatch(getUsersOrders(userId));
 // }
+
 
 const onProductEnter = function (nextRouterState) {
     const productId = nextRouterState.params.id;

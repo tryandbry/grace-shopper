@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { postItem , deleteItem, putItem } from '../reducers/cart';
+import { createReview, averageRating  } from '../reducers/product';
+import store from '../store';
 // import ProductQuantityChanger from './ProductQuantityChanger';
 import Product from '../components/Product';
 import Item from '../components/Item';
@@ -18,13 +20,27 @@ class ProductOrItemContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantity: this.props.productOrItem.quantity || 1
+            quantity: this.props.productOrItem.quantity || 1,
+            review: '',
+            dirty: false,
+            stars: 0
         }
         
         this.changeQuantity = this.changeQuantity.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addItemToCart = this.addItemToCart.bind(this);
         this.removeItemFromCart = this.removeItemFromCart.bind(this);
+        this.handleReviewForm = this.handleReviewForm.bind(this);
+        this.handleStarChange = this.handleStarChange.bind(this);
+        this.onReviewSubmit = this.onReviewSubmit.bind(this);
+    }
+
+
+    componentDidMount() {
+        if(this.props.product.id) {
+            console.log('!!!!!!!!!!!!!!!!', this.props.product.id);
+             store.dispatch(averageRating(this.props.product.id))
+        }
     }
 
     changeQuantity(e) {
@@ -43,7 +59,7 @@ class ProductOrItemContainer extends Component {
         else return;
         
         if (type == 'Item')
-            putItem(productOrItem.product.id, newQuantity, userId);
+            this.props.putItem(productOrItem.product.id, newQuantity, userId);
         
         this.setState({ quantity : newQuantity })
     }
@@ -55,7 +71,7 @@ class ProductOrItemContainer extends Component {
         
         if (this.props.type == 'Item') {
             const { putItem, productOrItem, userId } = this.props
-            putItem(productOrItem.product.id, value, userId)
+            this.props.putItem(productOrItem.product.id, value, userId)
         }
         
         this.setState({ quantity: value })
@@ -73,7 +89,7 @@ class ProductOrItemContainer extends Component {
             ({ id, name, image, cost, description, inventory, updated_at })
         )(product);
         
-        postItem(smallProduct, this.state.quantity, userId);
+        this.props.postItem(smallProduct, this.state.quantity, userId);
         
     }
 
@@ -86,12 +102,39 @@ class ProductOrItemContainer extends Component {
         // will worry about it later
         
         const { productOrItem, userId, deleteItem } = this.props;
-        deleteItem(productOrItem, userId);
+        this.props.deleteItem(productOrItem, userId);
         this.setState({ quantity: 0 });
+    }
+
+    handleReviewForm(e) {
+        const review = e.target.value
+        console.log('real time review input ', review);
+        this.setState({
+            review,
+            dirty: true
+        });
+    }
+
+    handleStarChange(e) {
+        const stars = e.target.value
+        console.log('how many stars? ', stars)
+        this.setState({
+            stars
+        });
+    }
+
+    onReviewSubmit(e) {
+        console.log('what is props? ', this.props)
+        e.preventDefault();
+        if (this.state.dirty) {
+            return this.props.createReview(this.state.stars, this.state.review, this.props.userId, this.props.product.id); 
+        }
     }
 
     render() {
         const { type, productOrItem } = this.props;
+
+        console.log('props is????? ', this.props)
         
         return (<div>{
             (type == 'Item')
@@ -108,6 +151,9 @@ class ProductOrItemContainer extends Component {
                 handleChange={this.handleChange}
                 quantity={this.state.quantity}
                 addItemToCart={this.addItemToCart}
+                handleReviewForm={this.handleReviewForm}
+                handleStarChange={this.handleStarChange}
+                onReviewSubmit={this.onReviewSubmit}
               />
         }</div>)
     }
@@ -117,10 +163,11 @@ class ProductOrItemContainer extends Component {
 const mapState = (state) => ({
     userId : state.auth.id
 });
-const mapDispatch = dispatch => dispatch => ({
-    postItem : (product, quantity, userId) => dispatch(postItem(product, quantity, userId)),
-    deleteItem : (itemId, userId) => dispatch(deleteItem(itemId, userId)),
-    putItem : (productId, quantity, userId) => dispatch(putItem(productId, quantity, userId))
-});
+const mapDispatch = {
+    postItem,
+    deleteItem,
+    putItem,
+    createReview
+};
 
 export default connect(mapState, mapDispatch)(ProductOrItemContainer);
