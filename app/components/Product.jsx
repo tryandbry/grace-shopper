@@ -24,7 +24,7 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                 <span className="stock"> price: </span>
                 <span className="cost"> {printPrice(product.cost)} </span>
                 <span className="stock"> Average Rating: </span>
-                <span className="averageRating"> { rating ? Math.round(rating * 100) / 100 + ' stars!' : 'There are no Current Ratings' } </span>
+                <span className="averageRating"> { !isNaN(rating) ? Math.round(rating * 100) / 100 + ' stars!' : 'Not yet rated' } </span>
             </div>
         </div>
         <div className="row purchase">
@@ -57,7 +57,8 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                             </div>
                             <div className="row">
                                 <div className="col-lg-6 col-md-6 col-sm-6">
-                                    <input id="input-id" type="number" className="rating" min={0} max={5} step={0.5} data-size="lg" onChange={handleStarChange} />
+                                    <label for="input-4" class="control-label">Rate This</label>
+                                    <input id="input-4" name="input-4" type="number"  className="rating" min={0} max={5} step={0.5} data-show-clear="false" data-show-caption="true" onChange={handleStarChange} />
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-3"/>
                                 <div className="col-lg-3 col-md-3 col-sm-3">
@@ -87,7 +88,8 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
 
 
 const mapState = state =>{
-    console.log(state.product.rating)
+    //console.log(state.product.rating)
+    console.log("Product component:",state);
 return {
     rating: state.product.rating
 }
