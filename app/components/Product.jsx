@@ -88,7 +88,8 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
 
 
 const mapState = state =>{
-    console.log(state.product.rating)
+    //console.log(state.product.rating)
+    console.log("Product component:",state);
 return {
     rating: state.product.rating
 }

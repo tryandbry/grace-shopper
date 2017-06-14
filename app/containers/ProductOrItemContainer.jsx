@@ -124,12 +124,11 @@ class ProductOrItemContainer extends Component {
     }
 
     onReviewSubmit(e) {
-        console.log('what is props? ', this.props)
-        e.preventDefault();
+        // e.preventDefault();
         if (this.state.dirty) {
              this.props.createReview(this.state.stars, this.state.review, this.props.userId, this.props.product.id); 
         }
-
+        location.reload();
     }
 
     render() {
