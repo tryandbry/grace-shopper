@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import ProductQuantityChanger from './ProductQuantityChanger';
 import { printPrice } from 'APP/utils'
 
+
 //need add reviewchange somewhere to take in input in real time........
 
-const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart, handleReviewForm, handleStarChange, onReviewSubmit }) => (
+const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCart, handleReviewForm, handleStarChange, onReviewSubmit, rating }) => (
     <div className="container product">
         <div className="row">
             <div className="col-lg-3 col-md-3">
@@ -22,6 +23,8 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                 <div></div>
                 <span className="stock"> price: </span>
                 <span className="cost"> {printPrice(product.cost)} </span>
+                <span className="stock"> Average Rating: </span>
+                <span className="averageRating"> { rating ? Math.round(rating * 100) / 100 + ' stars!' : 'There are no Current Ratings' } </span>
             </div>
         </div>
         <div className="row purchase">
@@ -48,7 +51,7 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12">
                         <div className="form-group">
-                            <label for="inputlg">Leave a Review?</label>
+                            <label for="inputlg">Leave a Review for {product.name}</label>
                             <div className="row">
                                 <textarea className="form-control" rows="5" id="comment" onChange={handleReviewForm}></textarea>
                             </div>
@@ -68,7 +71,10 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
                     product.reviews && product.reviews.map(review => (
                         <div key={review.id}>
                             <h5><span>{review.user.fullName}</span></h5>
-                            <small>{review.text}</small>
+                            <small>Rating: {review.rating} stars </small>
+                            <div>
+                            <small className='reviewTxt'>{review.text}</small>
+                            </div>
                         </div>
                     ))
                 }
@@ -78,4 +84,13 @@ const Product = ({ product, changeQuantity, handleChange, quantity, addItemToCar
 )
 
 
-export default Product;
+
+
+const mapState = state =>{
+    console.log(state.product.rating)
+return {
+    rating: state.product.rating
+}
+} 
+
+export default connect(mapState)(Product);

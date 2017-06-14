@@ -6,12 +6,12 @@ module.exports = require('express').Router()
     .post('/', (req, res, next) => {
         const rating = req.body.rating;
         const text = req.body.text;
-        const productId = req.body.productId;
+        const productId = req.body.product_id;
 
         console.log('hit review route/n/n/n/n', rating,text,productId)
 
         Review.create({
-            rating,
+            rating: `${rating}`,
             text,
             user_id: req.user.id,
             product_id: productId

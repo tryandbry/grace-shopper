@@ -26,7 +26,7 @@ import Bom from './components/Bom'
 
 import { getUsersOrders } from './reducers/user'
 import { getProducts, getCategories } from './reducers/catalog'
-import { getProduct } from './reducers/product'
+import { getProduct, averageRating } from './reducers/product'
 import { fetchBom } from './reducers/bom'
 
 
