@@ -47,4 +47,4 @@ export const whoami = () =>
             return auth
         })
         .then(auth => dispatch(getCart(auth.user.id)))
-        .catch(console.error.bind(console));
+        .catch(console.error.bind('whoami:',console));

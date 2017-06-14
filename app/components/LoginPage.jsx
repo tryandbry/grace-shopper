@@ -13,7 +13,9 @@ class LoginPage extends React.Component{
   handleSubmit(evt){
     evt.preventDefault();
     this.props.login(evt.target.username.value, evt.target.password.value)
-    browserHistory.push('/');
+    .then(data=>{
+      if(this.props.auth.id != undefined) browserHistory.push('/');
+    });
   }
 
   render(){
@@ -72,5 +74,6 @@ class LoginPage extends React.Component{
   }
 }
 
+const mapState = ({auth})=>({auth});
 const mapDispatch = {login};
-export default connect(null, mapDispatch)(LoginPage);
+export default connect(mapState, mapDispatch)(LoginPage);
