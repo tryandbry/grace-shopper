@@ -1,32 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getSelectedCategory } from '../reducers/catalog';
-//import { Link } from 'react-router';
 
-
-const CategoryItem = ({category,i,selectCategory})=>{
-
-  return (
-    <div className="radio" key={i}>
+const CategoryItem = ({category,getSelectedCategory})=>
+    <div className="radio"> 
       <label>
 	<input 
 	  type="radio"
 	  name="categoryRadios"
 	  id={`category${category.name}`}
 	  value={category.id}
-	  onChange={()=>selectCategory(category.name)}
+	  onChange={()=>getSelectedCategory(category.name)}
 	/>{category.name}
       </label>
     </div>
-  )
-}
 
-
-const FilterCategory = ({categories, selectCategory}) => {
-    //const categories = props.categories;
-    //const selectCategory = props.selectCategory;
-
-    //console.log("Categories: ",categories);
+const FilterCategory = ({categories, getSelectedCategory}) => {
     const allProps = {
       name: 'All',
       id: 'all',
@@ -35,10 +24,10 @@ const FilterCategory = ({categories, selectCategory}) => {
     return (
         <div id="filtercategories">
 	  <h3>Categories</h3>
-	  <CategoryItem category={allProps} i={10} selectCategory={selectCategory} />
-	  {categories && categories.map((category,i) =>
-	    <CategoryItem category={category} i={i} selectCategory={selectCategory} />
-	  )}
+	  <CategoryItem category={allProps} getSelectedCategory={getSelectedCategory} />
+	  {categories.length ? categories.map((category,i) =>
+	    <CategoryItem category={category} key={i} getSelectedCategory={getSelectedCategory} />
+	  ): ""}
         </div>
     )
 }
@@ -46,7 +35,7 @@ const FilterCategory = ({categories, selectCategory}) => {
 const mapState = state => ({
     categories : state.catalog.categories,
 });
-const mapDispatch = dispatch => ({
-    selectCategory : id => dispatch(getSelectedCategory(id))
-});
+
+const mapDispatch = {getSelectedCategory};
+
 export default connect(mapState, mapDispatch)(FilterCategory);
