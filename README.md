@@ -34,9 +34,10 @@ in two separate terminals. The vanilla `npm start` is for production.
 `/bin` has scripts. (Two scripts for heroku deploy, one script that creates a useful symlink.)
 
 ## Requirements
+
 ### Unauthenticated Users
 
-####View products (catalog)
+#### View products (catalog)
 
 - Refine listing by category
 - Search product listing
@@ -57,47 +58,54 @@ in two separate terminals. The vanilla `npm start` is for production.
 - Login with Facebook and/or Google
 - Checkout
 
-####Purchase items from cart
+#### Purchase items from cart
+
 - Specify shipping address and email address
 - **Receive confirmation email**
 - **Receive notification emails upon order shipping, then order delivery**
 
-###Authenticated Users
-####Logout
-####Account management
+### Authenticated Users
+
+#### Logout
+
+#### Account management
+
 - **View past order list**
 - View order detail
     - Current order status
     - Items with quantity and subtotal
     - Link to the original product detail page
     - Date/time order was created
-####Product reviews
+
+#### Product reviews
+
 - Leave a review (with text and a 5-star rating) for a product
 
-###Admin
-####**Product management**
+### Admin
+
+#### **Product management**
 - Create and edit products with name, description, price and one or more photos
 - Create categories for items, each item can have multiple categories
 - Manage the availability of a product. If a product is no longer available, users will not see it while browsing, but they can view the product detail page if they've ordered it previously or have a direct link. On that product detail page, it should say "Currently Unavailable"
 - Add/remove categories from items
-####**Order management**
+#### **Order management**
 - View a list of all orders
 - Filter orders by status (Created, Processing, Cancelled, Completed)
 - Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
 - View details of a specific order
-####**User management**
+#### **User management**
 - Promote other user accounts to have admin status
 - Delete a user
 - Trigger password reset for a user (next time they successfully log in—with their old password—they are prompted for a new one)
 
-##Data Validations
+## Data Validations
 All completed.
 
-###Application
-####Tests
-####Heroku deploy
-####**Continuous integration**
-
+### Application
+#### Tests
+#### Heroku deploy
+#### **Continuous integration**
+ 
 > Written with [StackEdit](https://stackedit.io/).
 
 ## Quick Heroku deployment
