@@ -21,7 +21,7 @@
     "start-dev": "cross-env DEBUG=grace-shopper:oauth NODE_ENV=development npm run start-watch",
     "test-bones-original": "mocha --compilers js:babel-register --watch-extensions js,jsx app/**/*.test.js app/**/*.test.jsx server/**/*.test.js db/**/*.test.js",
     "test-react": "mocha test/01-react.test.js --compilers js:babel-register",
-    "test-model": "mocha test/01-react.test.js --compilers js:babel-register",
+    "test-model": "mocha test/02-model.test.js --compilers js:babel-register",
     "test": "mocha test/ --compilers js:babel-register",
     "test-watch": "npm run test -- --watch --reporter=min",
     "seed": "node db/seed.js",
