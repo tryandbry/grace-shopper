@@ -19,7 +19,10 @@
     "start": "node server/start.js",
     "start-watch": "nodemon server/start.js --watch server --watch db --watch index.js --watch package.json",
     "start-dev": "cross-env DEBUG=grace-shopper:oauth NODE_ENV=development npm run start-watch",
-    "test": "mocha --compilers js:babel-register --watch-extensions js,jsx app/**/*.test.js app/**/*.test.jsx server/**/*.test.js db/**/*.test.js",
+    "test-bones-original": "mocha --compilers js:babel-register --watch-extensions js,jsx app/**/*.test.js app/**/*.test.jsx server/**/*.test.js db/**/*.test.js",
+    "test-react": "mocha test/01-react.test.js --compilers js:babel-register",
+    "test-model": "mocha test/02-model.test.js --compilers js:babel-register",
+    "test": "mocha test/ --compilers js:babel-register",
     "test-watch": "npm run test -- --watch --reporter=min",
     "seed": "node db/seed.js",
     "deploy-heroku": "bin/deploy-heroku.sh"
@@ -42,6 +45,7 @@
   "dependencies": {
     "axios": "^0.15.2",
     "babel-preset-stage-2": "^6.18.0",
+    "babel-register": "^6.24.1",
     "bcryptjs": "^2.4.0",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
