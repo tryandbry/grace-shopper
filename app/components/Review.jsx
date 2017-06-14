@@ -2,7 +2,7 @@ import React from 'react'
 import Cart from'./Cart'
 import { connect } from 'react-redux'
 
-const Review = ({ onSubmitBuy, title, items }) => (
+const Review = ({ onSubmit, title, items }) => (
     <div className="container">
         <div className="row">
             <h2>{title}</h2>
@@ -11,8 +11,8 @@ const Review = ({ onSubmitBuy, title, items }) => (
             <Cart items={items} />
         </div>
         <div className="row">
-            <div className="form-group col-lg-12 col-md-12">
-                <button type="submit" className="btn btn-default" onClick={onSubmitBuy}>
+            <div className="col-lg-12 col-md-12">
+                <button className="btn btn-default" onClick={onSubmit}>
     	            Buy!
                 </button>
             </div>

@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux';
-import {fetchBom} from '../reducers/bom';
 import {printPrice} from 'APP/utils';
 
 const TAX_RATE = 0.11;
@@ -30,35 +29,7 @@ class Bom extends React.Component {
     },[]);
   }
 
-  /*
-  // Name: printPrice
-  // Purpose: Formats a float into a "price" string
-  // ----------------------------------
-  printPrice(num){
-    let temp = `${num}`.split('.');
-    let cents;
-    let dollars = "";
-    let buffer = temp[0].split('');
-    //process dollars
-    for(let i=0;buffer.length;i++){
-      if(i != 0 && i%3 == 0) dollars = ',' + dollars;
-      dollars = buffer.pop() + dollars;
-    }
-    //process cents
-    if(temp.length == 1) cents = "00";
-    if(temp.length == 2){
-      cents = temp[1].slice(0,2);
-      for(let i=cents.length;i<2;i++){
-	cents += "0";
-      }
-    }
-    return `$${dollars}.${cents}`;
-  }
-  */
-
   render(){
-    console.log("Bom component hit!",this.props);
-
     const shipping = this.props.bom.shipping;
     const id = this.props.bom.id;
     const lineItems = this.assembleLineItems();
@@ -143,6 +114,4 @@ class Bom extends React.Component {
 
 const mapState = state=>Object.assign({},state);
 
-const mapDispatch = {fetchBom};
-
-export default connect(mapState,mapDispatch)(Bom);
+export default connect(mapState)(Bom);
